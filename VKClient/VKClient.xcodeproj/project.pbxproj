@@ -58,13 +58,29 @@
 			children = (
 				7436DCED26C6E52600E7E21C /* AppDelegate.swift */,
 				7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */,
-				7436DCF126C6E52600E7E21C /* ViewController.swift */,
-				7436DCF326C6E52600E7E21C /* Main.storyboard */,
+				7436DD0226C6E70B00E7E21C /* Controllers */,
+				7436DD0126C6E6F000E7E21C /* View */,
 				7436DCF626C6E52800E7E21C /* Assets.xcassets */,
 				7436DCF826C6E52800E7E21C /* LaunchScreen.storyboard */,
 				7436DCFB26C6E52800E7E21C /* Info.plist */,
 			);
 			path = VKClient;
+			sourceTree = "<group>";
+		};
+		7436DD0126C6E6F000E7E21C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7436DCF326C6E52600E7E21C /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7436DD0226C6E70B00E7E21C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7436DCF126C6E52600E7E21C /* ViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
