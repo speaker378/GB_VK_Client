@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 13.08.2021.
