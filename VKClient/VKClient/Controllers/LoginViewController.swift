@@ -31,15 +31,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBAction func signInButtonPressed(_ sender: Any) {
-        if isValid() {
-            print("ok")
-        } else {
-            print("not ok")
-        }
+    @IBAction func signUpButtonPressed(_ sender: Any) {
     }
     
-    @IBAction func signUpButtonPressed(_ sender: Any) {
+    @IBAction func signInButtonPressed(_ sender: Any) {
+        if isValid() {
+            performSegue(withIdentifier: "loginSegue", sender: nil)
+        } else {
+            showAlert()
+        }
     }
     
     func isValid() -> Bool {
@@ -47,8 +47,27 @@ class LoginViewController: UIViewController {
             ((passwordTextField.text?.range(of: patternPassword, options: .regularExpression)) != nil)
     }
     
+    private func showAlert() {
+        let alertController = UIAlertController(title: "Ошибка",
+                                                message: "Не верное имя или пароль",
+                                                preferredStyle: .alert)
+        let alertItem = UIAlertAction(title: "Ok",
+                                      style: .cancel,
+                                      handler: { _ in
+                                        self.loginTextField.text = ""
+                                        self.passwordTextField.text = "" })
+        alertController.addAction(alertItem)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginTextField.attributedPlaceholder = NSAttributedString(
+            string: "Имя пользователя",
+            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Пароль",
+            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
