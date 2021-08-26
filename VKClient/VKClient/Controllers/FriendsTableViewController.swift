@@ -59,8 +59,8 @@ class FriendsTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let photosVC = segue.destination as? PhotosCollectionViewController else { return }
-        guard let userID = tableView.indexPathForSelectedRow?[0] else { return }
+        guard let photosVC = segue.destination as? PhotosCollectionViewController,
+              let userID = tableView.indexPathForSelectedRow?[0] else { return }
         let photo = friends[userID].avatar
         photosVC.userPhotos.append(UserPhoto(photo: photo))
     }
