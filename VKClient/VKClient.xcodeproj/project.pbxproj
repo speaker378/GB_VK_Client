@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */; };
 		7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCED26C6E52600E7E21C /* AppDelegate.swift */; };
 		7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */; };
 		7436DCF226C6E52600E7E21C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCF126C6E52600E7E21C /* LoginViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		7436DCEA26C6E52600E7E21C /* VKClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7436DCED26C6E52600E7E21C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,9 +78,9 @@
 		7436DCEC26C6E52600E7E21C /* VKClient */ = {
 			isa = PBXGroup;
 			children = (
-				74D2234926D54C5200D444F7 /* Models */,
 				7436DCED26C6E52600E7E21C /* AppDelegate.swift */,
 				7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */,
+				74D2234926D54C5200D444F7 /* Models */,
 				7436DD0226C6E70B00E7E21C /* Controllers */,
 				7436DD0126C6E6F000E7E21C /* View */,
 				7436DCF626C6E52800E7E21C /* Assets.xcassets */,
@@ -124,6 +126,7 @@
 			children = (
 				74D2234D26D639D300D444F7 /* CommunityCell.xib */,
 				74D2234C26D639D300D444F7 /* CommunityCell.swift */,
+				7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */,
 				74D2235326D666C700D444F7 /* PhotoCollectionViewCell.swift */,
 			);
 			path = Reuse;
@@ -207,6 +210,7 @@
 				7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */,
 				74D37AB126D2B58500E65F83 /* FriendsTableViewController.swift in Sources */,
 				74D2235126D63E6C00D444F7 /* Community.swift in Sources */,
+				7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */,
 				74D37AB526D2B63900E65F83 /* CommunityTableViewController.swift in Sources */,
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionViewController.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
