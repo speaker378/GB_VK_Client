@@ -23,13 +23,12 @@ struct Friend {
     }
 }
 
-struct Friends {
-   var list = [
-        Friend(name: "Aragorn", avatar: UIImage(named: "Aragorn"), networkStatus: true),
-        Friend(name: "Boromir", avatar: UIImage(named: "Boromir"), networkStatus: false),
-        Friend(name: "Frodo", avatar: UIImage(named: "Frodo"), networkStatus: true),
-        Friend(name: "Galadriel", avatar: UIImage(named: "Galadriel"), networkStatus: true),
-        Friend(name: "Gandalf", avatar: UIImage(named: "Gandalf"), networkStatus: true),
-        Friend(name: "Legolas", avatar: UIImage(named: "Legolas"), networkStatus: true),
-    ]
-}
+
+var friendsList = [
+    Friend(name: "Aragorn", avatar: UIImage(named: "Aragorn"), networkStatus: true),
+    Friend(name: "Boromir", avatar: UIImage(named: "Boromir"), networkStatus: false),
+    Friend(name: "Frodo", avatar: UIImage(named: "Frodo"), networkStatus: true),
+    Friend(name: "Galadriel", avatar: UIImage(named: "Galadriel"), networkStatus: true),
+    Friend(name: "Gandalf", avatar: UIImage(named: "Gandalf"), networkStatus: true),
+    Friend(name: "Legolas", avatar: UIImage(named: "Legolas"), networkStatus: true),
+]

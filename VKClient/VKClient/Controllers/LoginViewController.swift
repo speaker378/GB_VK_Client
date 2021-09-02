@@ -43,8 +43,9 @@ class LoginViewController: UIViewController {
     }
     
     func isValid() -> Bool {
-        return ((loginTextField.text?.range(of: patternUsername, options: .regularExpression)) != nil) &&
-            ((passwordTextField.text?.range(of: patternPassword, options: .regularExpression)) != nil)
+//        return ((loginTextField.text?.range(of: patternUsername, options: .regularExpression)) != nil) &&
+//            ((passwordTextField.text?.range(of: patternPassword, options: .regularExpression)) != nil)
+        return true
     }
     
     private func showAlert() {

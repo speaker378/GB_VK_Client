@@ -20,10 +20,10 @@
 		74D2235126D63E6C00D444F7 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235026D63E6C00D444F7 /* Community.swift */; };
 		74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235326D666C700D444F7 /* PhotoCollectionViewCell.swift */; };
 		74D2235626D667AC00D444F7 /* UserPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235526D667AC00D444F7 /* UserPhoto.swift */; };
-		74D37AB126D2B58500E65F83 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB026D2B58500E65F83 /* FriendsTableViewController.swift */; };
+		74D37AB126D2B58500E65F83 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB026D2B58500E65F83 /* FriendsViewController.swift */; };
 		74D37AB326D2B5F900E65F83 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB226D2B5F900E65F83 /* PhotosCollectionViewController.swift */; };
-		74D37AB526D2B63900E65F83 /* CommunityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB426D2B63900E65F83 /* CommunityTableViewController.swift */; };
-		74D37AB726D2B65200E65F83 /* FindTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB626D2B65200E65F83 /* FindTableViewController.swift */; };
+		74D37AB526D2B63900E65F83 /* MyCommunitysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB426D2B63900E65F83 /* MyCommunitysTableViewController.swift */; };
+		74D37AB726D2B65200E65F83 /* AllCommunitysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB626D2B65200E65F83 /* AllCommunitysTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +42,10 @@
 		74D2235026D63E6C00D444F7 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		74D2235326D666C700D444F7 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		74D2235526D667AC00D444F7 /* UserPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoto.swift; sourceTree = "<group>"; };
-		74D37AB026D2B58500E65F83 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
+		74D37AB026D2B58500E65F83 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		74D37AB226D2B5F900E65F83 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosCollectionViewController.swift; path = VKClient/Controllers/PhotosCollectionViewController.swift; sourceTree = SOURCE_ROOT; };
-		74D37AB426D2B63900E65F83 /* CommunityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewController.swift; sourceTree = "<group>"; };
-		74D37AB626D2B65200E65F83 /* FindTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FindTableViewController.swift; path = VKClient/View/FindTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		74D37AB426D2B63900E65F83 /* MyCommunitysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunitysTableViewController.swift; sourceTree = "<group>"; };
+		74D37AB626D2B65200E65F83 /* AllCommunitysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AllCommunitysTableViewController.swift; path = VKClient/View/AllCommunitysTableViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				7436DCF126C6E52600E7E21C /* LoginViewController.swift */,
-				74D37AB026D2B58500E65F83 /* FriendsTableViewController.swift */,
+				74D37AB026D2B58500E65F83 /* FriendsViewController.swift */,
 				74D37AB226D2B5F900E65F83 /* PhotosCollectionViewController.swift */,
-				74D37AB426D2B63900E65F83 /* CommunityTableViewController.swift */,
-				74D37AB626D2B65200E65F83 /* FindTableViewController.swift */,
+				74D37AB426D2B63900E65F83 /* MyCommunitysTableViewController.swift */,
+				74D37AB626D2B65200E65F83 /* AllCommunitysTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -205,13 +205,13 @@
 			files = (
 				74D2235626D667AC00D444F7 /* UserPhoto.swift in Sources */,
 				7436DCF226C6E52600E7E21C /* LoginViewController.swift in Sources */,
-				74D37AB726D2B65200E65F83 /* FindTableViewController.swift in Sources */,
+				74D37AB726D2B65200E65F83 /* AllCommunitysTableViewController.swift in Sources */,
 				74D2234E26D639D300D444F7 /* CommunityCell.swift in Sources */,
 				7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */,
-				74D37AB126D2B58500E65F83 /* FriendsTableViewController.swift in Sources */,
+				74D37AB126D2B58500E65F83 /* FriendsViewController.swift in Sources */,
 				74D2235126D63E6C00D444F7 /* Community.swift in Sources */,
 				7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */,
-				74D37AB526D2B63900E65F83 /* CommunityTableViewController.swift in Sources */,
+				74D37AB526D2B63900E65F83 /* MyCommunitysTableViewController.swift in Sources */,
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionViewController.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
 				74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */,
