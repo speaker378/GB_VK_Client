@@ -9,8 +9,10 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var likeControl: Like!
     
     func configure(userPhoto: UserPhoto) {
         photoImageView.image = userPhoto.photo
+        likeControl.likes = userPhoto.likes
     }
 }
