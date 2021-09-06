@@ -9,4 +9,6 @@ import UIKit
 
 struct UserPhoto {
     let photo: UIImage?
+    var likes = UInt.random(in: 1...8)
+    var likeState = false
 }
