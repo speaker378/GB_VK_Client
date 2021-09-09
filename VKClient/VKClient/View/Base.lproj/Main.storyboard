@@ -328,6 +328,35 @@
             </objects>
             <point key="canvasLocation" x="1507" y="86"/>
         </scene>
+        <!--Новости-->
+        <scene sceneID="1QZ-dX-C2V">
+            <objects>
+                <tableViewController id="GSl-hZ-Xiw" customClass="NewsTableViewController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="myr-H6-NUA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" id="RQY-gv-tEe">
+                                <rect key="frame" x="0.0" y="49.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQY-gv-tEe" id="z6H-M0-KKd">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="GSl-hZ-Xiw" id="Jkq-SZ-Eg6"/>
+                            <outlet property="delegate" destination="GSl-hZ-Xiw" id="jfV-np-VjH"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Новости" image="newspaper" catalog="system" selectedImage="newspaper.fill" id="u0n-ZJ-6tl"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1JC-N7-154" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="764" y="-587"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PkT-ma-B53">
             <objects>
@@ -342,6 +371,7 @@
                     <connections>
                         <segue destination="Ug4-Zt-QlV" kind="relationship" relationship="viewControllers" id="I9u-mL-aOl"/>
                         <segue destination="Lhv-6B-jOs" kind="relationship" relationship="viewControllers" id="Dcf-lP-pbZ"/>
+                        <segue destination="GSl-hZ-Xiw" kind="relationship" relationship="viewControllers" id="4ot-vc-CWz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6uC-kp-Wgf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -444,6 +474,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="newspaper" catalog="system" width="128" height="108"/>
+        <image name="newspaper.fill" catalog="system" width="128" height="111"/>
         <image name="person.2" catalog="system" width="128" height="81"/>
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.3" catalog="system" width="128" height="62"/>

@@ -7,16 +7,16 @@
 
 import UIKit
 
-struct Friend {
-    let name: String
-    let avatar: UIImage?
+struct Friend: NewsCreator {
     let userID: UInt
+    var name: String
+    var avatar: UIImage
     var networkStatus: Bool
     private static var counter = 0
     
     init(name: String, avatar: UIImage?, networkStatus: Bool) {
         self.name = name
-        self.avatar = avatar
+        self.avatar = avatar ?? UIImage(systemName: "photo.fill")!
         self.networkStatus = networkStatus
         self.userID = UInt(Friend.counter)
         Friend.counter += 1
