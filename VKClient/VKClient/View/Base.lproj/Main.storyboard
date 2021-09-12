@@ -210,24 +210,10 @@
                     <view key="view" contentMode="scaleToFill" id="LK3-DY-FaK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PUN-qZ-CZ8">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="JjK-a3-Kzb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="JjK-a3-Kzb" firstAttribute="trailing" secondItem="PUN-qZ-CZ8" secondAttribute="trailing" id="0Od-LF-3Gz"/>
-                            <constraint firstItem="PUN-qZ-CZ8" firstAttribute="top" secondItem="JjK-a3-Kzb" secondAttribute="top" id="3ic-Td-NRB"/>
-                            <constraint firstItem="JjK-a3-Kzb" firstAttribute="bottom" secondItem="PUN-qZ-CZ8" secondAttribute="bottom" id="Xfn-Y8-euO"/>
-                            <constraint firstItem="PUN-qZ-CZ8" firstAttribute="leading" secondItem="JjK-a3-Kzb" secondAttribute="leading" id="ktP-hl-rXS"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n8y-MY-c2F"/>
-                    <connections>
-                        <outlet property="image" destination="PUN-qZ-CZ8" id="g2h-hM-z4d"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3g-2o-Qg2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
