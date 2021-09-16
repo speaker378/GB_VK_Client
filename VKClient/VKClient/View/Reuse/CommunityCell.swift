@@ -14,11 +14,10 @@ class CommunityCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
     }
     
     func configure(community: Community) {
-        communityImageView.image = community.image
+        communityImageView.image = community.avatar
         communityNameLabel.text = community.name
         communityNameLabel.textColor = UIColor.black
         communityNameLabel.font = UIFont.systemFont(ofSize: 20)
