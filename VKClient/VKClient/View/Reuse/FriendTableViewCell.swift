@@ -14,12 +14,36 @@ class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var networkStatusUILabel: UILabel!
     @IBOutlet weak var networkStatusUIImage: UIImageView!
     
+    @objc func animate(_ sender: UITapGestureRecognizer) {
+        let scale = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        self.transform = scale
+        self.alpha = 0.5
+        
+        UIImageView.animate(withDuration: 0.75,
+                            delay: 0,
+                            usingSpringWithDamping: 0.5,
+                            initialSpringVelocity: 0,
+                            options: [.curveEaseInOut],
+                            animations: {
+                                self.transform = .identity
+                                self.alpha = 1
+                            })
+    }
+    
     func configure(friend: Friend) {
         avatarUIImageView.image = friend.avatar
         avatarUIImageView.layer.borderWidth = 1
         avatarUIImageView.layer.borderColor = UIColor.black.cgColor
         avatarUIImageView.layer.cornerRadius = avatarUIImageView.frame.height / 2
         avatarUIImageView.clipsToBounds = true
+        
+        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.animate(_:)))
+        singleTap.numberOfTapsRequired = 1
+        singleTap.numberOfTouchesRequired = 1
+        self.avatarUIImageView.addGestureRecognizer(singleTap)
+        self.avatarUIImageView.isUserInteractionEnabled = true
+        self.selectionStyle = .none
+
         
         nameUILabel.text = friend.name
         nameUILabel.textColor = UIColor.black

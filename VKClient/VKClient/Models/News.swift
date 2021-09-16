@@ -19,16 +19,8 @@ struct News {
     var numberOfViews: UInt
 }
 
-func getImage() -> UIImage {
-    let url = URL(string: "https://picsum.photos/400")
-    let data = try? Data(contentsOf: url!)
-    let image = UIImage(data: data!)
-    return image ?? UIImage()
-}
-
-
 var newsList = [
-    News(creator: myCommunitysList[1], text: "Simple text for test", images: [getImage()], numberOfViews: UInt.random(in: 0...1000)),
+    News(creator: myCommunitysList[1], text: "Simple text for test", images: [getImage(width: 400)], numberOfViews: UInt.random(in: 0...1000)),
     News(creator: friendsList[2], text: "Any simple text for test", images: [nil], numberOfViews: UInt.random(in: 0...1000)),
-    News(creator: friendsList[4], text: "Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text ", images: [getImage()], numberOfViews: UInt.random(in: 0...1000)),
+    News(creator: friendsList[4], text: "Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text Very long text ", images: [getImage(width: 400)], numberOfViews: UInt.random(in: 0...1000)),
 ]

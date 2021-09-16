@@ -12,11 +12,8 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let url = URL(string: "https://picsum.photos/100")
         for _ in 1...4 {
-            let data = try? Data(contentsOf: url!)
-            let image = UIImage(data: data!)
-            userPhotos.append(UserPhoto(photo: image))
+            userPhotos.append(UserPhoto(photo: getImage(width: 100)))
         }
     }
 
@@ -30,6 +27,17 @@ class PhotosCollectionViewController: UICollectionViewController {
         cell.configure(userPhoto: userPhotos[indexPath.item])
     
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showGallery", sender: indexPath)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let galleryVC = segue.destination as? GalleryViewController else { return }
+        let indexPath = sender as! IndexPath
+        galleryVC.indexImage = indexPath.item
+        galleryVC.photos = userPhotos
     }
 
 }

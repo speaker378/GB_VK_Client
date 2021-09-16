@@ -15,7 +15,9 @@ class Like: UIControl {
         }
     }
     var stateButton = false
-    let button = UIButton(type: .system)
+    
+    let stackView = UIStackView()
+    let image = UIImageView()
     let numberOfLikes  = UILabel()
     
     override init(frame: CGRect) {
@@ -31,35 +33,63 @@ class Like: UIControl {
     private func setupView() {
         self.backgroundColor = .none
         
-        button.tintColor = .white
-        button.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
-        button.frame = self.bounds
-        button.addTarget(self, action: #selector(likePressed(_:)), for: .touchUpInside)
+        stackView.distribution = .fill
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 0
         
-        numberOfLikes.frame.size.height = button.bounds.size.height * CGFloat(0.6)
-        numberOfLikes.frame.size.width = button.bounds.size.width * CGFloat(0.6)
-        numberOfLikes.center.x = button.center.x
-        numberOfLikes.center.y = button.center.y * CGFloat(0.9)
-        numberOfLikes.text = String(likes)
-        numberOfLikes.font = UIFont.boldSystemFont(ofSize: numberOfLikes.frame.size.height)
+        image.tintColor = .white
+        image.image = UIImage(systemName: "suit.heart.fill")
+        
+        numberOfLikes.font = UIFont.boldSystemFont(ofSize: 20)
         numberOfLikes.textColor = .systemRed
-        numberOfLikes.textAlignment = .center
+        numberOfLikes.textAlignment = .left
         
-        self.addSubview(button)
-        self.addSubview(numberOfLikes)
+        self.addSubview(stackView)
+        stackView.addArrangedSubview(numberOfLikes)
+        stackView.addArrangedSubview(image)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.likePressed(_:)))
+        singleTap.numberOfTapsRequired = 1
+        singleTap.numberOfTouchesRequired = 1
+        self.addGestureRecognizer(singleTap)
+        self.isUserInteractionEnabled = true
     }
     
-    @objc private func likePressed(_ sender: UIButton) {
+    @objc private func likePressed(_ sender: UITapGestureRecognizer) {
         if stateButton == false {
-            sender.tintColor = .systemRed
             likes += 1
-            numberOfLikes.textColor = .white
-            stateButton = true
+            UIView.transition(with: image,
+                              duration: 0.59,
+                              options: .transitionFlipFromBottom,
+                              animations: { [unowned self] in
+                                self.image.tintColor = .red
+                              })
+            UIView.transition(with: numberOfLikes,
+                              duration: 0.33,
+                              options: .transitionFlipFromTop,
+                              animations: { [unowned self] in
+                                self.numberOfLikes.textColor = .white
+                              })
+            stateButton.toggle()
         } else {
-            sender.tintColor = .white
             likes -= 1
-            numberOfLikes.textColor = .systemRed
-            stateButton = false
+            UIView.transition(with: numberOfLikes,
+                              duration: 0.59,
+                              options: .transitionFlipFromTop,
+                              animations: { [unowned self] in
+                                self.image.tintColor = .white
+                              })
+            UIView.transition(with: image,
+                              duration: 0.33,
+                              options: .transitionFlipFromBottom,
+                              animations: { [unowned self] in
+                                self.numberOfLikes.textColor = .red
+                              })
+            stateButton.toggle()
         }
     }
     

@@ -12,3 +12,4 @@ struct UserPhoto {
     var likes = UInt.random(in: 1...8)
     var likeState = false
 }
+
