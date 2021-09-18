@@ -13,7 +13,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         for _ in 1...4 {
-            userPhotos.append(UserPhoto(photo: getImage(width: 100)))
+            userPhotos.append(UserPhoto(photo: getImage(width: 800)))
         }
     }
 
@@ -36,7 +36,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let galleryVC = segue.destination as? GalleryViewController else { return }
         let indexPath = sender as! IndexPath
-        galleryVC.indexImage = indexPath.item
+        galleryVC.indexMidImage = indexPath.item
         galleryVC.photos = userPhotos
     }
 
