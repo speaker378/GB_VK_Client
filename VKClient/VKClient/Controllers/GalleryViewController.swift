@@ -18,16 +18,22 @@ class GalleryViewController: UIViewController {
     var swipeToLeft = UIViewPropertyAnimator()
     
     override func loadView() {
-        super.loadView()
+        let view = UIView()
+        view.backgroundColor = .white
+        self.view = view
         let gestPan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
         view.addGestureRecognizer(gestPan)
         setupImageViews()
-        setImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        scaleAnimate()
+        midImageView.image = photos[indexMidImage].photo
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setImages()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
