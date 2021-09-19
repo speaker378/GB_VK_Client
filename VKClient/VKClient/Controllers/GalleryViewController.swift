@@ -158,6 +158,8 @@ class GalleryViewController: UIViewController {
             
         case .changed:
             let translationX = recognizer.translation(in: self.view).x
+            let translationY = recognizer.translation(in: self.view).y
+            if translationY < -100 {self.navigationController?.popViewController(animated: true)}
             if translationX > 0 { swipeToRight.fractionComplete = abs(translationX)/200 }
             else { swipeToLeft.fractionComplete = abs(translationX)/200 }
             
