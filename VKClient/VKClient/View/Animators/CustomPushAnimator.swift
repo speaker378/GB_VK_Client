@@ -30,11 +30,7 @@ class CustomPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             withDuration: duration,
             animations: {
                 destination.view.transform = .identity
-                source.view.layer.opacity = 0.5
             }) { finished in
-            if finished && !transitionContext.transitionWasCancelled {
-                source.view.layer.opacity = 1
-            }
             transitionContext.completeTransition( finished && !transitionContext.transitionWasCancelled)
         }
     }

@@ -10,6 +10,7 @@
 		7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239326F7501100B839B4 /* CustomNavigationController.swift */; };
 		7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */; };
 		7419239926F75E3B00B839B4 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */; };
+		7419239B26F7756B00B839B4 /* CustomInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */; };
 		7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */; };
 		7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCED26C6E52600E7E21C /* AppDelegate.swift */; };
 		7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */; };
@@ -40,6 +41,7 @@
 		7419239326F7501100B839B4 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
+		7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractiveTransition.swift; sourceTree = "<group>"; };
 		7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		7436DCEA26C6E52600E7E21C /* VKClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7436DCED26C6E52600E7E21C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			children = (
 				7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */,
 				7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */,
+				7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */,
 			);
 			path = Animators;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7419239B26F7756B00B839B4 /* CustomInteractiveTransition.swift in Sources */,
 				74D2235626D667AC00D444F7 /* UserPhoto.swift in Sources */,
 				7436DCF226C6E52600E7E21C /* LoginViewController.swift in Sources */,
 				7478BE9C26E60C7F007AA4FF /* LikeControl.swift in Sources */,
