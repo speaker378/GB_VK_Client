@@ -328,7 +328,7 @@
         <!--Друзья-->
         <scene sceneID="GiL-GW-XDN">
             <objects>
-                <navigationController modalPresentationStyle="fullScreen" id="Ug4-Zt-QlV" sceneMemberID="viewController">
+                <navigationController modalPresentationStyle="fullScreen" id="Ug4-Zt-QlV" customClass="CustomNavigationController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Друзья" image="person.2" catalog="system" selectedImage="person.2.fill" id="Kb6-CG-nUa"/>
                     <navigationItem key="navigationItem" id="F0j-8X-6oN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PEv-hZ-jvf">

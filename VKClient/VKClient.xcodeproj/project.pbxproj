@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239326F7501100B839B4 /* CustomNavigationController.swift */; };
+		7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */; };
+		7419239926F75E3B00B839B4 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */; };
 		7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */; };
 		7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCED26C6E52600E7E21C /* AppDelegate.swift */; };
 		7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */; };
@@ -34,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7419239326F7501100B839B4 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
+		7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
 		7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		7436DCEA26C6E52600E7E21C /* VKClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7436DCED26C6E52600E7E21C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7419239526F75E1000B839B4 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */,
+				7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */,
+			);
+			path = Animators;
+			sourceTree = "<group>";
+		};
 		7436DCE126C6E52600E7E21C = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +122,7 @@
 		7436DD0126C6E6F000E7E21C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7419239526F75E1000B839B4 /* Animators */,
 				74D2235226D6646B00D444F7 /* Reuse */,
 				7436DCF826C6E52800E7E21C /* LaunchScreen.storyboard */,
 				7436DCF326C6E52600E7E21C /* Main.storyboard */,
@@ -125,6 +141,7 @@
 				74D37AB426D2B63900E65F83 /* MyCommunitysTableViewController.swift */,
 				74D37AB626D2B65200E65F83 /* AllCommunitysTableViewController.swift */,
 				744DB0D726E9205F00A15590 /* NewsTableViewController.swift */,
+				7419239326F7501100B839B4 /* CustomNavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -228,6 +245,7 @@
 				74D2235626D667AC00D444F7 /* UserPhoto.swift in Sources */,
 				7436DCF226C6E52600E7E21C /* LoginViewController.swift in Sources */,
 				7478BE9C26E60C7F007AA4FF /* LikeControl.swift in Sources */,
+				7419239926F75E3B00B839B4 /* CustomPopAnimator.swift in Sources */,
 				74D37AB726D2B65200E65F83 /* AllCommunitysTableViewController.swift in Sources */,
 				744DB0D526E91DCC00A15590 /* NewsCell.swift in Sources */,
 				74D2234E26D639D300D444F7 /* CommunityCell.swift in Sources */,
@@ -237,10 +255,12 @@
 				7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */,
 				74D37AB526D2B63900E65F83 /* MyCommunitysTableViewController.swift in Sources */,
 				744DB0D826E9205F00A15590 /* NewsTableViewController.swift in Sources */,
+				7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */,
 				749188D126EC95A700D0969B /* Network.swift in Sources */,
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionViewController.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
 				74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */,
+				7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */,
 				749188CF26EC902800D0969B /* GalleryViewController.swift in Sources */,
 				744DB0DA26E9231D00A15590 /* News.swift in Sources */,
 				74D2234B26D54C9700D444F7 /* Friend.swift in Sources */,
