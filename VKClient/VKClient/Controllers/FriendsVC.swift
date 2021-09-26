@@ -14,11 +14,8 @@ class FriendsVC: UIViewController {
     private var myFriends = friendsList
     private var friendsFirstLetters: [String] = []
     private var friendsDict = [String: [Friend]]()
-    
-    var loader: Loader?
+    private var loader: Loader?
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFriendsData()
@@ -77,6 +74,11 @@ extension FriendsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = UIColor(red: 0.1, green: 0.1, blue: 0.5, alpha: 0.3)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let mycell = cell as? FriendTableViewCell else { return }
+        mycell.animate(UITapGestureRecognizer())
     }
     
     
