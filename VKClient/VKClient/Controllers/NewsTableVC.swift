@@ -1,5 +1,5 @@
 //
-//  NewsTableViewController.swift
+//  NewsTableVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 08.09.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsTableViewController: UITableViewController {
+class NewsTableVC: UITableViewController {
     
     private var myNews = newsList
 

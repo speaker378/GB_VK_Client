@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  LoginVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 13.08.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginVC: UIViewController {
     let patternUsername = #"^[A-z\d.-]{3,19}$"#
     /*
      ^ - учет с начала строки

@@ -1,5 +1,5 @@
 //
-//  GalleryViewController.swift
+//  GalleryVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 11.09.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GalleryViewController: UIViewController {
+class GalleryVC: UIViewController {
     
     var photos = [UserPhoto]()
     var indexMidImage: Int = 0

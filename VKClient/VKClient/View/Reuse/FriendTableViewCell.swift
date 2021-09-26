@@ -14,6 +14,20 @@ class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var networkStatusUILabel: UILabel!
     @IBOutlet weak var networkStatusUIImage: UIImageView!
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupViews()
+    }
+    
     @objc func animate(_ sender: UITapGestureRecognizer) {
         let scale = CGAffineTransform(scaleX: 0.5, y: 0.5)
         self.transform = scale
@@ -30,25 +44,15 @@ class FriendTableViewCell: UITableViewCell {
                             })
     }
     
-    func configure(friend: Friend) {
-        avatarUIImageView.image = friend.avatar
+    private func setupViews() {
         avatarUIImageView.layer.borderWidth = 1
         avatarUIImageView.layer.borderColor = UIColor.black.cgColor
         avatarUIImageView.layer.cornerRadius = avatarUIImageView.frame.height / 2
         avatarUIImageView.clipsToBounds = true
         
-        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.animate(_:)))
-        singleTap.numberOfTapsRequired = 1
-        singleTap.numberOfTouchesRequired = 1
-        self.avatarUIImageView.addGestureRecognizer(singleTap)
-        self.avatarUIImageView.isUserInteractionEnabled = true
-        self.selectionStyle = .none
-
-        
-        nameUILabel.text = friend.name
         nameUILabel.textColor = UIColor.black
         nameUILabel.font = UIFont.systemFont(ofSize: 22)
-
+        
         containerForImageUIView.layer.shadowOpacity = 0.6
         containerForImageUIView.layer.cornerRadius = containerForImageUIView.frame.height / 2
         containerForImageUIView.clipsToBounds = true
@@ -59,14 +63,26 @@ class FriendTableViewCell: UITableViewCell {
         networkStatusUILabel.font = UIFont.systemFont(ofSize: 10)
         networkStatusUILabel.textColor = UIColor.black
         
-        if friend.networkStatus {
-            networkStatusUILabel.text = "Online"
-            networkStatusUIImage.tintColor = UIColor.green
-        } else {
+        let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.animate(_:)))
+        singleTap.numberOfTapsRequired = 1
+        singleTap.numberOfTouchesRequired = 1
+        self.avatarUIImageView.addGestureRecognizer(singleTap)
+        self.avatarUIImageView.isUserInteractionEnabled = true
+        self.selectionStyle = .none
+    }
+    
+    func configure(friend: Friend) {
+        avatarUIImageView.image = friend.avatar
+        nameUILabel.text = friend.name
+        
+        switch friend.networkStatus {
+        case false:
             networkStatusUILabel.text = "Offline"
             networkStatusUIImage.tintColor = UIColor.gray
+        case true:
+            networkStatusUILabel.text = "Online"
+            networkStatusUIImage.tintColor = UIColor.green
         }
-        
     }
 
 }

@@ -16,14 +16,31 @@ class CommunityCell: UITableViewCell {
         super.prepareForReuse()
     }
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupViews()
+    }
+    
+    private func setupViews() {
+        communityNameLabel.textColor = UIColor.black
+        communityNameLabel.font = UIFont.systemFont(ofSize: 20)
+        membersLabel.textColor = UIColor.gray
+        membersLabel.font = UIFont.systemFont(ofSize: 17)
+    }
+    
     func configure(community: Community) {
         communityImageView.image = community.avatar
         communityNameLabel.text = community.name
-        communityNameLabel.textColor = UIColor.black
-        communityNameLabel.font = UIFont.systemFont(ofSize: 20)
         membersLabel.text = String(community.members) + " участников"
-        membersLabel.textColor = UIColor.gray
-        membersLabel.font = UIFont.systemFont(ofSize: 17)
     }
     
 }
