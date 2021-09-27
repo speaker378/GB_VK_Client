@@ -28,9 +28,20 @@ class NewsCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    func configure(news: News) {
-        
-        creatorAvatar.image = news.creator.avatar
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupViews()
+    }
+    
+    private func setupViews() {
         creatorAvatar.layer.borderWidth = 1
         creatorAvatar.layer.borderColor = UIColor.black.cgColor
         creatorAvatar.layer.cornerRadius = creatorAvatar.frame.height / 2
@@ -41,15 +52,17 @@ class NewsCell: UITableViewCell {
         creatorAvatarContainer.clipsToBounds = true
         creatorAvatarContainer.layer.masksToBounds = false
         
-        creatorName.text = news.creator.name
         creatorName.textColor = UIColor.black
         creatorName.font = UIFont.systemFont(ofSize: 22)
         
-        
-        textNews.text = news.text
         textNews.textColor = UIColor.black
         textNews.font = UIFont.systemFont(ofSize: 22)
-        
+    }
+    
+    func configure(news: News) {
+        creatorAvatar.image = news.creator.avatar
+        creatorName.text = news.creator.name
+        textNews.text = news.text
         imageNews.image = news.images[0]
     }
     

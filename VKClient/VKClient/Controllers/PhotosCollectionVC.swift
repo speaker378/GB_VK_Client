@@ -1,5 +1,5 @@
 //
-//  PhotosCollectionViewController.swift
+//  PhotosCollectionVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 22.08.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotosCollectionViewController: UICollectionViewController {
+class PhotosCollectionVC: UICollectionViewController {
     var userPhotos: [UserPhoto] = []
 
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let galleryVC = segue.destination as? GalleryViewController else { return }
+        guard let galleryVC = segue.destination as? GalleryVC else { return }
         let indexPath = sender as! IndexPath
         galleryVC.indexMidImage = indexPath.item
         galleryVC.photos = userPhotos

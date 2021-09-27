@@ -1,5 +1,5 @@
 //
-//  FindTableViewController.swift
+//  AllCommunitysTableVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 22.08.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AllCommunitysTableViewController: UITableViewController {
+class AllCommunitysTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -58,7 +58,7 @@ class AllCommunitysTableViewController: UITableViewController {
     }
 }
 
-extension AllCommunitysTableViewController: UISearchBarDelegate {
+extension AllCommunitysTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterCommunitys(with: searchText)
     }
