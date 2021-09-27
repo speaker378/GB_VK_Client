@@ -55,6 +55,27 @@ extension FriendsVC: UITableViewDelegate {
         88
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerView = view as? UITableViewHeaderFooterView else { return }
+        headerView.layer.backgroundColor = UIColor(red: 0.837, green: 0.837, blue: 0.837, alpha: 0.3).cgColor
+        headerView.textLabel?.textColor = .black
+        headerView.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        CGFloat(0.01)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        30
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let mycell = cell as? FriendTableViewCell else { return }
+        mycell.animate(UITapGestureRecognizer())
+    }
+    
+    
 }
 
 
@@ -71,16 +92,6 @@ extension FriendsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return friendsFirstLetters[section]
     }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor(red: 0.1, green: 0.1, blue: 0.5, alpha: 0.3)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let mycell = cell as? FriendTableViewCell else { return }
-        mycell.animate(UITapGestureRecognizer())
-    }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = friendsFirstLetters[section]
