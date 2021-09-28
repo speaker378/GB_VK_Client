@@ -19,7 +19,7 @@ class GalleryVC: UIViewController {
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         self.view = view
         let gestPan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
         view.addGestureRecognizer(gestPan)

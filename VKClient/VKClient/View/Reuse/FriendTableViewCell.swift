@@ -50,7 +50,6 @@ class FriendTableViewCell: UITableViewCell {
         avatarUIImageView.layer.cornerRadius = avatarUIImageView.frame.height / 2
         avatarUIImageView.clipsToBounds = true
         
-        nameUILabel.textColor = UIColor.black
         nameUILabel.font = UIFont.systemFont(ofSize: 22)
         
         containerForImageUIView.layer.shadowOpacity = 0.6
@@ -61,8 +60,7 @@ class FriendTableViewCell: UITableViewCell {
         networkStatusUIImage.image = UIImage(systemName: "circle.fill")
         
         networkStatusUILabel.font = UIFont.systemFont(ofSize: 10)
-        networkStatusUILabel.textColor = UIColor.black
-        
+
         let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.animate(_:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.numberOfTouchesRequired = 1
@@ -78,10 +76,10 @@ class FriendTableViewCell: UITableViewCell {
         switch friend.networkStatus {
         case false:
             networkStatusUILabel.text = "Offline"
-            networkStatusUIImage.tintColor = UIColor.gray
+            networkStatusUIImage.tintColor = .systemGray
         case true:
             networkStatusUILabel.text = "Online"
-            networkStatusUIImage.tintColor = UIColor.green
+            networkStatusUIImage.tintColor = .systemGreen
         }
     }
 

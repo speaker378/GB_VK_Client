@@ -63,6 +63,8 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        signInButton.layer.cornerRadius = 6
+        signInButton.clipsToBounds = true
         loginTextField.attributedPlaceholder = NSAttributedString(
             string: "Имя пользователя",
             attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])

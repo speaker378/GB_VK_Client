@@ -52,10 +52,8 @@ class NewsCell: UITableViewCell {
         creatorAvatarContainer.clipsToBounds = true
         creatorAvatarContainer.layer.masksToBounds = false
         
-        creatorName.textColor = UIColor.black
         creatorName.font = UIFont.systemFont(ofSize: 22)
         
-        textNews.textColor = UIColor.black
         textNews.font = UIFont.systemFont(ofSize: 22)
     }
     

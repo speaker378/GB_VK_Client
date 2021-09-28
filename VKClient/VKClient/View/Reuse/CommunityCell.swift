@@ -31,9 +31,8 @@ class CommunityCell: UITableViewCell {
     }
     
     private func setupViews() {
-        communityNameLabel.textColor = UIColor.black
         communityNameLabel.font = UIFont.systemFont(ofSize: 20)
-        membersLabel.textColor = UIColor.gray
+        membersLabel.textColor = .systemGray
         membersLabel.font = UIFont.systemFont(ofSize: 17)
     }
     

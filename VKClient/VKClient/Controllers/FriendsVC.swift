@@ -57,8 +57,6 @@ extension FriendsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
-        headerView.layer.backgroundColor = UIColor(red: 0.837, green: 0.837, blue: 0.837, alpha: 0.3).cgColor
-        headerView.textLabel?.textColor = .black
         headerView.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
