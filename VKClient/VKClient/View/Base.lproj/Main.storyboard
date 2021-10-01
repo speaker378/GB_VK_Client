@@ -43,7 +43,7 @@
                                             <constraint firstAttribute="height" constant="50" id="la4-zr-OKC"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="AHk-N6-bxE" userLabel="Stack Text Fields">
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="AHk-N6-bxE" userLabel="Stack Text Fields">
                                         <rect key="frame" x="70.5" y="250" width="273" height="96"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя пользователя" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kOD-4E-dXB" userLabel="Username Input">
@@ -69,7 +69,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="q2N-i3-1Mh" userLabel="Stack Buttons">
-                                        <rect key="frame" x="70.5" y="376" width="273" height="76"/>
+                                        <rect key="frame" x="70.5" y="376" width="273" height="42"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EwO-9w-E9U">
                                                 <rect key="frame" x="0.0" y="0.0" width="273" height="42"/>
@@ -82,8 +82,8 @@
                                                     <action selector="signInButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fdj-IV-46l"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1oT-tZ-9pA">
-                                                <rect key="frame" x="0.0" y="44" width="273" height="32"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1oT-tZ-9pA">
+                                                <rect key="frame" x="0.0" y="0.0" width="273" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <state key="normal" title="Регистрация">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -128,12 +128,12 @@
                         <outlet property="scrollView" destination="DQ9-1S-w9p" id="yVX-S1-VNy"/>
                         <outlet property="signInButton" destination="EwO-9w-E9U" id="HH5-ko-37D"/>
                         <outlet property="signUpButton" destination="1oT-tZ-9pA" id="1U2-8r-cb7"/>
-                        <segue destination="Vha-LM-tmI" kind="show" identifier="loginSegue" id="lHV-hE-77j"/>
+                        <segue destination="cN8-jP-kR6" kind="show" identifier="authorizationSegue" id="3tU-Ry-ewh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16.800000000000001" y="86.806596701649184"/>
+            <point key="canvasLocation" x="-726" y="86"/>
         </scene>
         <!--Фото-->
         <scene sceneID="1dT-s8-cqa">
@@ -349,6 +349,42 @@
             </objects>
             <point key="canvasLocation" x="1507" y="86"/>
         </scene>
+        <!--AuthorizationVC-->
+        <scene sceneID="UJx-ME-kJG">
+            <objects>
+                <viewController storyboardIdentifier="Authorization" modalPresentationStyle="fullScreen" id="cN8-jP-kR6" customClass="AuthorizationVC" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LWd-b8-CIe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xep-GR-7c3">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mSH-kx-her"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xep-GR-7c3" firstAttribute="trailing" secondItem="mSH-kx-her" secondAttribute="trailing" id="3s6-t8-Bug"/>
+                            <constraint firstItem="xep-GR-7c3" firstAttribute="leading" secondItem="mSH-kx-her" secondAttribute="leading" id="Aan-Kf-wK7"/>
+                            <constraint firstItem="xep-GR-7c3" firstAttribute="bottom" secondItem="mSH-kx-her" secondAttribute="bottom" id="Pah-2y-Tq2"/>
+                            <constraint firstItem="xep-GR-7c3" firstAttribute="top" secondItem="mSH-kx-her" secondAttribute="top" id="fLd-4B-Pxc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ILk-RQ-Pi2"/>
+                    <connections>
+                        <outlet property="webview" destination="xep-GR-7c3" id="a6l-AR-0cj"/>
+                        <segue destination="Vha-LM-tmI" kind="show" identifier="loginSegue" id="f3S-O8-cfO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Yi-7B-ThY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="33" y="86"/>
+        </scene>
         <!--Новости-->
         <scene sceneID="1QZ-dX-C2V">
             <objects>
@@ -390,9 +426,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="GSl-hZ-Xiw" kind="relationship" relationship="viewControllers" id="4ot-vc-CWz"/>
                         <segue destination="Ug4-Zt-QlV" kind="relationship" relationship="viewControllers" id="I9u-mL-aOl"/>
                         <segue destination="Lhv-6B-jOs" kind="relationship" relationship="viewControllers" id="Dcf-lP-pbZ"/>
-                        <segue destination="GSl-hZ-Xiw" kind="relationship" relationship="viewControllers" id="4ot-vc-CWz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6uC-kp-Wgf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

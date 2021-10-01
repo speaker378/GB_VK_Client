@@ -36,7 +36,7 @@ class LoginVC: UIViewController {
     
     @IBAction func signInButtonPressed(_ sender: Any) {
         if isValid() {
-            performSegue(withIdentifier: "loginSegue", sender: nil)
+            performSegue(withIdentifier: "authorizationSegue", sender: nil)
         } else {
             showAlert()
         }

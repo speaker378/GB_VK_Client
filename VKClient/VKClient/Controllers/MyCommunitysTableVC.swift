@@ -8,9 +8,11 @@
 import UIKit
 
 class MyCommunitysTableVC: UITableViewController {
+    var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkService.getCommunitys(userId: "677504579")
         tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
     }
     
