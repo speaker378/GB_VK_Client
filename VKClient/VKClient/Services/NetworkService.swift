@@ -30,8 +30,9 @@ final class NetworkService {
                   let data = responseData
             else { return }
             let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+            guard let json = json else { return }
             DispatchQueue.main.async {
-                print(json!)}
+                print(json)}
         }.resume()
     }
     
