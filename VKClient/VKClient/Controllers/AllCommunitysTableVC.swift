@@ -11,10 +11,13 @@ class AllCommunitysTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var networkService = NetworkService()
+    
     private var visibleCommunitys = [Community]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkService.getCommunitysSearch(text: "Swift")
         tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
     }
     

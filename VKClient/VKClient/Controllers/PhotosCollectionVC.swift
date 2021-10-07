@@ -9,9 +9,11 @@ import UIKit
 
 class PhotosCollectionVC: UICollectionViewController {
     var userPhotos: [UserPhoto] = []
+    var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkService.getAllPhotos(userId: "677504579")
         for _ in 1...4 {
             userPhotos.append(UserPhoto(photo: getImage(width: 800)))
         }

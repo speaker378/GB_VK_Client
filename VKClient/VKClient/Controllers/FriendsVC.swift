@@ -15,9 +15,11 @@ class FriendsVC: UIViewController {
     private var friendsFirstLetters: [String] = []
     private var friendsDict = [String: [Friend]]()
     private var loader: Loader?
+    var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkService.getFriends()
         setupFriendsData()
         loader = Loader(rootView: view)
     }
