@@ -22,7 +22,7 @@ final class NetworkService {
                               URLQueryItem(name: "v", value: versionAPI)]
     }
     
-    private func getData(_ request: URLRequest) {
+    func getData(_ request: URLRequest) {
         session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
