@@ -14,3 +14,12 @@ func getImage(width: Int, height: Int? = nil) -> UIImage {
     let image = UIImage(data: data!)
     return image ?? UIImage()
 }
+
+
+func getImage(at url: String) -> UIImage {
+    guard let url = URL(string: url),
+          let data = try? Data(contentsOf: url),
+          let image = UIImage(data: data)
+    else { return UIImage() }
+    return image
+}

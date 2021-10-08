@@ -22,20 +22,6 @@ final class NetworkService {
                               URLQueryItem(name: "v", value: versionAPI)]
     }
     
-    func getData(_ request: URLRequest) {
-        session.dataTask(with: request) { responseData, urlResponse, error in
-            guard let response = urlResponse as? HTTPURLResponse,
-                  (200...299).contains(response.statusCode),
-                  error == nil,
-                  let data = responseData
-            else { return }
-            let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-            guard let json = json else { return }
-            DispatchQueue.main.async {
-                print(json)}
-        }.resume()
-    }
-    
     func getAuthorizeRequest() -> URLRequest {
         var urlConstructor = urlConstructor
         urlConstructor.host = "oauth.vk.com"
@@ -52,14 +38,46 @@ final class NetworkService {
         return request
     }
     
-    func getFriends() {
+    func getFriends(complition: @escaping ([Friend]) -> Void) {
         var constructor = urlConstructor
         constructor.path = "/method/friends.get"
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "fields", value: "photo_100,online"),
         ]
-        let request = URLRequest(url: constructor.url!)
-        getData(request)
+        guard let url = constructor.url else { return complition([]) }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { responseData, urlResponse, error in
+            guard let response = urlResponse as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  error == nil,
+                  let data = responseData
+            else { return complition([]) }
+            
+            do {
+                let friends = try JSONDecoder().decode(VKResponse<Friend>.self, from: data).response.items
+                DispatchQueue.main.async {
+                    complition(friends)
+                }
+            } catch  {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    func getData(_ request: URLRequest) {
+        session.dataTask(with: request) { responseData, urlResponse, error in
+            guard let response = urlResponse as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  error == nil,
+                  let data = responseData
+            else { return }
+            let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+            guard let json = json else { return }
+            DispatchQueue.main.async {
+                print(json)}
+        }.resume()
     }
     
     func getAllPhotos(userId: String) {

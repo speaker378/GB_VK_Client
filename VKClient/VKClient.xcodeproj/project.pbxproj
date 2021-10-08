@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7404249E270093E8001372DE /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7404249D270093E8001372DE /* Loader.swift */; };
+		740CAE58271090EA00BFEE3C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740CAE57271090EA00BFEE3C /* Response.swift */; };
 		7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239326F7501100B839B4 /* CustomNavigationController.swift */; };
 		7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */; };
 		7419239926F75E3B00B839B4 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		7404249D270093E8001372DE /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		740CAE57271090EA00BFEE3C /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7419239326F7501100B839B4 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		7419239626F75E2D00B839B4 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				74D2235526D667AC00D444F7 /* UserPhoto.swift */,
 				744DB0D926E9231D00A15590 /* News.swift */,
 				74397D5D2705981B001B50CB /* Session.swift */,
+				740CAE57271090EA00BFEE3C /* Response.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				7404249E270093E8001372DE /* Loader.swift in Sources */,
 				7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */,
 				749188D126EC95A700D0969B /* Network.swift in Sources */,
+				740CAE58271090EA00BFEE3C /* Response.swift in Sources */,
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionVC.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
 				74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */,

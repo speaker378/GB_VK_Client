@@ -11,16 +11,17 @@ class FriendsVC: UIViewController {
     
     @IBOutlet weak var friendsTableView: UITableView!
     
-    private var myFriends = friendsList
-    private var friendsFirstLetters: [String] = []
+    private var myFriends = [Friend]() { didSet{
+        self.setupFriendsData()
+        self.friendsTableView.reloadData() } }
+    private var friendsFirstLetters = [String]()
     private var friendsDict = [String: [Friend]]()
     private var loader: Loader?
     var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkService.getFriends()
-        setupFriendsData()
+        fetchFriends()
         loader = Loader(rootView: view)
     }
         
@@ -29,13 +30,20 @@ class FriendsVC: UIViewController {
         guard let indexPath = friendsTableView.indexPathForSelectedRow else { return }
         let friends = friendsDict[friendsFirstLetters[indexPath.section]]
         guard let friend = friends?[indexPath.row] else { return }
-        let photo = friend.avatar
+        let photo = getImage(at: friend.avatarURL)
         photosVC.userPhotos.append(UserPhoto(photo: photo))
+    }
+    
+    private func fetchFriends() {
+        networkService.getFriends { [weak self] myFriends in
+            guard let self = self else { return }
+            self.myFriends = myFriends
+        }
     }
     
     private func setupFriendsData() {
         for friend in myFriends {
-            let firstChar = String(friend.name.first!).capitalized
+            let firstChar = String(friend.firstName.first!).capitalized
             if friendsDict[firstChar] == nil {
                 friendsDict[firstChar] = [friend]
                 friendsFirstLetters.append(firstChar)
@@ -43,6 +51,7 @@ class FriendsVC: UIViewController {
                 friendsDict[firstChar]!.append(friend)
             }
         }
+        friendsFirstLetters = friendsFirstLetters.sorted()
     }
 }
 
