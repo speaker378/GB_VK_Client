@@ -9,7 +9,7 @@ import UIKit
 
 class GalleryVC: UIViewController {
     
-    var photos = [UserPhoto]()
+    var photos = [UIImage]()
     var indexMidImage: Int = 0
     var leftImageView = UIImageView()
     var midImageView = UIImageView()
@@ -28,7 +28,7 @@ class GalleryVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        midImageView.image = photos[indexMidImage].photo
+        midImageView.image = photos[indexMidImage]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,9 +42,9 @@ class GalleryVC: UIViewController {
     }
     
     func setupImageViews() {
-        leftImageView.contentMode = .scaleAspectFill
-        midImageView.contentMode = .scaleAspectFill
-        rightImageView.contentMode = .scaleAspectFill
+        leftImageView.contentMode = .scaleAspectFit
+        midImageView.contentMode = .scaleAspectFit
+        rightImageView.contentMode = .scaleAspectFit
         
         view.addSubview(leftImageView)
         view.addSubview(midImageView)
@@ -81,9 +81,9 @@ class GalleryVC: UIViewController {
         var indexPhotoRight = indexMidImage + 1
         if indexPhotoRight > photos.count - 1 { indexPhotoRight = 0 }
         
-        leftImageView.image = photos[indexPhotoLeft].photo
-        midImageView.image = photos[indexMidImage].photo
-        rightImageView.image = photos[indexPhotoRight].photo
+        leftImageView.image = photos[indexPhotoLeft]
+        midImageView.image = photos[indexMidImage]
+        rightImageView.image = photos[indexPhotoRight]
     }
     
     func scaleAnimate(){

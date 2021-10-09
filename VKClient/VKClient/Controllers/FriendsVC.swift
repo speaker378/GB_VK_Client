@@ -30,8 +30,8 @@ class FriendsVC: UIViewController {
         guard let indexPath = friendsTableView.indexPathForSelectedRow else { return }
         let friends = friendsDict[friendsFirstLetters[indexPath.section]]
         guard let friend = friends?[indexPath.row] else { return }
-        let photo = getImage(at: friend.avatarURL)
-        photosVC.userPhotos.append(UserPhoto(photo: photo))
+        let userID = friend.userID
+        photosVC.userID = userID
     }
     
     private func fetchFriends() {

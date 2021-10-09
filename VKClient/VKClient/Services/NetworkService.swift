@@ -66,6 +66,34 @@ final class NetworkService {
         task.resume()
     }
     
+    func getAllPhotos(userId: Int, complition: @escaping ([UserPhoto]) -> Void) {
+        var constructor = urlConstructor
+        constructor.path = "/method/photos.getAll"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "owner_id", value: String(userId)),
+        ]
+        guard let url = constructor.url else { return complition([]) }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { responseData, urlResponse, error in
+            guard let response = urlResponse as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  error == nil,
+                  let data = responseData
+            else { return complition([]) }
+            
+            do {
+                let photos = try JSONDecoder().decode(VKResponse<UserPhoto>.self, from: data).response.items
+                DispatchQueue.main.async {
+                    complition(photos)
+                }
+            } catch  {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
     func getData(_ request: URLRequest) {
         session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
@@ -78,16 +106,6 @@ final class NetworkService {
             DispatchQueue.main.async {
                 print(json)}
         }.resume()
-    }
-    
-    func getAllPhotos(userId: String) {
-        var constructor = urlConstructor
-        constructor.path = "/method/photos.getAll"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "owner_id", value: userId),
-        ]
-        let request = URLRequest(url: constructor.url!)
-        getData(request)
     }
     
     func getCommunitys(userId: String) {

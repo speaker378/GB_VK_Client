@@ -8,14 +8,28 @@
 import UIKit
 
 class PhotosCollectionVC: UICollectionViewController {
-    var userPhotos: [UserPhoto] = []
+    var userID = 0
+    var userPhotos = [UserPhoto]() { didSet{ getPhotos() } }
+    var photos = [UIImage]() { didSet{ collectionView.reloadData() } }
     var networkService = NetworkService()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkService.getAllPhotos(userId: "677504579")
-        for _ in 1...4 {
-            userPhotos.append(UserPhoto(photo: getImage(width: 800)))
+        fetchUserPhotos()
+    }
+    
+    private func getPhotos() {
+        for userPhoto in userPhotos {
+            guard let imageURL = userPhoto.sizes.last?.url else{ return }
+            let image = getImage(at: imageURL)
+            photos.append(image)
+        }
+    }
+    
+    private func fetchUserPhotos() {
+        networkService.getAllPhotos(userId: userID) { [weak self] userPhotos in
+            guard let self = self else { return }
+            self.userPhotos = userPhotos
         }
     }
 
@@ -26,7 +40,7 @@ class PhotosCollectionVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCollectionViewCell  else { return UICollectionViewCell() }
         
-        cell.configure(userPhoto: userPhotos[indexPath.item])
+        cell.configure(userPhoto: photos[indexPath.item])
     
         return cell
     }
@@ -39,7 +53,7 @@ class PhotosCollectionVC: UICollectionViewController {
         guard let galleryVC = segue.destination as? GalleryVC else { return }
         let indexPath = sender as! IndexPath
         galleryVC.indexMidImage = indexPath.item
-        galleryVC.photos = userPhotos
+        galleryVC.photos = photos
     }
 
 }
