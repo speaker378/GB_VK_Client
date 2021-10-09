@@ -7,6 +7,14 @@
 
 import UIKit
 
+func getImage(at url: String) -> UIImage {
+    guard let url = URL(string: url),
+          let data = try? Data(contentsOf: url),
+          let image = UIImage(data: data)
+    else { return UIImage() }
+    return image
+}
+
 final class NetworkService {
         
     private let clientId = "7963810"
@@ -94,40 +102,88 @@ final class NetworkService {
         task.resume()
     }
     
-    func getData(_ request: URLRequest) {
-        session.dataTask(with: request) { responseData, urlResponse, error in
+    func getCommunitys(userId: Int, complition: @escaping ([Community]) -> Void) {
+        var constructor = urlConstructor
+        constructor.path = "/method/groups.get"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "user_id", value: String(userId)),
+            URLQueryItem(name: "extended", value: "1"),
+        ]
+        guard let url = constructor.url else { return complition([]) }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return }
-            let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-            guard let json = json else { return }
-            DispatchQueue.main.async {
-                print(json)}
-        }.resume()
+            else { return complition([]) }
+            
+            do {
+                let communitys = try JSONDecoder().decode(VKResponse<Community>.self, from: data).response.items
+                DispatchQueue.main.async {
+                    complition(communitys)
+                }
+            } catch  {
+                print(error)
+            }
+        }
+        task.resume()
     }
     
-    func getCommunitys(userId: String) {
-        var constructor = urlConstructor
-        constructor.path = "/method/groups.get"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "user_id", value: userId),
-            URLQueryItem(name: "extended", value: "1"),
-            URLQueryItem(name: "fields", value: "description"),
-        ]
-        let request = URLRequest(url: constructor.url!)
-        getData(request)
-    }
-    
-    func getCommunitysSearch(text: String) {
+    func getCommunitysSearch(text: String, complition: @escaping ([Community]) -> Void) {
         var constructor = urlConstructor
         constructor.path = "/method/groups.search"
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "q", value: text),
+            URLQueryItem(name: "count", value: "50"),
         ]
-        let request = URLRequest(url: constructor.url!)
-        getData(request)
+        guard let url = constructor.url else { return complition([]) }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { responseData, urlResponse, error in
+            guard let response = urlResponse as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  error == nil,
+                  let data = responseData
+            else { return complition([]) }
+            
+            do {
+                let communitys = try JSONDecoder().decode(VKResponse<Community>.self, from: data).response.items
+                DispatchQueue.main.async {
+                    complition(communitys)
+                }
+            } catch  {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    func joinCommunitys(groupID: Int) {
+        var constructor = urlConstructor
+        constructor.path = "/method/groups.join"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "group_id", value: String(groupID)),
+        ]
+        guard let url = constructor.url else { return }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request)
+        task.resume()
+    }
+    
+    func leaveCommunitys(groupID: Int) {
+        var constructor = urlConstructor
+        constructor.path = "/method/groups.leave"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "group_id", value: String(groupID)),
+        ]
+        guard let url = constructor.url else { return }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request)
+        task.resume()
     }
     
 }

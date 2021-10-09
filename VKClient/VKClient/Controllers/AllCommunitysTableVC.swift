@@ -11,30 +11,35 @@ class AllCommunitysTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    private var allCommunitys = [Community]()
     var networkService = NetworkService()
-    
-    private var visibleCommunitys = [Community]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkService.getCommunitysSearch(text: "Swift")
         tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
+    }
+    
+    private func fetchCommunitys(text: String) {
+        networkService.getCommunitysSearch(text: text) { [weak self] allCommunitys in
+            guard let self = self else { return }
+            self.allCommunitys = allCommunitys
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        visibleCommunitys = allCommunitysList
         tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return visibleCommunitys.count
+        return allCommunitys.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "communityCell", for: indexPath) as? CommunityCell  else { return UITableViewCell() }
         
-        cell.configure(community: visibleCommunitys[indexPath.row])
+        cell.configure(community: allCommunitys[indexPath.row])
 
         return cell
     }
@@ -45,11 +50,9 @@ class AllCommunitysTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let joinAction = UIContextualAction(style: .destructive, title: "Вступить") { _, _, complete in
-            var removeItem = self.visibleCommunitys.remove(at: indexPath.row)
-            allCommunitysList.remove(at: allCommunitysList.firstIndex(of: removeItem)!)
+            let group = self.allCommunitys.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            removeItem.members += 1
-            myCommunitysList.append(removeItem)
+            self.networkService.joinCommunitys(groupID: group.id)
             complete(true)
         }
         
@@ -63,15 +66,7 @@ class AllCommunitysTableVC: UITableViewController {
 
 extension AllCommunitysTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterCommunitys(with: searchText)
-    }
-    
-    private func filterCommunitys(with text: String) {
-        guard !text.isEmpty else {
-            visibleCommunitys = allCommunitysList
-            tableView.reloadData()
-            return }
-        visibleCommunitys = allCommunitysList.filter { $0.name.lowercased().contains(text.lowercased()) }
-        tableView.reloadData()
+        guard !searchText.isEmpty else { return }
+        fetchCommunitys(text: searchText)
     }
 }

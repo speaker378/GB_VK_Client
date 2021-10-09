@@ -10,7 +10,6 @@ import UIKit
 class CommunityCell: UITableViewCell {
     @IBOutlet weak var communityImageView: UIImageView!
     @IBOutlet weak var communityNameLabel: UILabel!
-    @IBOutlet weak var membersLabel: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -32,14 +31,11 @@ class CommunityCell: UITableViewCell {
     
     private func setupViews() {
         communityNameLabel.font = UIFont.systemFont(ofSize: 20)
-        membersLabel.textColor = .systemGray
-        membersLabel.font = UIFont.systemFont(ofSize: 17)
     }
     
     func configure(community: Community) {
-        communityImageView.image = community.avatar
+        communityImageView.image = getImage(at: community.avatar)
         communityNameLabel.text = community.name
-        membersLabel.text = String(community.members) + " участников"
     }
     
 }
