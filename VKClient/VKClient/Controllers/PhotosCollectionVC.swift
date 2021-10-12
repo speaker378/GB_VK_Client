@@ -9,21 +9,12 @@ import UIKit
 
 class PhotosCollectionVC: UICollectionViewController {
     var userID = 0
-    var userPhotos = [UserPhoto]() { didSet{ getPhotos() } }
-    var photos = [UIImage]() { didSet{ collectionView.reloadData() } }
+    var userPhotos = [UserPhoto]() { didSet{ collectionView.reloadData() } }
     var networkService = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserPhotos()
-    }
-    
-    private func getPhotos() {
-        for userPhoto in userPhotos {
-            guard let imageURL = userPhoto.sizes.last?.url else{ return }
-            let image = getImage(at: imageURL)
-            photos.append(image)
-        }
     }
     
     private func fetchUserPhotos() {
@@ -40,7 +31,7 @@ class PhotosCollectionVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCollectionViewCell  else { return UICollectionViewCell() }
         
-        cell.configure(userPhoto: userPhotos[indexPath.item], image: photos[indexPath.item])
+        cell.configure(userPhoto: userPhotos[indexPath.item])
     
         return cell
     }
@@ -53,7 +44,7 @@ class PhotosCollectionVC: UICollectionViewController {
         guard let galleryVC = segue.destination as? GalleryVC else { return }
         let indexPath = sender as! IndexPath
         galleryVC.indexMidImage = indexPath.item
-        galleryVC.photos = photos
+        galleryVC.userPhotos = self.userPhotos
     }
 
 }

@@ -9,7 +9,7 @@ import UIKit
 
 class GalleryVC: UIViewController {
     
-    var photos = [UIImage]()
+    var userPhotos = [UserPhoto]()
     var indexMidImage: Int = 0
     var leftImageView = UIImageView()
     var midImageView = UIImageView()
@@ -28,7 +28,10 @@ class GalleryVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        midImageView.image = photos[indexMidImage]
+        let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
+        if let url = URL(string: sizeMid.url) {
+            midImageView.loadImage(from: url)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,6 +42,26 @@ class GalleryVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         view.subviews.forEach{ $0.removeFromSuperview()}
         super.viewWillDisappear(animated)
+    }
+    
+    func selectSizePhoto(of sizeList: [Size]) -> Size {
+        let sizes = sizeList.map { $0.type }
+        
+        if sizes.contains("w") {
+            let myIndex = Int(sizeList.firstIndex { $0.type == "w" }!)
+            return sizeList[myIndex]
+        } else if sizes.contains("z") {
+            let myIndex = Int(sizeList.firstIndex { $0.type == "z" }!)
+            return sizeList[myIndex]
+        } else if sizes.contains("y") {
+            let myIndex = Int(sizeList.firstIndex { $0.type == "y" }!)
+            return sizeList[myIndex]
+        } else if sizes.contains("x") {
+            let myIndex = Int(sizeList.firstIndex { $0.type == "x" }!)
+            return sizeList[myIndex]
+        }
+        
+        return sizeList.last!
     }
     
     func setupImageViews() {
@@ -76,23 +99,33 @@ class GalleryVC: UIViewController {
     
     func setImages() {
         var indexPhotoLeft = indexMidImage - 1
-        if indexPhotoLeft < 0 { indexPhotoLeft = photos.count - 1 }
+        if indexPhotoLeft < 0 { indexPhotoLeft = userPhotos.count - 1 }
         
         var indexPhotoRight = indexMidImage + 1
-        if indexPhotoRight > photos.count - 1 { indexPhotoRight = 0 }
+        if indexPhotoRight > userPhotos.count - 1 { indexPhotoRight = 0 }
         
-        leftImageView.image = photos[indexPhotoLeft]
-        midImageView.image = photos[indexMidImage]
-        rightImageView.image = photos[indexPhotoRight]
+        let sizeLeft = selectSizePhoto(of: userPhotos[indexPhotoLeft].sizes)
+        if let url = URL(string: sizeLeft.url) {
+            leftImageView.loadImage(from: url)
+        }
+        let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
+        if let url = URL(string: sizeMid.url) {
+            midImageView.loadImage(from: url)
+        }
+        let sizeRight = selectSizePhoto(of: userPhotos[indexPhotoRight].sizes)
+        if let url = URL(string: sizeRight.url) {
+            rightImageView.loadImage(from: url)
+        }
     }
     
     func scaleAnimate(){
+        setImages()
         let scale = CGAffineTransform(scaleX: 0.9, y: 0.9)
         self.midImageView.transform = scale
         self.rightImageView.transform = scale
         self.leftImageView.transform = scale
-        setImages()
-
+        
+        
         UIView.animate(
             withDuration: 0.15,
             delay: 0,
@@ -126,7 +159,7 @@ class GalleryVC: UIViewController {
                         }, completion: { [unowned self] _ in
                             self.indexMidImage -= 1
                             if self.indexMidImage < 0 {
-                                self.indexMidImage = self.photos.count - 1
+                                self.indexMidImage = self.userPhotos.count - 1
                             }
                             self.scaleAnimate()
                         })
@@ -149,7 +182,7 @@ class GalleryVC: UIViewController {
                             self.leftImageView.transform = transform
                         }, completion: { [unowned self] _ in
                             self.indexMidImage += 1
-                            if self.indexMidImage > self.photos.count - 1 {
+                            if self.indexMidImage > self.userPhotos.count - 1 {
                                 self.indexMidImage = 0
                             }
                             self.scaleAnimate()

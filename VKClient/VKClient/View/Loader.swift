@@ -46,7 +46,7 @@ class Loader {
     
     func animate(action: @escaping ()-> Void) {
             self.view.isUserInteractionEnabled = false
-            let jumpDuration: Double = 0.33
+            let jumpDuration: Double = 0.1
             let delayDuration: Double = 0
             let totalDuration = delayDuration + jumpDuration * 2
 

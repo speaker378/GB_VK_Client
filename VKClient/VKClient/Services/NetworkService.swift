@@ -80,6 +80,7 @@ final class NetworkService {
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "owner_id", value: String(userId)),
             URLQueryItem(name: "extended", value: "1"),
+            URLQueryItem(name: "count", value: "200"),
         ]
         guard let url = constructor.url else { return complition([]) }
         let request = URLRequest(url: url)
