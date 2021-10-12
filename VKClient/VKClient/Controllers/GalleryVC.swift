@@ -94,7 +94,7 @@ class GalleryVC: UIViewController {
         setImages()
 
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.15,
             delay: 0,
             options: [],
             animations: { [unowned self] in
@@ -109,7 +109,7 @@ class GalleryVC: UIViewController {
         case .began:
             
             swipeToRight = UIViewPropertyAnimator(
-                duration: 0.5,
+                duration: 0.25,
                 curve: .easeIn,
                 animations: {
                     UIView.animate(
@@ -133,7 +133,7 @@ class GalleryVC: UIViewController {
                 })
             
             swipeToLeft = UIViewPropertyAnimator(
-                duration: 0.5,
+                duration: 0.25,
                 curve: .easeIn,
                 animations: {
                     UIView.animate(
