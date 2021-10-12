@@ -57,7 +57,7 @@ class Loader {
             for (index, circle) in circles.enumerated() {
                 circle.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
                 let delay = jumpDuration*2 * TimeInterval(index) / TimeInterval(circles.count)
-                UIView.animateKeyframes(withDuration: totalDuration, delay: delay, options: [.autoreverse], animations: {
+                UIView.animateKeyframes(withDuration: totalDuration, delay: delay, options: [], animations: {
                     UIView.addKeyframe(withRelativeStartTime: jumpRelativeTime, relativeDuration: jumpRelativeDuration) {
                         circle.frame.origin.y -= 20
                     }
