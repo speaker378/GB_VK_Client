@@ -79,6 +79,7 @@ final class NetworkService {
         constructor.path = "/method/photos.getAll"
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "owner_id", value: String(userId)),
+            URLQueryItem(name: "extended", value: "1"),
         ]
         guard let url = constructor.url else { return complition([]) }
         let request = URLRequest(url: url)
@@ -101,6 +102,22 @@ final class NetworkService {
         }
         task.resume()
     }
+    
+    func likePhoto(ownerID: Int, itemID: Int, action: likeAction) {
+        var constructor = urlConstructor
+        constructor.path = "/method/likes.\(action.rawValue)"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "type", value: "photo"),
+            URLQueryItem(name: "owner_id", value: "\(ownerID)"),
+            URLQueryItem(name: "item_id", value: "\(itemID)"),
+        ]
+        guard let url = constructor.url else { return }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request)
+        task.resume()
+    }
+    
     
     func getCommunitys(userId: Int, complition: @escaping ([Community]) -> Void) {
         var constructor = urlConstructor
@@ -186,4 +203,11 @@ final class NetworkService {
         task.resume()
     }
     
+}
+
+extension NetworkService {
+    enum likeAction: String {
+        case add
+        case delete
+    }
 }

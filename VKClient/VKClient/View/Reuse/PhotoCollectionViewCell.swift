@@ -11,8 +11,13 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var likeControl: Like!
     
-    func configure(userPhoto: UIImage) {
-        photoImageView.image = userPhoto
-        likeControl.likes = Int.random(in: 1...50)
+    func configure(userPhoto: UserPhoto, image: UIImage) {
+        photoImageView.image = image
+        likeControl.likes = userPhoto.likes.count
+        likeControl.ownerID = userPhoto.ownerID
+        likeControl.itemID = userPhoto.id
+        if userPhoto.likes.userLikes == 1 {
+            likeControl.stateButton = true
+        }
     }
 }
