@@ -9,7 +9,7 @@ import UIKit
 
 class Like: UIControl {
     
-    var likes: UInt = 0 {
+    var likes: Int = 0 {
         didSet {
             numberOfLikes.text = String(likes)
         }

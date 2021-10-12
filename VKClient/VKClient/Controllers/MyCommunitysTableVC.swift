@@ -8,27 +8,36 @@
 import UIKit
 
 class MyCommunitysTableVC: UITableViewController {
+    private var myCommunitys = [Community]()
     var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkService.getCommunitys(userId: "677504579")
         tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
+        fetchCommunitys()
+    }
+    
+    private func fetchCommunitys() {
+        networkService.getCommunitys(userId: 677589579) { [weak self] myCommunitys in
+            guard let self = self else { return }
+            self.myCommunitys = myCommunitys
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        fetchCommunitys()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myCommunitysList.count
+        return myCommunitys.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "communityCell", for: indexPath) as? CommunityCell  else { return UITableViewCell() }
         
-        cell.configure(community: myCommunitysList[indexPath.row])
+        cell.configure(community: myCommunitys[indexPath.row])
 
         return cell
     }
@@ -39,10 +48,9 @@ class MyCommunitysTableVC: UITableViewController {
         
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let leaveAction = UIContextualAction(style: .destructive, title: "Покинуть") { _, _, complete in
-            var removeItem = myCommunitysList.remove(at: indexPath.row)
+            let group = self.myCommunitys.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            removeItem.members -= 1
-            allCommunitysList.append(removeItem)
+            self.networkService.leaveCommunitys(groupID: group.id)
             complete(true)
         }
         

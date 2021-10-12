@@ -70,16 +70,16 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     func configure(friend: Friend) {
-        avatarUIImageView.image = friend.avatar
-        nameUILabel.text = friend.name
+        avatarUIImageView.image = getImage(at: friend.avatarURL)
+        nameUILabel.text = friend.firstName + " " + friend.lastName
         
         switch friend.networkStatus {
-        case false:
-            networkStatusUILabel.text = "Offline"
-            networkStatusUIImage.tintColor = .systemGray
-        case true:
+        case 1:
             networkStatusUILabel.text = "Online"
             networkStatusUIImage.tintColor = .systemGreen
+        default:
+            networkStatusUILabel.text = "Offline"
+            networkStatusUIImage.tintColor = .systemGray
         }
     }
 

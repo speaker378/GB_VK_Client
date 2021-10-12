@@ -7,9 +7,19 @@
 
 import UIKit
 
-struct UserPhoto {
-    let photo: UIImage?
-    var likes = UInt.random(in: 1...8)
-    var likeState = false
+struct UserPhoto: Codable {
+    let id: Int
+    let ownerID: Int
+    let sizes: [Size]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case ownerID = "owner_id"
+        case sizes
+    }
 }
 
+struct Size: Codable {
+    let url: String
+    let type: String
+}
