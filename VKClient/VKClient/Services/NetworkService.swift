@@ -7,14 +7,6 @@
 
 import UIKit
 
-func getImage(at url: String) -> UIImage {
-    guard let url = URL(string: url),
-          let data = try? Data(contentsOf: url),
-          let image = UIImage(data: data)
-    else { return UIImage() }
-    return image
-}
-
 final class NetworkService {
         
     private let clientId = "7963810"
