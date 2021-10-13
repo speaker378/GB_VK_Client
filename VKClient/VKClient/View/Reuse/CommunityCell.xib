@@ -23,7 +23,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n0A-op-tzH">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n0A-op-tzH" customClass="CustomUIImageView" customModule="VKClient" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="2Uq-ig-tBi"/>

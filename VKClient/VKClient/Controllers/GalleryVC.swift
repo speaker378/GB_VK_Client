@@ -11,9 +11,9 @@ class GalleryVC: UIViewController {
     
     var userPhotos = [UserPhoto]()
     var indexMidImage: Int = 0
-    var leftImageView = UIImageView()
-    var midImageView = UIImageView()
-    var rightImageView = UIImageView()
+    var leftImageView = CustomUIImageView()
+    var midImageView = CustomUIImageView()
+    var rightImageView = CustomUIImageView()
     var swipeToRight = UIViewPropertyAnimator()
     var swipeToLeft = UIViewPropertyAnimator()
     

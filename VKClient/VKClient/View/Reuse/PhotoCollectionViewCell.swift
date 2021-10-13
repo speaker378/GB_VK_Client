@@ -8,7 +8,7 @@
 import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoImageView: CustomUIImageView!
     @IBOutlet weak var likeControl: Like!
     
     func selectSizePhoto(of sizeList: [Size]) -> Size {

@@ -1,5 +1,5 @@
 //
-//  UIImageView.swift
+//  CustomUIImageView.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 12.10.2021.
@@ -9,10 +9,15 @@ import UIKit
 
 let imageCache = NSCache<AnyObject, AnyObject>()
 
-extension UIImageView {
+class CustomUIImageView: UIImageView {
+    var task: URLSessionDataTask!
     
     func loadImage(from url: URL) {
         image = nil
+        
+        if let task = task {
+            task.cancel()
+        }
         
         if let imageFromCache = imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
             self.image = imageFromCache

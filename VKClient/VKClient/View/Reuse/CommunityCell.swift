@@ -8,7 +8,7 @@
 import UIKit
 
 class CommunityCell: UITableViewCell {
-    @IBOutlet weak var communityImageView: UIImageView!
+    @IBOutlet weak var communityImageView: CustomUIImageView!
     @IBOutlet weak var communityNameLabel: UILabel!
     
     override func prepareForReuse() {
