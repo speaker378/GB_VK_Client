@@ -11,16 +11,19 @@ let imageCache = NSCache<AnyObject, AnyObject>()
 
 class CustomUIImageView: UIImageView {
     var task: URLSessionDataTask!
+    let spinner = UIActivityIndicatorView(style: .medium)
     
     func loadImage(from url: URL) {
         image = nil
+        addSpinner()
         
         if let task = task {
             task.cancel()
         }
         
         if let imageFromCache = imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
-            self.image = imageFromCache
+            image = imageFromCache
+            removeSpinner()
             return
         }
         
@@ -37,8 +40,23 @@ class CustomUIImageView: UIImageView {
             
             DispatchQueue.main.async {
                 self.image = loadedImage
+                self.removeSpinner()
             }
         }
         task.resume()
+    }
+    
+    func addSpinner() {
+        addSubview(spinner)
+        
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        spinner.startAnimating()
+    }
+    
+    func removeSpinner() {
+        spinner.removeFromSuperview()
     }
 }
