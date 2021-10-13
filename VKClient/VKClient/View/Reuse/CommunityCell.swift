@@ -34,7 +34,9 @@ class CommunityCell: UITableViewCell {
     }
     
     func configure(community: Community) {
-        communityImageView.image = getImage(at: community.avatar)
+        if let url = URL(string: community.avatarUrlString) {
+            communityImageView.loadImage(from: url)
+        }
         communityNameLabel.text = community.name
     }
     

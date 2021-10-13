@@ -29,7 +29,7 @@ class GalleryVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
-        if let url = URL(string: sizeMid.url) {
+        if let url = URL(string: sizeMid.urlString) {
             midImageView.loadImage(from: url)
         }
     }
@@ -105,15 +105,15 @@ class GalleryVC: UIViewController {
         if indexPhotoRight > userPhotos.count - 1 { indexPhotoRight = 0 }
         
         let sizeLeft = selectSizePhoto(of: userPhotos[indexPhotoLeft].sizes)
-        if let url = URL(string: sizeLeft.url) {
+        if let url = URL(string: sizeLeft.urlString) {
             leftImageView.loadImage(from: url)
         }
         let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
-        if let url = URL(string: sizeMid.url) {
+        if let url = URL(string: sizeMid.urlString) {
             midImageView.loadImage(from: url)
         }
         let sizeRight = selectSizePhoto(of: userPhotos[indexPhotoRight].sizes)
-        if let url = URL(string: sizeRight.url) {
+        if let url = URL(string: sizeRight.urlString) {
             rightImageView.loadImage(from: url)
         }
     }

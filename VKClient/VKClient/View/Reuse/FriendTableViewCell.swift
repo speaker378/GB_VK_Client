@@ -70,7 +70,7 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     func configure(friend: Friend) {
-        if let url = URL(string: friend.avatarURL) {
+        if let url = URL(string: friend.avatarUrlString) {
             avatarUIImageView.loadImage(from: url)
         }
         nameUILabel.text = friend.firstName + " " + friend.lastName

@@ -11,14 +11,14 @@ struct Friend: Codable {
     let userID: Int
     let firstName: String
     let lastName: String
-    let avatarURL: String
+    let avatarUrlString: String
     let networkStatus: Int
         
     enum CodingKeys: String, CodingKey {
         case userID = "id"
         case firstName = "first_name"
         case lastName = "last_name"
-        case avatarURL =  "photo_100"
+        case avatarUrlString =  "photo_100"
         case networkStatus = "online"
     }
 }

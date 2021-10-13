@@ -22,8 +22,13 @@ struct UserPhoto: Codable {
 }
 
 struct Size: Codable {
-    let url: String
+    let urlString: String
     let type: String
+    
+    enum CodingKeys: String, CodingKey {
+        case urlString = "url"
+        case type
+    }
 }
 
 struct Likes: Codable {

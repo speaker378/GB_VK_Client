@@ -30,7 +30,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     func configure(userPhoto: UserPhoto) {
         let size = selectSizePhoto(of: userPhoto.sizes)
-        if let url = URL(string: size.url) {
+        if let url = URL(string: size.urlString) {
             photoImageView.loadImage(from: url)
         }
         likeControl.likes = userPhoto.likes.count
