@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Nuke
 
 class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var containerForImageUIView: UIView!
-    @IBOutlet weak var avatarUIImageView: CustomUIImageView!
+    @IBOutlet weak var avatarUIImageView: UIImageView!
     @IBOutlet weak var nameUILabel: UILabel!
     @IBOutlet weak var networkStatusUILabel: UILabel!
     @IBOutlet weak var networkStatusUIImage: UIImageView!
@@ -45,17 +46,19 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        avatarUIImageView.layer.borderWidth = 1
-        avatarUIImageView.layer.borderColor = UIColor.black.cgColor
+        containerForImageUIView.layer.shadowOpacity = 0.6
+        containerForImageUIView.layer.shadowOffset = CGSize(width: -5, height: 0)
+        containerForImageUIView.layer.shadowRadius = 2
+        containerForImageUIView.layer.cornerRadius = containerForImageUIView.frame.height / 2
+        containerForImageUIView.clipsToBounds = false
+        containerForImageUIView.layer.masksToBounds = false
+        containerForImageUIView.backgroundColor = .clear
+        
+        avatarUIImageView.frame = containerForImageUIView.bounds
         avatarUIImageView.layer.cornerRadius = avatarUIImageView.frame.height / 2
         avatarUIImageView.clipsToBounds = true
         
         nameUILabel.font = UIFont.systemFont(ofSize: 22)
-        
-        containerForImageUIView.layer.shadowOpacity = 0.6
-        containerForImageUIView.layer.cornerRadius = containerForImageUIView.frame.height / 2
-        containerForImageUIView.clipsToBounds = true
-        containerForImageUIView.layer.masksToBounds = false
         
         networkStatusUIImage.image = UIImage(systemName: "circle.fill")
         
@@ -70,8 +73,12 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     func configure(friend: Friend) {
+        let options = ImageLoadingOptions(
+          placeholder: UIImage(systemName: "photo"),
+          transition: .fadeIn(duration: 0.25)
+        )
         if let url = URL(string: friend.avatarUrlString) {
-            avatarUIImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: options, into: avatarUIImageView)
         }
         nameUILabel.text = friend.firstName + " " + friend.lastName
         

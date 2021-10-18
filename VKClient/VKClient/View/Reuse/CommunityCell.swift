@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Nuke
 
 class CommunityCell: UITableViewCell {
-    @IBOutlet weak var communityImageView: CustomUIImageView!
+    @IBOutlet weak var communityImageView: UIImageView!
     @IBOutlet weak var communityNameLabel: UILabel!
     
     override func prepareForReuse() {
@@ -34,8 +35,12 @@ class CommunityCell: UITableViewCell {
     }
     
     func configure(community: Community) {
+        let options = ImageLoadingOptions(
+          placeholder: UIImage(systemName: "photo"),
+          transition: .fadeIn(duration: 0.25)
+        )
         if let url = URL(string: community.avatarUrlString) {
-            communityImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: options, into: communityImageView)
         }
         communityNameLabel.text = community.name
     }

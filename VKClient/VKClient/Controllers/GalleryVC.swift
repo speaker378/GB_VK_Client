@@ -6,16 +6,21 @@
 //
 
 import UIKit
+import Nuke
 
 class GalleryVC: UIViewController {
     
     var userPhotos = [UserPhoto]()
     var indexMidImage: Int = 0
-    var leftImageView = CustomUIImageView()
-    var midImageView = CustomUIImageView()
-    var rightImageView = CustomUIImageView()
+    var leftImageView = UIImageView()
+    var midImageView = UIImageView()
+    var rightImageView = UIImageView()
     var swipeToRight = UIViewPropertyAnimator()
     var swipeToLeft = UIViewPropertyAnimator()
+    let optionsNuke = ImageLoadingOptions(
+      placeholder: UIImage(systemName: "photo"),
+      transition: .fadeIn(duration: 0.25)
+    )
     
     override func loadView() {
         let view = UIView()
@@ -30,7 +35,7 @@ class GalleryVC: UIViewController {
         super.viewWillAppear(animated)
         let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
         if let url = URL(string: sizeMid.urlString) {
-            midImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: optionsNuke, into: midImageView)
         }
     }
     
@@ -40,8 +45,13 @@ class GalleryVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        view.subviews.forEach{ $0.removeFromSuperview()}
         super.viewWillDisappear(animated)
+        view.subviews.forEach{ if $0 != midImageView{ $0.isHidden = true } }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        view.subviews.forEach{ $0.isHidden = false }
     }
     
     func selectSizePhoto(of sizeList: [Size]) -> Size {
@@ -106,15 +116,15 @@ class GalleryVC: UIViewController {
         
         let sizeLeft = selectSizePhoto(of: userPhotos[indexPhotoLeft].sizes)
         if let url = URL(string: sizeLeft.urlString) {
-            leftImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: optionsNuke, into: leftImageView)
         }
         let sizeMid = selectSizePhoto(of: userPhotos[indexMidImage].sizes)
         if let url = URL(string: sizeMid.urlString) {
-            midImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: optionsNuke, into: midImageView)
         }
         let sizeRight = selectSizePhoto(of: userPhotos[indexPhotoRight].sizes)
         if let url = URL(string: sizeRight.urlString) {
-            rightImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: optionsNuke, into: rightImageView)
         }
     }
     
