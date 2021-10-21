@@ -42,6 +42,7 @@
 		74D37AB326D2B5F900E65F83 /* PhotosCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB226D2B5F900E65F83 /* PhotosCollectionVC.swift */; };
 		74D37AB526D2B63900E65F83 /* MyCommunitysTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB426D2B63900E65F83 /* MyCommunitysTableVC.swift */; };
 		74D37AB726D2B65200E65F83 /* AllCommunitysTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB626D2B65200E65F83 /* AllCommunitysTableVC.swift */; };
+		74ED889F2721429100D6E28B /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ED889E2721429100D6E28B /* RealmService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		74D37AB226D2B5F900E65F83 /* PhotosCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosCollectionVC.swift; path = VKClient/Controllers/PhotosCollectionVC.swift; sourceTree = SOURCE_ROOT; };
 		74D37AB426D2B63900E65F83 /* MyCommunitysTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunitysTableVC.swift; sourceTree = "<group>"; };
 		74D37AB626D2B65200E65F83 /* AllCommunitysTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AllCommunitysTableVC.swift; path = VKClient/Controllers/AllCommunitysTableVC.swift; sourceTree = SOURCE_ROOT; };
+		74ED889E2721429100D6E28B /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				74397D622706E2FD001B50CB /* NetworkService.swift */,
+				74ED889E2721429100D6E28B /* RealmService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionVC.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
 				74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */,
+				74ED889F2721429100D6E28B /* RealmService.swift in Sources */,
 				7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */,
 				749188CF26EC902800D0969B /* GalleryVC.swift in Sources */,
 				744DB0DA26E9231D00A15590 /* News.swift in Sources */,
