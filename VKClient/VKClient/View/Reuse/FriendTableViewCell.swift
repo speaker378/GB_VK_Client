@@ -72,7 +72,7 @@ class FriendTableViewCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
-    func configure(friend: Friend) {
+    func configure(friend: RealmFriend) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
           transition: .fadeIn(duration: 0.25)

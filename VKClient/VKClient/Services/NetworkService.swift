@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class NetworkService {
         
@@ -38,13 +39,13 @@ final class NetworkService {
         return request
     }
     
-    func getFriends(complition: @escaping ([Friend]) -> Void) {
+    func getFriends(complition: @escaping () -> Void) {
         var constructor = urlConstructor
         constructor.path = "/method/friends.get"
         constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "fields", value: "photo_100,online"),
+            URLQueryItem(name: "fields", value: "photo_100,online,friend_status"),
         ]
-        guard let url = constructor.url else { return complition([]) }
+        guard let url = constructor.url else { return complition() }
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -52,12 +53,14 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return complition([]) }
+            else { return complition() }
             
             do {
                 let friends = try JSONDecoder().decode(VKResponse<Friend>.self, from: data).response.items
+                let realmFriends = friends.map { RealmFriend(friend: $0) }
                 DispatchQueue.main.async {
-                    complition(friends)
+                    try? RealmService.save(items: realmFriends)
+                    complition()
                 }
             } catch  {
                 print(error)
