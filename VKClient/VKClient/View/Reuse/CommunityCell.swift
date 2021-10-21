@@ -34,6 +34,17 @@ class CommunityCell: UITableViewCell {
         communityNameLabel.font = UIFont.systemFont(ofSize: 20)
     }
     
+    func configure(community: RealmCommunity) {
+        let options = ImageLoadingOptions(
+          placeholder: UIImage(systemName: "photo"),
+          transition: .fadeIn(duration: 0.25)
+        )
+        if let url = URL(string: community.avatarUrlString) {
+            Nuke.loadImage(with: url, options: options, into: communityImageView)
+        }
+        communityNameLabel.text = community.name
+    }
+    
     func configure(community: Community) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),

@@ -29,7 +29,7 @@ class RealmService {
         return realm.objects(T.self)
     }
     
-    static func delete<T: Object>(object: Results<T>) throws {
+    static func delete<T: Object>(object: T) throws {
         let realm = try Realm()
         try realm.write {
             realm.delete(object)

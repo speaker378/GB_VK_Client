@@ -115,14 +115,14 @@ final class NetworkService {
     }
     
     
-    func getCommunitys(userId: Int, complition: @escaping ([Community]) -> Void) {
+    func getCommunitys(userId: Int, complition: @escaping () -> Void) {
         var constructor = urlConstructor
         constructor.path = "/method/groups.get"
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "user_id", value: String(userId)),
             URLQueryItem(name: "extended", value: "1"),
         ]
-        guard let url = constructor.url else { return complition([]) }
+        guard let url = constructor.url else { return complition() }
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -130,12 +130,14 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return complition([]) }
+            else { return complition() }
             
             do {
                 let communitys = try JSONDecoder().decode(VKResponse<Community>.self, from: data).response.items
+                let realmCommunitys = communitys.map { RealmCommunity(community: $0) }
                 DispatchQueue.main.async {
-                    complition(communitys)
+                    try? RealmService.save(items: realmCommunitys)
+                    complition()
                 }
             } catch  {
                 print(error)
