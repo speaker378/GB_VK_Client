@@ -12,12 +12,11 @@ class FriendsVC: UIViewController {
     
     @IBOutlet weak var friendsTableView: UITableView!
     
-    private var friends: Results<RealmFriend>? { didSet{
-        self.setupFriendsData()
-        self.friendsTableView.reloadData() } }
+    private var friends: Results<RealmFriend>?
     private var friendsFirstLetters = [String]()
     private var friendsDict = [String: [RealmFriend]]()
     private var loader: Loader?
+    private var friendsToken: NotificationToken?
     var networkService = NetworkService()
 
     override func viewDidLoad() {
@@ -25,6 +24,16 @@ class FriendsVC: UIViewController {
         friends = try? RealmService.load(typeOf: RealmFriend.self)
         fetchFriends()
         loader = Loader(rootView: view)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        friendsObserveSetup()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        friendsToken?.invalidate()
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -36,10 +45,21 @@ class FriendsVC: UIViewController {
         photosVC.userID = userID
     }
     
-    private func fetchFriends() {
-        networkService.getFriends { [weak self] in
-            self?.friends = try? RealmService.load(typeOf: RealmFriend.self)
+    private func friendsObserveSetup() {
+        friendsToken = friends?.observe { [weak self] changes in
+            switch changes {
+            case .initial:
+                self?.setupFriendsData()
+            case .update:
+                self?.setupFriendsData()
+            case .error(let error):
+                print(error)
+            }
         }
+    }
+    
+    private func fetchFriends() {
+        networkService.getFriends {}
     }
     
     private func setupFriendsData() {
@@ -56,6 +76,7 @@ class FriendsVC: UIViewController {
             }
         }
         friendsFirstLetters = friendsFirstLetters.sorted()
+        friendsTableView.reloadData()
     }
 }
 
