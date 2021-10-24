@@ -104,10 +104,10 @@ extension FriendsVC: UITableViewDelegate {
         30
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let mycell = cell as? FriendTableViewCell else { return }
-        mycell.animate(UITapGestureRecognizer())
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        guard let mycell = cell as? FriendTableViewCell else { return }
+//        mycell.animate(UITapGestureRecognizer())
+//    }
     
     
 }
