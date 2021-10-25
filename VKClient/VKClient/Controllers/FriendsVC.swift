@@ -6,21 +6,23 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendsVC: UIViewController {
     
     @IBOutlet weak var friendsTableView: UITableView!
     
-    private var myFriends = [Friend]() { didSet{
+    private var friends: Results<RealmFriend>? { didSet{
         self.setupFriendsData()
         self.friendsTableView.reloadData() } }
     private var friendsFirstLetters = [String]()
-    private var friendsDict = [String: [Friend]]()
+    private var friendsDict = [String: [RealmFriend]]()
     private var loader: Loader?
     var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        friends = try? RealmService.load(typeOf: RealmFriend.self)
         fetchFriends()
         loader = Loader(rootView: view)
     }
@@ -35,20 +37,22 @@ class FriendsVC: UIViewController {
     }
     
     private func fetchFriends() {
-        networkService.getFriends { [weak self] myFriends in
-            guard let self = self else { return }
-            self.myFriends = myFriends
+        networkService.getFriends { [weak self] in
+            self?.friends = try? RealmService.load(typeOf: RealmFriend.self)
         }
     }
     
     private func setupFriendsData() {
-        for friend in myFriends {
+        guard let friends = friends else { return }
+        for friend in friends where friend.friendStatus == 3 {
             let firstChar = String(friend.firstName.first!).capitalized
             if friendsDict[firstChar] == nil {
                 friendsDict[firstChar] = [friend]
                 friendsFirstLetters.append(firstChar)
             } else {
-                friendsDict[firstChar]!.append(friend)
+                if !friendsDict[firstChar]!.contains(friend) {
+                    friendsDict[firstChar]!.append(friend)
+                }
             }
         }
         friendsFirstLetters = friendsFirstLetters.sorted()

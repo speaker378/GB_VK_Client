@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Nuke
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var photoImageView: CustomUIImageView!
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var likeControl: Like!
     
     func selectSizePhoto(of sizeList: [Size]) -> Size {
@@ -30,8 +31,12 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     func configure(userPhoto: UserPhoto) {
         let size = selectSizePhoto(of: userPhoto.sizes)
+        let options = ImageLoadingOptions(
+          placeholder: UIImage(systemName: "photo"),
+          transition: .fadeIn(duration: 0.25)
+        )
         if let url = URL(string: size.urlString) {
-            photoImageView.loadImage(from: url)
+            Nuke.loadImage(with: url, options: options, into: photoImageView)
         }
         likeControl.likes = userPhoto.likes.count
         likeControl.ownerID = userPhoto.ownerID

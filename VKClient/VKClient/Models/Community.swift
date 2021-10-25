@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 struct Community: Codable {
     let id: Int
@@ -16,5 +17,18 @@ struct Community: Codable {
         case id
         case name
         case avatarUrlString = "photo_100"
+    }
+}
+
+class RealmCommunity: Object {
+    @Persisted(primaryKey: true) var id: Int = 0
+    @Persisted(indexed: true) var name: String = ""
+    @Persisted var avatarUrlString: String = ""
+    
+    convenience init(community: Community) {
+        self.init()
+        self.id = community.id
+        self.name = community.name
+        self.avatarUrlString = community.avatarUrlString
     }
 }

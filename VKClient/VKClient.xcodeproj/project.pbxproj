@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,6 @@
 		7419239926F75E3B00B839B4 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */; };
 		7419239B26F7756B00B839B4 /* CustomInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */; };
 		7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */; };
-		742C5A182715E5E9006E9104 /* CustomUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742C5A172715E5E9006E9104 /* CustomUIImageView.swift */; };
 		7436DCEE26C6E52600E7E21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCED26C6E52600E7E21C /* AppDelegate.swift */; };
 		7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */; };
 		7436DCF226C6E52600E7E21C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7436DCF126C6E52600E7E21C /* LoginVC.swift */; };
@@ -28,6 +27,9 @@
 		744DB0D626E91DCC00A15590 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 744DB0D426E91DCC00A15590 /* NewsCell.xib */; };
 		744DB0D826E9205F00A15590 /* NewsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744DB0D726E9205F00A15590 /* NewsTableVC.swift */; };
 		744DB0DA26E9231D00A15590 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744DB0D926E9231D00A15590 /* News.swift */; };
+		7474B0A9271D2B76005BA504 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 7474B0A8271D2B76005BA504 /* Nuke */; };
+		7474B0AC271D2BE0005BA504 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7474B0AB271D2BE0005BA504 /* Realm */; };
+		7474B0AE271D2BE0005BA504 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7474B0AD271D2BE0005BA504 /* RealmSwift */; };
 		7478BE9C26E60C7F007AA4FF /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7478BE9B26E60C7F007AA4FF /* LikeControl.swift */; };
 		749188CF26EC902800D0969B /* GalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749188CE26EC902800D0969B /* GalleryVC.swift */; };
 		74D2234B26D54C9700D444F7 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2234A26D54C9700D444F7 /* Friend.swift */; };
@@ -40,6 +42,7 @@
 		74D37AB326D2B5F900E65F83 /* PhotosCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB226D2B5F900E65F83 /* PhotosCollectionVC.swift */; };
 		74D37AB526D2B63900E65F83 /* MyCommunitysTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB426D2B63900E65F83 /* MyCommunitysTableVC.swift */; };
 		74D37AB726D2B65200E65F83 /* AllCommunitysTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB626D2B65200E65F83 /* AllCommunitysTableVC.swift */; };
+		74ED889F2721429100D6E28B /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ED889E2721429100D6E28B /* RealmService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +53,6 @@
 		7419239826F75E3B00B839B4 /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
 		7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractiveTransition.swift; sourceTree = "<group>"; };
 		7420A56A26DCD6A100D92629 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
-		742C5A172715E5E9006E9104 /* CustomUIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUIImageView.swift; sourceTree = "<group>"; };
 		7436DCEA26C6E52600E7E21C /* VKClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7436DCED26C6E52600E7E21C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		74D37AB226D2B5F900E65F83 /* PhotosCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosCollectionVC.swift; path = VKClient/Controllers/PhotosCollectionVC.swift; sourceTree = SOURCE_ROOT; };
 		74D37AB426D2B63900E65F83 /* MyCommunitysTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunitysTableVC.swift; sourceTree = "<group>"; };
 		74D37AB626D2B65200E65F83 /* AllCommunitysTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AllCommunitysTableVC.swift; path = VKClient/Controllers/AllCommunitysTableVC.swift; sourceTree = SOURCE_ROOT; };
+		74ED889E2721429100D6E28B /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7474B0AE271D2BE0005BA504 /* RealmSwift in Frameworks */,
+				7474B0AC271D2BE0005BA504 /* Realm in Frameworks */,
+				7474B0A9271D2B76005BA504 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,14 +105,6 @@
 				7419239A26F7756B00B839B4 /* CustomInteractiveTransition.swift */,
 			);
 			path = Animators;
-			sourceTree = "<group>";
-		};
-		742C5A162715E5E9006E9104 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				742C5A172715E5E9006E9104 /* CustomUIImageView.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		7436DCE126C6E52600E7E21C = {
@@ -130,7 +128,6 @@
 			children = (
 				7436DCED26C6E52600E7E21C /* AppDelegate.swift */,
 				7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */,
-				742C5A162715E5E9006E9104 /* Helpers */,
 				74397D612706E2D4001B50CB /* Services */,
 				74D2234926D54C5200D444F7 /* Models */,
 				7436DD0226C6E70B00E7E21C /* Controllers */,
@@ -174,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				74397D622706E2FD001B50CB /* NetworkService.swift */,
+				74ED889E2721429100D6E28B /* RealmService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -220,6 +218,11 @@
 			dependencies = (
 			);
 			name = VKClient;
+			packageProductDependencies = (
+				7474B0A8271D2B76005BA504 /* Nuke */,
+				7474B0AB271D2BE0005BA504 /* Realm */,
+				7474B0AD271D2BE0005BA504 /* RealmSwift */,
+			);
 			productName = VKClient;
 			productReference = 7436DCEA26C6E52600E7E21C /* VKClient.app */;
 			productType = "com.apple.product-type.application";
@@ -247,6 +250,10 @@
 				Base,
 			);
 			mainGroup = 7436DCE126C6E52600E7E21C;
+			packageReferences = (
+				7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */,
+				7474B0AA271D2BE0005BA504 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+			);
 			productRefGroup = 7436DCEB26C6E52600E7E21C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -292,7 +299,6 @@
 				74397D632706E2FD001B50CB /* NetworkService.swift in Sources */,
 				7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */,
 				74D37AB526D2B63900E65F83 /* MyCommunitysTableVC.swift in Sources */,
-				742C5A182715E5E9006E9104 /* CustomUIImageView.swift in Sources */,
 				744DB0D826E9205F00A15590 /* NewsTableVC.swift in Sources */,
 				7404249E270093E8001372DE /* Loader.swift in Sources */,
 				7419239726F75E2D00B839B4 /* CustomPushAnimator.swift in Sources */,
@@ -300,6 +306,7 @@
 				74D37AB326D2B5F900E65F83 /* PhotosCollectionVC.swift in Sources */,
 				7436DCF026C6E52600E7E21C /* SceneDelegate.swift in Sources */,
 				74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */,
+				74ED889F2721429100D6E28B /* RealmService.swift in Sources */,
 				7419239426F7501100B839B4 /* CustomNavigationController.swift in Sources */,
 				749188CF26EC902800D0969B /* GalleryVC.swift in Sources */,
 				744DB0DA26E9231D00A15590 /* News.swift in Sources */,
@@ -505,6 +512,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.4.1;
+			};
+		};
+		7474B0AA271D2BE0005BA504 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.17.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7474B0A8271D2B76005BA504 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		7474B0AB271D2BE0005BA504 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7474B0AA271D2BE0005BA504 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		7474B0AD271D2BE0005BA504 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7474B0AA271D2BE0005BA504 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7436DCE226C6E52600E7E21C /* Project object */;
 }
