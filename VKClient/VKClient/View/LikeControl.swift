@@ -9,16 +9,28 @@ import UIKit
 
 class Like: UIControl {
     
-    var likes: Int = 0 {
+    var ownerID = 0
+    var itemID = 0
+    var likes = 0 {
         didSet {
             numberOfLikes.text = String(likes)
         }
     }
-    var stateButton = false
+    var stateButton = false { didSet {
+        switch stateButton {
+            case false:
+            numberOfLikes.textColor = .white
+            image.tintColor = .white
+            case true:
+            numberOfLikes.textColor = .systemRed
+            image.tintColor = .systemRed
+        }
+    } }
     
     let stackView = UIStackView()
     let image = UIImageView()
     let numberOfLikes  = UILabel()
+    let networkService = NetworkService()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,12 +50,12 @@ class Like: UIControl {
         stackView.alignment = .center
         stackView.spacing = 0
         
-        image.tintColor = .white
         image.image = UIImage(systemName: "suit.heart.fill")
+        image.tintColor = .white
         
         numberOfLikes.font = UIFont.boldSystemFont(ofSize: 20)
-        numberOfLikes.textColor = .systemRed
-        numberOfLikes.textAlignment = .left
+        numberOfLikes.textAlignment = .right
+        numberOfLikes.textColor = .white
         
         self.addSubview(stackView)
         stackView.addArrangedSubview(numberOfLikes)
@@ -66,15 +78,16 @@ class Like: UIControl {
                               duration: 0.59,
                               options: .transitionFlipFromBottom,
                               animations: { [unowned self] in
-                                self.image.tintColor = .red
+                self.image.tintColor = .systemRed
                               })
             UIView.transition(with: numberOfLikes,
                               duration: 0.33,
                               options: .transitionFlipFromTop,
                               animations: { [unowned self] in
-                                self.numberOfLikes.textColor = .white
+                self.numberOfLikes.textColor = .systemRed
                               })
             stateButton.toggle()
+            networkService.likePhoto(ownerID: ownerID, itemID: itemID, action: .add)
         } else {
             likes -= 1
             UIView.transition(with: numberOfLikes,
@@ -87,9 +100,10 @@ class Like: UIControl {
                               duration: 0.33,
                               options: .transitionFlipFromBottom,
                               animations: { [unowned self] in
-                                self.numberOfLikes.textColor = .red
+                self.numberOfLikes.textColor = .white
                               })
             stateButton.toggle()
+            networkService.likePhoto(ownerID: ownerID, itemID: itemID, action: .delete)
         }
     }
     

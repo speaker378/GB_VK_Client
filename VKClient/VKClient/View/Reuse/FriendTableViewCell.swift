@@ -9,7 +9,7 @@ import UIKit
 
 class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var containerForImageUIView: UIView!
-    @IBOutlet weak var avatarUIImageView: UIImageView!
+    @IBOutlet weak var avatarUIImageView: CustomUIImageView!
     @IBOutlet weak var nameUILabel: UILabel!
     @IBOutlet weak var networkStatusUILabel: UILabel!
     @IBOutlet weak var networkStatusUIImage: UIImageView!
@@ -70,7 +70,9 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     func configure(friend: Friend) {
-        avatarUIImageView.image = getImage(at: friend.avatarURL)
+        if let url = URL(string: friend.avatarUrlString) {
+            avatarUIImageView.loadImage(from: url)
+        }
         nameUILabel.text = friend.firstName + " " + friend.lastName
         
         switch friend.networkStatus {

@@ -7,14 +7,6 @@
 
 import UIKit
 
-func getImage(at url: String) -> UIImage {
-    guard let url = URL(string: url),
-          let data = try? Data(contentsOf: url),
-          let image = UIImage(data: data)
-    else { return UIImage() }
-    return image
-}
-
 final class NetworkService {
         
     private let clientId = "7963810"
@@ -79,6 +71,8 @@ final class NetworkService {
         constructor.path = "/method/photos.getAll"
         constructor.queryItems = requiredParameters + [
             URLQueryItem(name: "owner_id", value: String(userId)),
+            URLQueryItem(name: "extended", value: "1"),
+            URLQueryItem(name: "count", value: "200"),
         ]
         guard let url = constructor.url else { return complition([]) }
         let request = URLRequest(url: url)
@@ -101,6 +95,22 @@ final class NetworkService {
         }
         task.resume()
     }
+    
+    func likePhoto(ownerID: Int, itemID: Int, action: likeAction) {
+        var constructor = urlConstructor
+        constructor.path = "/method/likes.\(action.rawValue)"
+        constructor.queryItems = requiredParameters + [
+            URLQueryItem(name: "type", value: "photo"),
+            URLQueryItem(name: "owner_id", value: "\(ownerID)"),
+            URLQueryItem(name: "item_id", value: "\(itemID)"),
+        ]
+        guard let url = constructor.url else { return }
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request)
+        task.resume()
+    }
+    
     
     func getCommunitys(userId: Int, complition: @escaping ([Community]) -> Void) {
         var constructor = urlConstructor
@@ -186,4 +196,11 @@ final class NetworkService {
         task.resume()
     }
     
+}
+
+extension NetworkService {
+    enum likeAction: String {
+        case add
+        case delete
+    }
 }

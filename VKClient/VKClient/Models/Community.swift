@@ -10,11 +10,11 @@ import UIKit
 struct Community: Codable {
     let id: Int
     let name: String
-    let avatar: String
+    let avatarUrlString: String
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case avatar = "photo_100"
+        case avatarUrlString = "photo_100"
     }
 }

@@ -12,6 +12,5 @@ struct VKResponse<T:Codable>: Codable {
 }
 
 struct Response<T: Codable>: Codable {
-    let count: Int
     let items: [T]
 }
