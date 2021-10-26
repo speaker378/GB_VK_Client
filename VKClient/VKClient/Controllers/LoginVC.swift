@@ -6,15 +6,10 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginVC: UIViewController {
-    let patternUsername = #"^[A-z\d.-]{3,19}$"#
-    /*
-     ^ - учет с начала строки
-     [A-z\d.-] - строка может содержать латинские буквы без учета регистра, числа, а также "-" и "."
-     {3,19} - строка длинной от 3 до 19 символов
-     $ - учет с до конца строки
-     */
+    let patternUsername = #"^\S+@\S+\.\S+$"#
     let patternPassword = #"^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}"#
     /*
      ^ - учет с начала строки
@@ -24,54 +19,59 @@ class LoginVC: UIViewController {
      (?=.*[A-Z]) - строка содержит хотя бы одну латинскую букву в верхнем регистре;
      [0-9a-zA-Z!@#$%^&*]{8,} - строка состоит не менее, чем из 8 вышеупомянутых
      */
+    private var handler: AuthStateDidChangeListenerHandle?
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var anonButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    @IBAction func signUpButtonPressed(_ sender: Any) {
-    }
+    @IBOutlet weak var stackButtons: UIStackView!
     
     @IBAction func signInButtonPressed(_ sender: Any) {
         if isValid() {
+            guard let email = loginTextField.text,
+                  let password = passwordTextField.text else { return }
+            Auth.auth().signIn(withEmail: email, password: password)
             performSegue(withIdentifier: "authorizationSegue", sender: nil)
-        } else {
-            showAlert()
         }
     }
     
-    func isValid() -> Bool {
-//        return ((loginTextField.text?.range(of: patternUsername, options: .regularExpression)) != nil) &&
-//            ((passwordTextField.text?.range(of: patternPassword, options: .regularExpression)) != nil)
-        return true
+    @IBAction func signUpButtonPressed(_ sender: Any) {        
+        if isValid() {
+            guard let email = loginTextField.text,
+                  let password = passwordTextField.text else { return }
+            
+            Auth.auth().createUser(withEmail: email, password: password) { authDataResult, error in
+                guard error == nil else {
+                    print(error!.localizedDescription)
+                    return
+                }
+                Auth.auth().signIn(withEmail: email, password: password)
+            }
+            performSegue(withIdentifier: "authorizationSegue", sender: nil)
+        }
     }
     
-    private func showAlert() {
-        let alertController = UIAlertController(title: "Ошибка",
-                                                message: "Не верное имя или пароль",
-                                                preferredStyle: .alert)
-        let alertItem = UIAlertAction(title: "Ok",
-                                      style: .cancel,
-                                      handler: { _ in
-                                        self.loginTextField.text = ""
-                                        self.passwordTextField.text = "" })
-        alertController.addAction(alertItem)
-        present(alertController, animated: true, completion: nil)
+    @IBAction func anonButtonPressed(_ sender: Any) {
+        Auth.auth().signInAnonymously { [weak self] auth, error in
+            if error == nil {
+                self?.performSegue(withIdentifier: "authorizationSegue", sender: nil)
+            } else {
+                self?.showAlert(error!.localizedDescription)
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        signInButton.layer.cornerRadius = 6
-        signInButton.clipsToBounds = true
-        loginTextField.attributedPlaceholder = NSAttributedString(
-            string: "Имя пользователя",
-            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        passwordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Пароль",
-            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        setupViews()
+        handler = Auth.auth().addIDTokenDidChangeListener{ [weak self] auth, user in
+            if user != nil {
+                self?.performSegue(withIdentifier: "authorizationSegue", sender: nil)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +100,49 @@ class LoginVC: UIViewController {
             object: nil)
     }
     
+    func setupViews() {
+        
+        for view in stackButtons.subviews {
+            view.layer.cornerRadius = 6
+            view.clipsToBounds = true
+        }
+        loginTextField.attributedPlaceholder = NSAttributedString(
+            string: "E-mail",
+            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Password",
+            attributes:[NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    func isValid() -> Bool {
+        if ((loginTextField.text?.range(of: patternUsername, options: .regularExpression)) == nil) {
+            showAlert("Не верный адрес электронной почты")
+            return false
+        }
+        if ((passwordTextField.text?.range(of: patternPassword, options: .regularExpression)) == nil) {
+            showAlert("Не верный пароль")
+            return false
+        }
+        return true
+    }
+        
+    
+    private func showAlert(_ message: String) {
+        let alertController = UIAlertController(title: "Ой ой",
+                                                message: message,
+                                                preferredStyle: .alert)
+        let alertItem = UIAlertAction(title: "Исправлюсь",
+                                      style: .cancel,
+                                      handler: { _ in
+//                                        self.loginTextField.text = ""
+                                        self.passwordTextField.text = "" })
+        alertController.addAction(alertItem)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    //MARK: keyboard
     @objc func keyboardWasShow(notification: Notification) {
         let info = notification.userInfo! as NSDictionary
         let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
