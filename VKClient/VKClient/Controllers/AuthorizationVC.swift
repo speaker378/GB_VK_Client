@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import Firebase
 
 class AuthorizationVC: UIViewController {
     
@@ -52,8 +53,14 @@ extension AuthorizationVC: WKNavigationDelegate {
         
             Session.shared.token = token
             Session.shared.userId = userId
+            saveCurrentUserIdToFirebase()
             performSegue(withIdentifier: "loginSegue", sender: nil)
         
         decisionHandler(.cancel)
+    }
+    
+    private func saveCurrentUserIdToFirebase() {
+        let storageRef = Database.database().reference(withPath: "users")
+        storageRef.child(String(Session.shared.userId)).child("id").setValue(Session.shared.userId)
     }
 }
