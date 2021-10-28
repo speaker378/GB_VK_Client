@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AllCommunitysTableVC: UITableViewController {
     
@@ -66,7 +67,37 @@ class AllCommunitysTableVC: UITableViewController {
 
 extension AllCommunitysTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else { return }
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(AllCommunitysTableVC.reload), object: nil)
+            self.perform(#selector(AllCommunitysTableVC.reload), with: nil, afterDelay: 1.25)
+    }
+    
+    @objc func reload() {
+        guard let searchText = searchBar.text else { return }
+        guard searchText != "" else {
+            allCommunitys.removeAll()
+            tableView.reloadData()
+            return
+        }
         fetchCommunitys(text: searchText)
+        saveFindedCommunitysUserToFirebase(searchText)
+    }
+    
+    func saveFindedCommunitysUserToFirebase(_ text: String) {
+        let storageRef = Database.database().reference(withPath: "users")
+        let currentUser = storageRef.child(String(Session.shared.userId))
+        let history = currentUser.child("searchHistory")
+        history.child(getCurrentDateFormatterString()).setValue(text)
+    }
+    
+    func getCurrentDateFormatterString() -> String {
+        return Date().formatted(
+            .dateTime
+                .year()
+                .month()
+                .day()
+                .hour()
+                .minute()
+                .second()
+        )
     }
 }

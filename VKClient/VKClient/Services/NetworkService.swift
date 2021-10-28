@@ -15,6 +15,7 @@ final class NetworkService {
     private var requiredParameters: [URLQueryItem]
     private let session = URLSession.shared
     private var urlConstructor = URLComponents()
+    private var task: URLSessionDataTask? = nil
 
     init() {
         urlConstructor.scheme = "https"
@@ -155,8 +156,9 @@ final class NetworkService {
         ]
         guard let url = constructor.url else { return complition([]) }
         let request = URLRequest(url: url)
+        if task != nil { task!.cancel() }
         
-        let task = session.dataTask(with: request) { responseData, urlResponse, error in
+        task = session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
                   error == nil,
@@ -172,7 +174,7 @@ final class NetworkService {
                 print(error)
             }
         }
-        task.resume()
+        task!.resume()
     }
     
     func joinCommunitys(groupID: Int) {
