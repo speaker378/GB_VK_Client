@@ -86,20 +86,18 @@ extension AllCommunitysTableVC: UISearchBarDelegate {
         let storageRef = Database.database().reference(withPath: "users")
         let currentUser = storageRef.child(String(Session.shared.userId))
         let history = currentUser.child("searchHistory")
-        history.child(getCurrentDateFormaterString()).setValue(text)
+        history.child(getCurrentDateFormatterString()).setValue(text)
     }
     
-    func getCurrentDateFormaterString() -> String {
-        let now = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-        let year = components.year ?? 0
-        let month = components.month ?? 0
-        let day = components.day ?? 0
-        let hour = components.hour ?? 0
-        let minute = components.minute ?? 0
-        let second = components.second ?? 0
-        let dataString = "\(year):\(month):\(day) - \(hour):\(minute):\(second)"
-        return dataString
+    func getCurrentDateFormatterString() -> String {
+        return Date().formatted(
+            .dateTime
+                .year()
+                .month()
+                .day()
+                .hour()
+                .minute()
+                .second()
+        )
     }
 }
