@@ -7,10 +7,11 @@
 
 import UIKit
 import Nuke
+import RealmSwift
 
 class GalleryVC: UIViewController {
     
-    var userPhotos = [UserPhoto]()
+    var userPhotos: Results<RealmUserPhoto>!
     var indexMidImage: Int = 0
     var leftImageView = UIImageView()
     var midImageView = UIImageView()
@@ -54,7 +55,7 @@ class GalleryVC: UIViewController {
         view.subviews.forEach{ $0.isHidden = false }
     }
     
-    func selectSizePhoto(of sizeList: [Size]) -> Size {
+    func selectSizePhoto(of sizeList: List<RealmSize>) -> RealmSize {
         let sizes = sizeList.map { $0.type }
         
         if sizes.contains("w") {

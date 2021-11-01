@@ -7,12 +7,13 @@
 
 import UIKit
 import Nuke
+import RealmSwift
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var likeControl: Like!
     
-    func selectSizePhoto(of sizeList: [Size]) -> Size {
+    func selectSizePhoto(of sizeList: List<RealmSize>) -> RealmSize {
         let sizes = sizeList.map { $0.type }
         
         if sizes.contains("m") {
@@ -29,7 +30,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         return sizeList[0]
     }
     
-    func configure(userPhoto: UserPhoto) {
+    func configure(userPhoto: RealmUserPhoto) {
         let size = selectSizePhoto(of: userPhoto.sizes)
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
@@ -38,10 +39,10 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         if let url = URL(string: size.urlString) {
             Nuke.loadImage(with: url, options: options, into: photoImageView)
         }
-        likeControl.likes = userPhoto.likes.count
+        likeControl.likes = userPhoto.countLikes
         likeControl.ownerID = userPhoto.ownerID
         likeControl.itemID = userPhoto.id
-        if userPhoto.likes.userLikes == 1 {
+        if userPhoto.userLikes == 1 {
             likeControl.stateButton = true
         }
     }
