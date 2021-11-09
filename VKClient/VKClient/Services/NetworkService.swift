@@ -9,23 +9,27 @@ import UIKit
 import RealmSwift
 
 final class NetworkService {
-        
     private let clientId = "7963810"
     private let versionAPI = "5.131"
-    private var requiredParameters: [URLQueryItem]
     private let session = URLSession.shared
-    private var urlConstructor = URLComponents()
-    private var task: URLSessionDataTask? = nil
-
-    init() {
-        urlConstructor.scheme = "https"
-        urlConstructor.host = "api.vk.com"
-        requiredParameters = [URLQueryItem(name: "access_token", value: Session.shared.token),
-                              URLQueryItem(name: "v", value: versionAPI)]
+    private var taskSearchCommunitys: URLSessionDataTask? = nil
+    
+    private func url(from path: String, params: [String: String]) -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.vk.com"
+        components.path = path
+        components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
+        components.queryItems! += [
+            URLQueryItem(name: "access_token", value: Session.shared.token),
+            URLQueryItem(name: "v", value: versionAPI),
+        ]
+        return components.url!
     }
     
     func getAuthorizeRequest() -> URLRequest {
-        var urlConstructor = urlConstructor
+        var urlConstructor = URLComponents()
+        urlConstructor.scheme = "https"
         urlConstructor.host = "oauth.vk.com"
         urlConstructor.path = "/authorize"
         urlConstructor.queryItems = [
@@ -41,12 +45,9 @@ final class NetworkService {
     }
     
     func getFriends(complition: @escaping () -> Void) {
-        var constructor = urlConstructor
-        constructor.path = "/method/friends.get"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "fields", value: "photo_100,online,friend_status"),
-        ]
-        guard let url = constructor.url else { return complition() }
+        let path = "/method/friends.get"
+        let params = ["fields" : "photo_100,online,friend_status"]
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -71,14 +72,13 @@ final class NetworkService {
     }
     
     func getAllPhotos(userId: Int, complition: @escaping () -> Void) {
-        var constructor = urlConstructor
-        constructor.path = "/method/photos.getAll"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "owner_id", value: String(userId)),
-            URLQueryItem(name: "extended", value: "1"),
-            URLQueryItem(name: "count", value: "200"),
+        let path = "/method/photos.getAll"
+        let params = [
+            "owner_id" : String(userId),
+            "extended" : "1",
+            "count" : "200",
         ]
-        guard let url = constructor.url else { return complition() }
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -111,14 +111,13 @@ final class NetworkService {
     }
     
     func likePhoto(ownerID: Int, itemID: Int, action: likeAction) {
-        var constructor = urlConstructor
-        constructor.path = "/method/likes.\(action.rawValue)"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "type", value: "photo"),
-            URLQueryItem(name: "owner_id", value: "\(ownerID)"),
-            URLQueryItem(name: "item_id", value: "\(itemID)"),
+        let path = "/method/likes.\(action.rawValue)"
+        let params = [
+            "type" : "photo",
+            "owner_id" : "\(ownerID)",
+            "item_id" : "\(itemID)",
         ]
-        guard let url = constructor.url else { return }
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request)
@@ -127,13 +126,12 @@ final class NetworkService {
     
     
     func getCommunitys(userId: Int, complition: @escaping () -> Void) {
-        var constructor = urlConstructor
-        constructor.path = "/method/groups.get"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "user_id", value: String(userId)),
-            URLQueryItem(name: "extended", value: "1"),
+        let path = "/method/groups.get"
+        let params = [
+            "user_id" : String(userId),
+            "extended" : "1",
         ]
-        guard let url = constructor.url else { return complition() }
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -158,17 +156,17 @@ final class NetworkService {
     }
     
     func getCommunitysSearch(text: String, complition: @escaping ([Community]) -> Void) {
-        var constructor = urlConstructor
-        constructor.path = "/method/groups.search"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "q", value: text),
-            URLQueryItem(name: "count", value: "50"),
+        let path = "/method/groups.search"
+        let params = [
+            "q" : text,
+            "count" : "50",
         ]
-        guard let url = constructor.url else { return complition([]) }
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
-        if task != nil { task!.cancel() }
         
-        task = session.dataTask(with: request) { responseData, urlResponse, error in
+        if taskSearchCommunitys != nil { taskSearchCommunitys!.cancel() }
+        
+        taskSearchCommunitys = session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
                   error == nil,
@@ -184,29 +182,15 @@ final class NetworkService {
                 print(error)
             }
         }
-        task!.resume()
+        taskSearchCommunitys!.resume()
     }
     
-    func joinCommunitys(groupID: Int) {
-        var constructor = urlConstructor
-        constructor.path = "/method/groups.join"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "group_id", value: String(groupID)),
+    func communityMembershipAction(groupID: Int, action: communityMembershipAction) {
+        let path = "/method/groups.\(action.rawValue)"
+        let params = [
+            "group_id" : String(groupID),
         ]
-        guard let url = constructor.url else { return }
-        let request = URLRequest(url: url)
-        
-        let task = session.dataTask(with: request)
-        task.resume()
-    }
-    
-    func leaveCommunitys(groupID: Int) {
-        var constructor = urlConstructor
-        constructor.path = "/method/groups.leave"
-        constructor.queryItems = requiredParameters + [
-            URLQueryItem(name: "group_id", value: String(groupID)),
-        ]
-        guard let url = constructor.url else { return }
+        let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request)
@@ -219,5 +203,9 @@ extension NetworkService {
     enum likeAction: String {
         case add
         case delete
+    }
+    enum communityMembershipAction: String {
+        case join
+        case leave
     }
 }

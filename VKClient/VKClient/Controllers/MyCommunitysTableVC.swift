@@ -72,7 +72,7 @@ class MyCommunitysTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let leaveAction = UIContextualAction(style: .destructive, title: "Покинуть") { _, _, complete in
             if let group = self.myCommunitys?[indexPath.row] {
-                self.networkService.leaveCommunitys(groupID: group.id)
+                self.networkService.communityMembershipAction(groupID: group.id, action: .leave)
                 try? RealmService.delete(object: group)
             }
             complete(true)

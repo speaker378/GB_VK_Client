@@ -53,7 +53,7 @@ class AllCommunitysTableVC: UITableViewController {
         let joinAction = UIContextualAction(style: .destructive, title: "Вступить") { _, _, complete in
             let group = self.allCommunitys.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            self.networkService.joinCommunitys(groupID: group.id)
+            self.networkService.communityMembershipAction(groupID: group.id, action: .join)
             complete(true)
         }
         
