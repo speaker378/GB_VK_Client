@@ -33,6 +33,7 @@ class RealmFriend: Object {
     @Persisted var avatarUrlString: String = ""
     @Persisted var networkStatus: Int = 0
     @Persisted var friendStatus: Int = 0
+    @Persisted var userPhotos: List<RealmUserPhoto>
     
     convenience init(friend: Friend) {
         self.init()

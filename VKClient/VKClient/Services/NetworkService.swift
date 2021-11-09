@@ -70,7 +70,7 @@ final class NetworkService {
         task.resume()
     }
     
-    func getAllPhotos(userId: Int, complition: @escaping ([UserPhoto]) -> Void) {
+    func getAllPhotos(userId: Int, complition: @escaping () -> Void) {
         var constructor = urlConstructor
         constructor.path = "/method/photos.getAll"
         constructor.queryItems = requiredParameters + [
@@ -78,7 +78,7 @@ final class NetworkService {
             URLQueryItem(name: "extended", value: "1"),
             URLQueryItem(name: "count", value: "200"),
         ]
-        guard let url = constructor.url else { return complition([]) }
+        guard let url = constructor.url else { return complition() }
         let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { responseData, urlResponse, error in
@@ -86,12 +86,22 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return complition([]) }
+            else { return complition() }
             
             do {
-                let photos = try JSONDecoder().decode(VKResponse<UserPhoto>.self, from: data).response.items
+                let jsonPhotos = try JSONDecoder().decode(VKResponse<UserPhoto>.self, from: data).response.items
+                let realmPhotos = jsonPhotos.map { RealmUserPhoto(userPhoto: $0) }
                 DispatchQueue.main.async {
-                    complition(photos)
+                    try? RealmService.save(items: realmPhotos)
+                    let photos = List<RealmUserPhoto>()
+                    photos.append(objectsIn: realmPhotos)
+                    let friend = try? RealmService.load(typeOf: RealmFriend.self).filter("userID == \(userId)")
+                    let realm = try? Realm()
+                    try? realm?.write{
+                        friend?.first?.userPhotos = photos
+                    }
+                    
+                    complition()
                 }
             } catch  {
                 print(error)
