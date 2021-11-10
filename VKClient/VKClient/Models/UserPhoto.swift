@@ -32,16 +32,6 @@ struct Size: Codable {
     }
 }
 
-struct Likes: Codable {
-    let userLikes: Int
-    let count: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case userLikes = "user_likes"
-        case count
-    }
-}
-
 
 class RealmUserPhoto: Object {
     @Persisted(primaryKey: true) var id: Int = 0

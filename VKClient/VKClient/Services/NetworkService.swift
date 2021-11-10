@@ -44,6 +44,31 @@ final class NetworkService {
         return request
     }
     
+    func getNewsFeed(completion: @escaping ([NewsPublication]) -> Void) {
+        let path = "/method/newsfeed.get"
+        let params = ["filters" : "post,photo"]
+        let url = url(from: path, params: params)
+        let request = URLRequest(url: url)
+        
+        let task = session.dataTask(with: request) { responseData, urlResponse, error in
+            guard let response = urlResponse as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  error == nil,
+                  let data = responseData
+            else { return completion([]) }
+            
+            do {
+                let posts = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items
+                DispatchQueue.main.async {
+                    completion(posts)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        task.resume()
+    }
+    
     func getFriends(complition: @escaping () -> Void) {
         let path = "/method/friends.get"
         let params = ["fields" : "photo_100,online,friend_status"]

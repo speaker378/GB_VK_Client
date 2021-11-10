@@ -57,11 +57,11 @@ class NewsCell: UITableViewCell {
         textNews.font = UIFont.systemFont(ofSize: 22)
     }
     
-    func configure(news: News) {
-        creatorAvatar.image = news.creator.avatar
-        creatorName.text = news.creator.name
+    func configure(news: NewsPublication) {
+//        creatorAvatar.image = news.creator.avatar
+//        creatorName.text = news.creator.name
         textNews.text = news.text
-        imageNews.image = news.images[0]
+//        imageNews.image = news.images[0]
     }
     
 }
