@@ -17,6 +17,8 @@ class NewsTableVC: UITableViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "newsCell")
         tableView.register(NewsHeader.self, forHeaderFooterViewReuseIdentifier: "NewsHeader")
+        tableView.register(NewsFooter.self, forHeaderFooterViewReuseIdentifier: "NewsFooter")
+        tableView.sectionHeaderTopPadding = 10
         fetchNews()
     }
     
@@ -71,12 +73,17 @@ class NewsTableVC: UITableViewController {
         54
     }
 
-//    //MARK: footer
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        <#code#>
-//    }
-//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        <#code#>
-//    }
+    //MARK: footer
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "NewsFooter") as? NewsFooter else { return UITableViewHeaderFooterView() }
+        view.likesLabel.text = String(myNews[section].likes.count)
+        view.commentsLabel.text = String(myNews[section].comments.count)
+        view.repostsLabel.text = String(myNews[section].reposts.count)
+        view.viewsLabel.text = String(myNews[section].views.count)
+        return view
+    }
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        30
+    }
     
 }

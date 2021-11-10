@@ -38,6 +38,10 @@ class NewsHeader: UITableViewHeaderFooterView {
         creatorName.font = UIFont.systemFont(ofSize: 22)
         dateLabel.font = UIFont.systemFont(ofSize: 12)
         
+        contentView.backgroundColor = .systemOrange
+        contentView.layer.cornerRadius = 15
+        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         NSLayoutConstraint.activate([
             
             creatorAvatar.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
