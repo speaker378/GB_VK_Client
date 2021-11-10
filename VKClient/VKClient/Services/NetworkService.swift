@@ -57,13 +57,30 @@ final class NetworkService {
                   let data = responseData
             else { return completion([]) }
             
-            do {
-                let posts = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items
-                DispatchQueue.main.async {
-                    completion(posts)
+            guard var news = try? JSONDecoder().decode(ResponseNews.self, from: data).response.items else {
+                return
+            }
+            guard let profiles = try? JSONDecoder().decode(ResponseNews.self, from: data).response.profiles else {
+                return
+            }
+            guard let groups = try? JSONDecoder().decode(ResponseNews.self, from: data).response.groups else {
+                return
+            }
+            
+            for i in 0..<news.count {
+                if news[i].sourceID < 0 {
+                    let group = groups.first(where: { $0.id == -news[i].sourceID })
+                    news[i].avatarURL = group?.avatarURL
+                    news[i].creatorName = group?.name
+                } else {
+                    let profile = profiles.first(where: { $0.id == news[i].sourceID })
+                    news[i].avatarURL = profile?.avatarURL
+                    news[i].creatorName = profile?.firstName
                 }
-            } catch {
-                print(error.localizedDescription)
+            }
+            
+            DispatchQueue.main.async {
+                completion(news)
             }
         }
         task.resume()
