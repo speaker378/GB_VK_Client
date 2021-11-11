@@ -512,16 +512,16 @@
         <!--Сообщества-->
         <scene sceneID="Wb3-ds-f98">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="dSu-eZ-YBA" customClass="MyCommunitysTableVC" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="dSu-eZ-YBA" customClass="GroupsTableVC" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jMZ-yM-b61">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="communityCell" id="0Ch-5Q-vFi">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" id="0Ch-5Q-vFi">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Ch-5Q-vFi" id="3Pg-3f-aK6" customClass="CommunityCell" customModule="VKClient" customModuleProvider="target">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Ch-5Q-vFi" id="3Pg-3f-aK6" customClass="GroupCell" customModule="VKClient" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
@@ -536,7 +536,7 @@
                     <navigationItem key="navigationItem" title="Сообщества" id="2fR-18-bhc">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="fnH-CE-CFZ">
                             <connections>
-                                <segue destination="pTh-Wd-Z2f" kind="show" identifier="communitysSegue" id="MLB-4F-9b0"/>
+                                <segue destination="pTh-Wd-Z2f" kind="show" identifier="groupsSegue" id="MLB-4F-9b0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -548,7 +548,7 @@
         <!--Поиск сообществ-->
         <scene sceneID="APW-DC-Onj">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="pTh-Wd-Z2f" customClass="AllCommunitysTableVC" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="pTh-Wd-Z2f" customClass="SearchGroupsTableVC" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mN4-dv-fK1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -562,7 +562,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="communityCell" id="NG0-r8-ujJ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" id="NG0-r8-ujJ">
                                 <rect key="frame" x="0.0" y="88.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NG0-r8-ujJ" id="Ecf-zi-aGt">

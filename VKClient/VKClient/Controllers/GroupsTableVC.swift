@@ -1,5 +1,5 @@
 //
-//  MyCommunitysTableVC.swift
+//  GroupsTableVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 22.08.2021.
@@ -8,40 +8,40 @@
 import UIKit
 import RealmSwift
 
-class MyCommunitysTableVC: UITableViewController {
-    private var myCommunitys: Results<RealmGroup>?
-    private var communitysToken: NotificationToken?
+class GroupsTableVC: UITableViewController {
+    private var groups: Results<RealmGroup>?
+    private var groupsToken: NotificationToken?
     var networkService = NetworkService()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
-        myCommunitys = try? RealmService.load(typeOf: RealmGroup.self)
-        fetchCommunitys()
+        tableView.register(UINib(nibName: "GroupCell", bundle: nil), forCellReuseIdentifier: "groupCell")
+        groups = try? RealmService.load(typeOf: RealmGroup.self)
+        fetchGroups()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        communitysObserveSetup()
+        groupsObserveSetup()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        communitysToken?.invalidate()
+        groupsToken?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchCommunitys()
+        fetchGroups()
     }
     
-    private func fetchCommunitys() {
-        networkService.getCommunitys(userId: Session.shared.userId) { }
+    private func fetchGroups() {
+        networkService.getGroups(userId: Session.shared.userId) { }
     }
     
-    private func communitysObserveSetup() {
-        communitysToken = myCommunitys?.observe { [weak self] changes in
+    private func groupsObserveSetup() {
+        groupsToken = groups?.observe { [weak self] changes in
             switch changes {
             case .initial:
                 self?.tableView.reloadData()
@@ -54,13 +54,13 @@ class MyCommunitysTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myCommunitys?.count ?? 0
+        return groups?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "communityCell", for: indexPath) as? CommunityCell, let myCommunitys = myCommunitys else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as? GroupCell, let myGroups = groups else { return UITableViewCell() }
         
-        cell.configure(community: myCommunitys[indexPath.row])
+        cell.configure(group: myGroups[indexPath.row])
 
         return cell
     }
@@ -71,8 +71,8 @@ class MyCommunitysTableVC: UITableViewController {
         
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let leaveAction = UIContextualAction(style: .destructive, title: "Покинуть") { _, _, complete in
-            if let group = self.myCommunitys?[indexPath.row] {
-                self.networkService.communityMembershipAction(groupID: group.id, action: .leave)
+            if let group = self.groups?[indexPath.row] {
+                self.networkService.groupMembershipAction(groupID: group.id, action: .leave)
                 try? RealmService.delete(object: group)
             }
             complete(true)

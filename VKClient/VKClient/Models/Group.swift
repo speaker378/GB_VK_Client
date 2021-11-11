@@ -25,10 +25,10 @@ class RealmGroup: Object {
     @Persisted(indexed: true) var name: String = ""
     @Persisted var avatarUrlString: String = ""
     
-    convenience init(community: Group) {
+    convenience init(group: Group) {
         self.init()
-        self.id = community.id
-        self.name = community.name
-        self.avatarUrlString = community.avatarUrlString
+        self.id = group.id
+        self.name = group.name
+        self.avatarUrlString = group.avatarUrlString
     }
 }

@@ -12,7 +12,7 @@ final class NetworkService {
     private let clientId = "7998302"
     private let versionAPI = "5.131"
     private let session = URLSession.shared
-    private var taskSearchCommunitys: URLSessionDataTask? = nil
+    private var taskSearchGroups: URLSessionDataTask? = nil
     
     private func url(from path: String, params: [String: String]) -> URL {
         var components = URLComponents()
@@ -170,7 +170,7 @@ final class NetworkService {
     }
     
     
-    func getCommunitys(userId: Int, complition: @escaping () -> Void) {
+    func getGroups(userId: Int, complition: @escaping () -> Void) {
         let path = "/method/groups.get"
         let params = [
             "user_id" : String(userId),
@@ -187,10 +187,10 @@ final class NetworkService {
             else { return complition() }
             
             do {
-                let communitys = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
-                let realmCommunitys = communitys.map { RealmGroup(community: $0) }
+                let groups = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
+                let realmGroups = groups.map { RealmGroup(group: $0) }
                 DispatchQueue.main.async {
-                    try? RealmService.save(items: realmCommunitys)
+                    try? RealmService.save(items: realmGroups)
                     complition()
                 }
             } catch  {
@@ -200,7 +200,7 @@ final class NetworkService {
         task.resume()
     }
     
-    func getCommunitysSearch(text: String, complition: @escaping ([Group]) -> Void) {
+    func getGroupsSearch(text: String, complition: @escaping ([Group]) -> Void) {
         let path = "/method/groups.search"
         let params = [
             "q" : text,
@@ -209,9 +209,9 @@ final class NetworkService {
         let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
-        if taskSearchCommunitys != nil { taskSearchCommunitys!.cancel() }
+        if taskSearchGroups != nil { taskSearchGroups!.cancel() }
         
-        taskSearchCommunitys = session.dataTask(with: request) { responseData, urlResponse, error in
+        taskSearchGroups = session.dataTask(with: request) { responseData, urlResponse, error in
             guard let response = urlResponse as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
                   error == nil,
@@ -219,18 +219,18 @@ final class NetworkService {
             else { return complition([]) }
             
             do {
-                let communitys = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
+                let groups = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
                 DispatchQueue.main.async {
-                    complition(communitys)
+                    complition(groups)
                 }
             } catch  {
                 print(error)
             }
         }
-        taskSearchCommunitys!.resume()
+        taskSearchGroups!.resume()
     }
     
-    func communityMembershipAction(groupID: Int, action: communityMembershipAction) {
+    func groupMembershipAction(groupID: Int, action: groupMembershipAction) {
         let path = "/method/groups.\(action.rawValue)"
         let params = [
             "group_id" : String(groupID),
@@ -249,7 +249,7 @@ extension NetworkService {
         case add
         case delete
     }
-    enum communityMembershipAction: String {
+    enum groupMembershipAction: String {
         case join
         case leave
     }

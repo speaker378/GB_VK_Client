@@ -1,5 +1,5 @@
 //
-//  AllCommunitysTableVC.swift
+//  SearchGroupsTableVC.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 22.08.2021.
@@ -8,22 +8,22 @@
 import UIKit
 import Firebase
 
-class AllCommunitysTableVC: UITableViewController {
+class SearchGroupsTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private var allCommunitys = [Group]()
+    private var groups = [Group]()
     var networkService = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
+        tableView.register(UINib(nibName: "GroupCell", bundle: nil), forCellReuseIdentifier: "groupCell")
     }
     
-    private func fetchCommunitys(text: String) {
-        networkService.getCommunitysSearch(text: text) { [weak self] allCommunitys in
+    private func fetchGroups(text: String) {
+        networkService.getGroupsSearch(text: text) { [weak self] findedGroups in
             guard let self = self else { return }
-            self.allCommunitys = allCommunitys
+            self.groups = findedGroups
             self.tableView.reloadData()
         }
     }
@@ -34,13 +34,13 @@ class AllCommunitysTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCommunitys.count
+        return groups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "communityCell", for: indexPath) as? CommunityCell  else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as? GroupCell  else { return UITableViewCell() }
         
-        cell.configure(community: allCommunitys[indexPath.row])
+        cell.configure(group: groups[indexPath.row])
 
         return cell
     }
@@ -51,9 +51,9 @@ class AllCommunitysTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let joinAction = UIContextualAction(style: .destructive, title: "Вступить") { _, _, complete in
-            let group = self.allCommunitys.remove(at: indexPath.row)
+            let group = self.groups.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            self.networkService.communityMembershipAction(groupID: group.id, action: .join)
+            self.networkService.groupMembershipAction(groupID: group.id, action: .join)
             complete(true)
         }
         
@@ -65,24 +65,24 @@ class AllCommunitysTableVC: UITableViewController {
     }
 }
 
-extension AllCommunitysTableVC: UISearchBarDelegate {
+extension SearchGroupsTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(AllCommunitysTableVC.reload), object: nil)
-            self.perform(#selector(AllCommunitysTableVC.reload), with: nil, afterDelay: 1.25)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SearchGroupsTableVC.reload), object: nil)
+            self.perform(#selector(SearchGroupsTableVC.reload), with: nil, afterDelay: 1.25)
     }
     
     @objc func reload() {
         guard let searchText = searchBar.text else { return }
         guard searchText != "" else {
-            allCommunitys.removeAll()
+            groups.removeAll()
             tableView.reloadData()
             return
         }
-        fetchCommunitys(text: searchText)
-        saveFindedCommunitysUserToFirebase(searchText)
+        fetchGroups(text: searchText)
+        saveFindedGroupsUserToFirebase(searchText)
     }
     
-    func saveFindedCommunitysUserToFirebase(_ text: String) {
+    func saveFindedGroupsUserToFirebase(_ text: String) {
         let storageRef = Database.database().reference(withPath: "users")
         let currentUser = storageRef.child(String(Session.shared.userId))
         let history = currentUser.child("searchHistory")
