@@ -60,13 +60,13 @@ final class NetworkService {
                   let data = responseData
             else { return completion([]) }
             
-            guard var news = try? JSONDecoder().decode(ResponseNews.self, from: data).response.items else {
+            guard var news = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items else {
                 return
             }
-            guard let profiles = try? JSONDecoder().decode(ResponseNews.self, from: data).response.profiles else {
+            guard let profiles = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.profiles else {
                 return
             }
-            guard let groups = try? JSONDecoder().decode(ResponseNews.self, from: data).response.groups else {
+            guard let groups = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.groups else {
                 return
             }
             

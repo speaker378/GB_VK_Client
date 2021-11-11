@@ -9,24 +9,6 @@ import Foundation
 
 // https://vk.com/dev/newsfeed.get
 
-struct ResponseNews: Codable {
-    let response: ItemsNews
-}
-
-struct ItemsNews: Codable {
-    let items: [NewsPublication]
-    let profiles: [Profile]
-    let groups: [Group]
-    let nextFrom: String
-    
-    enum CodingKeys: String, CodingKey {
-        case items
-        case profiles
-        case groups
-        case nextFrom = "next_from"
-    }
-}
-
 struct NewsPublication: Codable {
     let sourceID: Int // идентификатор источника новости (положительный — новость пользователя, отрицательный — новость группы)
     let date: Int // время публикации новости в формате unixtime
