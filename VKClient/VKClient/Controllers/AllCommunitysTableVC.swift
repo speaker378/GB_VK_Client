@@ -12,7 +12,7 @@ class AllCommunitysTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private var allCommunitys = [Community]()
+    private var allCommunitys = [Group]()
     var networkService = NetworkService()
     
     override func viewDidLoad() {

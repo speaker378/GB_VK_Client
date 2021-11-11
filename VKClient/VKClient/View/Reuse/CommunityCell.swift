@@ -34,7 +34,7 @@ class CommunityCell: UITableViewCell {
         communityNameLabel.font = UIFont.systemFont(ofSize: 20)
     }
     
-    func configure(community: RealmCommunity) {
+    func configure(community: RealmGroup) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
           transition: .fadeIn(duration: 0.25)
@@ -45,7 +45,7 @@ class CommunityCell: UITableViewCell {
         communityNameLabel.text = community.name
     }
     
-    func configure(community: Community) {
+    func configure(community: Group) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
           transition: .fadeIn(duration: 0.25)

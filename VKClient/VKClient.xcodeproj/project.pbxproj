@@ -43,7 +43,7 @@
 		74D2234B26D54C9700D444F7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2234A26D54C9700D444F7 /* Profile.swift */; };
 		74D2234E26D639D300D444F7 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2234C26D639D300D444F7 /* CommunityCell.swift */; };
 		74D2234F26D639D300D444F7 /* CommunityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74D2234D26D639D300D444F7 /* CommunityCell.xib */; };
-		74D2235126D63E6C00D444F7 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235026D63E6C00D444F7 /* Community.swift */; };
+		74D2235126D63E6C00D444F7 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235026D63E6C00D444F7 /* Group.swift */; };
 		74D2235426D666C700D444F7 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235326D666C700D444F7 /* PhotoCollectionViewCell.swift */; };
 		74D2235626D667AC00D444F7 /* UserPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2235526D667AC00D444F7 /* UserPhoto.swift */; };
 		74D37AB126D2B58500E65F83 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D37AB026D2B58500E65F83 /* FriendsVC.swift */; };
@@ -87,7 +87,7 @@
 		74D2234A26D54C9700D444F7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		74D2234C26D639D300D444F7 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		74D2234D26D639D300D444F7 /* CommunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityCell.xib; sourceTree = "<group>"; };
-		74D2235026D63E6C00D444F7 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
+		74D2235026D63E6C00D444F7 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		74D2235326D666C700D444F7 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		74D2235526D667AC00D444F7 /* UserPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoto.swift; sourceTree = "<group>"; };
 		74D37AB026D2B58500E65F83 /* FriendsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				74D2234A26D54C9700D444F7 /* Profile.swift */,
-				74D2235026D63E6C00D444F7 /* Community.swift */,
+				74D2235026D63E6C00D444F7 /* Group.swift */,
 				74D2235526D667AC00D444F7 /* UserPhoto.swift */,
 				74397D5D2705981B001B50CB /* Session.swift */,
 				740CAE57271090EA00BFEE3C /* Response.swift */,
@@ -323,7 +323,7 @@
 				74D37AB126D2B58500E65F83 /* FriendsVC.swift in Sources */,
 				745D879C273C2A90007ABE80 /* NewsFooter.swift in Sources */,
 				74397D5E2705981B001B50CB /* Session.swift in Sources */,
-				74D2235126D63E6C00D444F7 /* Community.swift in Sources */,
+				74D2235126D63E6C00D444F7 /* Group.swift in Sources */,
 				74397D632706E2FD001B50CB /* NetworkService.swift in Sources */,
 				7420A56B26DCD6A100D92629 /* FriendTableViewCell.swift in Sources */,
 				74D37AB526D2B63900E65F83 /* MyCommunitysTableVC.swift in Sources */,

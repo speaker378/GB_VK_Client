@@ -1,5 +1,5 @@
 //
-//  Community.swift
+//  Group.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 25.08.2021.
@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-struct Community: Codable {
+struct Group: Codable {
     let id: Int
     let name: String
     let avatarUrlString: String
@@ -20,12 +20,12 @@ struct Community: Codable {
     }
 }
 
-class RealmCommunity: Object {
+class RealmGroup: Object {
     @Persisted(primaryKey: true) var id: Int = 0
     @Persisted(indexed: true) var name: String = ""
     @Persisted var avatarUrlString: String = ""
     
-    convenience init(community: Community) {
+    convenience init(community: Group) {
         self.init()
         self.id = community.id
         self.name = community.name

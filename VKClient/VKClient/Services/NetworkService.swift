@@ -73,7 +73,7 @@ final class NetworkService {
             for i in 0..<news.count {
                 if news[i].sourceID < 0 {
                     let group = groups.first(where: { $0.id == -news[i].sourceID })
-                    news[i].avatarURL = group?.avatarURL
+                    news[i].avatarURL = group?.avatarUrlString
                     news[i].creatorName = group?.name
                 } else {
                     let profile = profiles.first(where: { $0.id == news[i].sourceID })
@@ -187,8 +187,8 @@ final class NetworkService {
             else { return complition() }
             
             do {
-                let communitys = try JSONDecoder().decode(VKResponse<Community>.self, from: data).response.items
-                let realmCommunitys = communitys.map { RealmCommunity(community: $0) }
+                let communitys = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
+                let realmCommunitys = communitys.map { RealmGroup(community: $0) }
                 DispatchQueue.main.async {
                     try? RealmService.save(items: realmCommunitys)
                     complition()
@@ -200,7 +200,7 @@ final class NetworkService {
         task.resume()
     }
     
-    func getCommunitysSearch(text: String, complition: @escaping ([Community]) -> Void) {
+    func getCommunitysSearch(text: String, complition: @escaping ([Group]) -> Void) {
         let path = "/method/groups.search"
         let params = [
             "q" : text,
@@ -219,7 +219,7 @@ final class NetworkService {
             else { return complition([]) }
             
             do {
-                let communitys = try JSONDecoder().decode(VKResponse<Community>.self, from: data).response.items
+                let communitys = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
                 DispatchQueue.main.async {
                     complition(communitys)
                 }

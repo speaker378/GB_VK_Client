@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class MyCommunitysTableVC: UITableViewController {
-    private var myCommunitys: Results<RealmCommunity>?
+    private var myCommunitys: Results<RealmGroup>?
     private var communitysToken: NotificationToken?
     var networkService = NetworkService()
     
@@ -17,7 +17,7 @@ class MyCommunitysTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "CommunityCell", bundle: nil), forCellReuseIdentifier: "communityCell")
-        myCommunitys = try? RealmService.load(typeOf: RealmCommunity.self)
+        myCommunitys = try? RealmService.load(typeOf: RealmGroup.self)
         fetchCommunitys()
     }
     
