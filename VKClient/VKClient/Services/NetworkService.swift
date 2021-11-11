@@ -76,8 +76,8 @@ final class NetworkService {
                     news[i].avatarURL = group?.avatarUrlString
                     news[i].creatorName = group?.name
                 } else {
-                    let profile = profiles.first(where: { $0.id == news[i].sourceID })
-                    news[i].avatarURL = profile?.avatarURL
+                    let profile = profiles.first(where: { $0.userID == news[i].sourceID })
+                    news[i].avatarURL = profile?.avatarUrlString
                     news[i].creatorName = profile?.firstName
                 }
             }

@@ -13,8 +13,8 @@ struct Profile: Codable {
     let firstName: String
     let lastName: String
     let avatarUrlString: String
-    let networkStatus: Int
-    let friendStatus: Int
+    let networkStatus: Int?
+    let friendStatus: Int?
         
     enum CodingKeys: String, CodingKey {
         case userID = "id"
@@ -41,7 +41,7 @@ class RealmProfile: Object {
         self.firstName = friend.firstName
         self.lastName = friend.lastName
         self.avatarUrlString = friend.avatarUrlString
-        self.networkStatus = friend.networkStatus
-        self.friendStatus = friend.friendStatus
+        self.networkStatus = friend.networkStatus ?? 0
+        self.friendStatus = friend.friendStatus ?? 0
     }
 }
