@@ -12,7 +12,6 @@ import Foundation
 struct NewsPublication: Codable {
     let sourceID: Int // идентификатор источника новости (положительный — новость пользователя, отрицательный — новость группы)
     let date: Int // время публикации новости в формате unixtime
-    let postType: PostTypeEnum
     let text: String
     let attachments: [Attachment]?
     let comments: Comments
@@ -20,37 +19,20 @@ struct NewsPublication: Codable {
     let reposts: Reposts
     let views: Views
     let postID: Int
-    let type: PostTypeEnum
     var avatarURL: String?
     var creatorName: String?
     
     enum CodingKeys: String, CodingKey {
         case sourceID = "source_id"
         case date
-        case postType = "post_type"
         case text
         case attachments
         case comments, likes, reposts, views
         case postID = "post_id"
-        case type
     }
 }
 
 struct Attachment: Codable {
-    let type: AttachmentType
+    let type: String
     let photo: Photo?
-}
-
-enum PostTypeEnum: String, Codable {
-    case post = "post"
-    case photo = "photo"
-    case copy = "copy"
-}
-
-enum AttachmentType: String, Codable {
-    case album = "album"
-    case audio = "audio"
-    case link = "link"
-    case photo = "photo"
-    case video = "video"
 }
