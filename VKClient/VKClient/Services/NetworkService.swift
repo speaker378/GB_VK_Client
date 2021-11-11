@@ -134,7 +134,7 @@ final class NetworkService {
             else { return complition() }
             
             do {
-                let jsonPhotos = try JSONDecoder().decode(VKResponse<UserPhoto>.self, from: data).response.items
+                let jsonPhotos = try JSONDecoder().decode(VKResponse<Photo>.self, from: data).response.items
                 let realmPhotos = jsonPhotos.map { RealmUserPhoto(userPhoto: $0) }
                 DispatchQueue.main.async {
                     try? RealmService.save(items: realmPhotos)

@@ -8,11 +8,11 @@
 import UIKit
 import RealmSwift
 
-struct UserPhoto: Codable {
+struct Photo: Codable {
     let id: Int
     let ownerID: Int
     let sizes: [Size]
-    let likes: Likes
+    let likes: Likes?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -41,13 +41,13 @@ class RealmUserPhoto: Object {
     @Persisted var countLikes: Int = 0
     @Persisted(originProperty: "userPhotos") var assignee: LinkingObjects<RealmProfile>
     
-    convenience init(userPhoto: UserPhoto) {
+    convenience init(userPhoto: Photo) {
         self.init()
         self.id = userPhoto.id
         self.ownerID = userPhoto.ownerID
         self.sizes.append(objectsIn: userPhoto.sizes.map { RealmSize(size: $0) })
-        self.userLikes = userPhoto.likes.userLikes
-        self.countLikes = userPhoto.likes.count
+        self.userLikes = userPhoto.likes?.userLikes ?? 0
+        self.countLikes = userPhoto.likes?.count ?? 0
     }
 }
 

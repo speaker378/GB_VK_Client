@@ -72,26 +72,6 @@ struct Attachment: Codable {
     let photo: Photo?
 }
 
-struct Photo: Codable {
-    let albumID, date, id, ownerID: Int
-    let hasTags: Bool
-    let accessKey: String?
-    let sizes: [Size]
-    let text: String
-    let userID, postID: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case albumID = "album_id"
-        case date, id
-        case ownerID = "owner_id"
-        case hasTags = "has_tags"
-        case accessKey = "access_key"
-        case sizes, text
-        case userID = "user_id"
-        case postID = "post_id"
-    }
-}
-
 enum PostTypeEnum: String, Codable {
     case post = "post"
     case photo = "photo"
