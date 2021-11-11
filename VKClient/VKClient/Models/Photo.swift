@@ -24,12 +24,21 @@ struct Photo: Codable {
 
 struct Size: Codable {
     let urlString: String
-    let type: String
+    let width: Int
+    let height: Int
+    let type: SizeType
     
     enum CodingKeys: String, CodingKey {
         case urlString = "url"
+        case width
+        case height
         case type
     }
+}
+
+// https://vk.com/dev/photo_sizes
+enum SizeType: String, Codable {
+    case s, m, x, o, p, q, r, y, z, w
 }
 
 
@@ -59,6 +68,6 @@ class RealmSize: Object {
     convenience init(size: Size) {
         self.init()
         self.urlString = size.urlString
-        self.type = size.type
+        self.type = size.type.rawValue
     }
 }
