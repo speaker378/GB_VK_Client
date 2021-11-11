@@ -103,8 +103,8 @@ final class NetworkService {
             else { return complition() }
             
             do {
-                let friends = try JSONDecoder().decode(VKResponse<Friend>.self, from: data).response.items
-                let realmFriends = friends.map { RealmFriend(friend: $0) }
+                let friends = try JSONDecoder().decode(VKResponse<Profile>.self, from: data).response.items
+                let realmFriends = friends.map { RealmProfile(friend: $0) }
                 DispatchQueue.main.async {
                     try? RealmService.save(items: realmFriends)
                     complition()
@@ -140,7 +140,7 @@ final class NetworkService {
                     try? RealmService.save(items: realmPhotos)
                     let photos = List<RealmUserPhoto>()
                     photos.append(objectsIn: realmPhotos)
-                    let friend = try? RealmService.load(typeOf: RealmFriend.self).filter("userID == \(userId)")
+                    let friend = try? RealmService.load(typeOf: RealmProfile.self).filter("userID == \(userId)")
                     let realm = try? Realm()
                     try? realm?.write{
                         friend?.first?.userPhotos = photos

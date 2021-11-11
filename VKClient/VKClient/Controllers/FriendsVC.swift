@@ -12,16 +12,16 @@ class FriendsVC: UIViewController {
     
     @IBOutlet weak var friendsTableView: UITableView!
     
-    private var friends: Results<RealmFriend>?
+    private var friends: Results<RealmProfile>?
     private var friendsFirstLetters = [String]()
-    private var friendsDict = [String: [RealmFriend]]()
+    private var friendsDict = [String: [RealmProfile]]()
     private var loader: Loader?
     private var friendsToken: NotificationToken?
     var networkService = NetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        friends = try? RealmService.load(typeOf: RealmFriend.self)
+        friends = try? RealmService.load(typeOf: RealmProfile.self)
         fetchFriends()
         loader = Loader(rootView: view)
     }

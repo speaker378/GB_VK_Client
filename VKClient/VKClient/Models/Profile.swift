@@ -1,5 +1,5 @@
 //
-//  Friend.swift
+//  Profile.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 24.08.2021.
@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-struct Friend: Codable {
+struct Profile: Codable {
     let userID: Int
     let firstName: String
     let lastName: String
@@ -26,7 +26,7 @@ struct Friend: Codable {
     }
 }
 
-class RealmFriend: Object {
+class RealmProfile: Object {
     @Persisted(primaryKey: true) var userID: Int = 0
     @Persisted(indexed: true) var firstName: String = ""
     @Persisted(indexed: true) var lastName: String = ""
@@ -35,7 +35,7 @@ class RealmFriend: Object {
     @Persisted var friendStatus: Int = 0
     @Persisted var userPhotos: List<RealmUserPhoto>
     
-    convenience init(friend: Friend) {
+    convenience init(friend: Profile) {
         self.init()
         self.userID = friend.userID
         self.firstName = friend.firstName

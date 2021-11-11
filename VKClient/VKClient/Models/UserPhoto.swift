@@ -39,7 +39,7 @@ class RealmUserPhoto: Object {
     @Persisted var sizes: List<RealmSize>
     @Persisted var userLikes: Int = 0
     @Persisted var countLikes: Int = 0
-    @Persisted(originProperty: "userPhotos") var assignee: LinkingObjects<RealmFriend>
+    @Persisted(originProperty: "userPhotos") var assignee: LinkingObjects<RealmProfile>
     
     convenience init(userPhoto: UserPhoto) {
         self.init()
