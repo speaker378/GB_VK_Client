@@ -15,7 +15,8 @@ class NewsTableVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "newsCell")
+        tableView.register(NewsTextCell.self, forCellReuseIdentifier: "NewsTextCell")
+        tableView.register(NewsPhotoCell.self, forCellReuseIdentifier: "NewsPhotoCell")
         tableView.register(NewsHeader.self, forHeaderFooterViewReuseIdentifier: "NewsHeader")
         tableView.register(NewsFooter.self, forHeaderFooterViewReuseIdentifier: "NewsFooter")
         tableView.sectionHeaderTopPadding = 10
@@ -39,15 +40,48 @@ class NewsTableVC: UITableViewController {
         let sectionData = myNews[section]
         if sectionData.attachments != nil { cellsInSection += 1 }
         if sectionData.text != "" { cellsInSection += 1 }
-        return 1
+        return cellsInSection
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell", for: indexPath) as? NewsCell else { return UITableViewCell() }
-
-        cell.configure(news: myNews[indexPath.row])
-
-        return cell
+        guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
+        guard let photoCell = tableView.dequeueReusableCell(withIdentifier: "NewsPhotoCell", for: indexPath) as? NewsPhotoCell else { return UITableViewCell() }
+        
+        let sectionData = myNews[indexPath.section]
+        
+        if indexPath.row == 0 {
+            if sectionData.text != "" {
+                textCell.newsText.text = sectionData.text
+                return textCell
+            }
+            let options = ImageLoadingOptions(
+              placeholder: UIImage(systemName: "photo"),
+              transition: .fadeIn(duration: 0.25)
+            )
+            let urlString = sectionData.attachments?.first?.photo?.sizes.first?.urlString
+            if let url = URL(string: urlString ?? "") {
+                Nuke.loadImage(with: url, options: options, into: photoCell.image)
+            }
+            
+            return photoCell
+        }
+        
+        if indexPath.row == 1 {
+            if sectionData.attachments != nil {
+                let options = ImageLoadingOptions(
+                  placeholder: UIImage(systemName: "photo"),
+                  transition: .fadeIn(duration: 0.25)
+                )
+                let urlString = sectionData.attachments?.first?.photo?.sizes.first?.urlString
+                if let url = URL(string: urlString ?? "") {
+                    Nuke.loadImage(with: url, options: options, into: photoCell.image)
+                }
+                
+                return photoCell
+            }
+        }
+        
+        return textCell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

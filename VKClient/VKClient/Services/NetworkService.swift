@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 final class NetworkService {
-    private let clientId = "7963810"
+    private let clientId = "7998302"
     private let versionAPI = "5.131"
     private let session = URLSession.shared
     private var taskSearchCommunitys: URLSessionDataTask? = nil
@@ -46,7 +46,10 @@ final class NetworkService {
     
     func getNewsFeed(completion: @escaping ([NewsPublication]) -> Void) {
         let path = "/method/newsfeed.get"
-        let params = ["filters" : "post,photo"]
+        let params = [
+            "filters" : "post",
+            "count" : "20"
+        ]
         let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
