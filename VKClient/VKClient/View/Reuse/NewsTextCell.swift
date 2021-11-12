@@ -20,6 +20,10 @@ class NewsTextCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        newsText.text = nil
+    }
+    
     func configureContents() {
         newsText.translatesAutoresizingMaskIntoConstraints = false
         
