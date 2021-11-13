@@ -20,6 +20,7 @@ class NewsTableVC: UITableViewController {
         tableView.register(NewsHeader.self, forHeaderFooterViewReuseIdentifier: "NewsHeader")
         tableView.register(NewsFooter.self, forHeaderFooterViewReuseIdentifier: "NewsFooter")
         tableView.sectionHeaderTopPadding = 10
+        tableView.separatorStyle = .none
         fetchNews()
     }
     

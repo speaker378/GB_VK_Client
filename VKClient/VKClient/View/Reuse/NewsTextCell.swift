@@ -36,7 +36,7 @@ class NewsTextCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            newsText.heightAnchor.constraint(equalToConstant: contentView.frame.height),
+            newsText.topAnchor.constraint(equalTo: contentView.topAnchor),
             newsText.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             newsText.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             newsText.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),

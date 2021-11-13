@@ -26,6 +26,7 @@ class NewsPhotoCell: UITableViewCell {
     
     func configureContents() {
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
         
         contentView.addSubview(image)
         
@@ -33,10 +34,10 @@ class NewsPhotoCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            image.heightAnchor.constraint(equalToConstant: 100),
+            image.topAnchor.constraint(equalTo: contentView.topAnchor),
             image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-
+            image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            image.heightAnchor.constraint(equalToConstant: 300),
         ])
         
     }
