@@ -33,10 +33,6 @@ struct NewsPublication: Codable {
 }
 
 struct Attachment: Codable {
-    let type: AttachmentType
+    let type: String
     let photo: Photo?
-}
-
-enum AttachmentType: String, Codable {
-    case photo = "photo"
 }
