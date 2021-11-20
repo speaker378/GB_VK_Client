@@ -59,11 +59,13 @@ class NewsTableVC: UITableViewController {
               placeholder: UIImage(systemName: "photo"),
               transition: .fadeIn(duration: 0.25)
             )
-            let urlString = sectionData.attachments?.first?.photo?.sizes.first?.urlString
-            if let url = URL(string: urlString ?? "") {
-                Nuke.loadImage(with: url, options: options, into: photoCell.image)
-            }
             
+            guard let photoSizes = sectionData.attachments?.first?.photo?.sizes,
+                  let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]),
+                  let url = URL(string: urlString)
+            else { return photoCell }
+            
+            Nuke.loadImage(with: url, options: options, into: photoCell.image)
             return photoCell
         }
         

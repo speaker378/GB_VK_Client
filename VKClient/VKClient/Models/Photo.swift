@@ -20,6 +20,19 @@ struct Photo: Codable {
         case sizes
         case likes
     }
+    
+    static func findUrlInPhotoSizes(sizes: [Size], sizesByPriority: [SizeType]) -> String? {
+        var urlString: String?
+        let tempDict = sizes.reduce(into: [SizeType : String]()) { result, next in
+            result[next.type] = next.urlString
+        }
+        for sizesByPriority in sizesByPriority {
+            urlString = tempDict[sizesByPriority]
+            if urlString != nil { break }
+        }
+        if urlString == nil { urlString = tempDict.first?.value }
+        return urlString
+    }
 }
 
 struct Size: Codable {
