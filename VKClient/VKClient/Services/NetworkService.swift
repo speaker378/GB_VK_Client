@@ -60,29 +60,36 @@ final class NetworkService {
                   let data = responseData
             else { return completion([]) }
             
-            guard var news = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items else {
-                return
+            let dispatchGroup = DispatchGroup()
+            var news = [NewsPublication]()
+            var profiles: [Profile]?
+            var groups: [Group]?
+            
+            dispatchGroup.enter()
+            do {
+                news = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items
+                profiles = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.profiles
+                groups = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.groups
+            } catch  {
+                print(error)
             }
-            guard let profiles = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.profiles else {
-                return
-            }
-            guard let groups = try? JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.groups else {
-                return
-            }
+            dispatchGroup.leave()
             
             for i in 0..<news.count {
-                if news[i].sourceID < 0 {
-                    let group = groups.first(where: { $0.id == -news[i].sourceID })
-                    news[i].avatarURL = group?.avatarUrlString
-                    news[i].creatorName = group?.name
-                } else {
-                    let profile = profiles.first(where: { $0.userID == news[i].sourceID })
-                    news[i].avatarURL = profile?.avatarUrlString
-                    news[i].creatorName = profile?.firstName
+                DispatchQueue.global().async(group: dispatchGroup) {
+                    if news[i].sourceID < 0 {
+                        let group = groups?.first(where: { $0.id == -news[i].sourceID })
+                        news[i].avatarURL = group?.avatarUrlString
+                        news[i].creatorName = group?.name
+                    } else {
+                        let profile = profiles?.first(where: { $0.userID == news[i].sourceID })
+                        news[i].avatarURL = profile?.avatarUrlString
+                        news[i].creatorName = profile?.firstName
+                    }
                 }
             }
             
-            DispatchQueue.main.async {
+            dispatchGroup.notify(queue: .main) {
                 completion(news)
             }
         }
