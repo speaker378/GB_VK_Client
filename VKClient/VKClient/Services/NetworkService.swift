@@ -65,15 +65,17 @@ final class NetworkService {
             var profiles: [Profile]?
             var groups: [Group]?
             
-            dispatchGroup.enter()
             do {
+                dispatchGroup.enter()
                 news = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items
                 profiles = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.profiles
                 groups = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.groups
+                dispatchGroup.leave()
             } catch  {
+                dispatchGroup.leave()
                 print(error)
             }
-            dispatchGroup.leave()
+            
             
             for i in 0..<news.count {
                 DispatchQueue.global().async(group: dispatchGroup) {

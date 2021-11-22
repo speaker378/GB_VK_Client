@@ -50,14 +50,15 @@ class NewsTableVC: UITableViewController {
         
         let sectionData = myNews[indexPath.section]
         
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             if sectionData.text != "" {
                 textCell.newsText.text = sectionData.text
                 return textCell
             }
             let options = ImageLoadingOptions(
-              placeholder: UIImage(systemName: "photo"),
-              transition: .fadeIn(duration: 0.25)
+                placeholder: UIImage(systemName: "photo"),
+                transition: .fadeIn(duration: 0.25)
             )
             
             guard let photoSizes = sectionData.attachments?.first?.photo?.sizes,
@@ -67,13 +68,12 @@ class NewsTableVC: UITableViewController {
             
             Nuke.loadImage(with: url, options: options, into: photoCell.image)
             return photoCell
-        }
-        
-        if indexPath.row == 1 {
+            
+        default:
             if sectionData.attachments != nil {
                 let options = ImageLoadingOptions(
-                  placeholder: UIImage(systemName: "photo"),
-                  transition: .fadeIn(duration: 0.25)
+                    placeholder: UIImage(systemName: "photo"),
+                    transition: .fadeIn(duration: 0.25)
                 )
                 let urlString = sectionData.attachments?.first?.photo?.sizes.first?.urlString
                 if let url = URL(string: urlString ?? "") {
@@ -82,9 +82,8 @@ class NewsTableVC: UITableViewController {
                 
                 return photoCell
             }
+            return textCell
         }
-        
-        return textCell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
