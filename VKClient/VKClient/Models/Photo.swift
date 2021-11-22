@@ -8,11 +8,11 @@
 import UIKit
 import RealmSwift
 
-struct UserPhoto: Codable {
+struct Photo: Codable {
     let id: Int
     let ownerID: Int
     let sizes: [Size]
-    let likes: Likes
+    let likes: Likes?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,22 +24,21 @@ struct UserPhoto: Codable {
 
 struct Size: Codable {
     let urlString: String
-    let type: String
+    let width: Int
+    let height: Int
+    let type: SizeType
     
     enum CodingKeys: String, CodingKey {
         case urlString = "url"
+        case width
+        case height
         case type
     }
 }
 
-struct Likes: Codable {
-    let userLikes: Int
-    let count: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case userLikes = "user_likes"
-        case count
-    }
+// https://vk.com/dev/photo_sizes
+enum SizeType: String, Codable {
+    case s, m, x, o, p, q, r, y, z, w
 }
 
 
@@ -49,15 +48,15 @@ class RealmUserPhoto: Object {
     @Persisted var sizes: List<RealmSize>
     @Persisted var userLikes: Int = 0
     @Persisted var countLikes: Int = 0
-    @Persisted(originProperty: "userPhotos") var assignee: LinkingObjects<RealmFriend>
+    @Persisted(originProperty: "userPhotos") var assignee: LinkingObjects<RealmProfile>
     
-    convenience init(userPhoto: UserPhoto) {
+    convenience init(userPhoto: Photo) {
         self.init()
         self.id = userPhoto.id
         self.ownerID = userPhoto.ownerID
         self.sizes.append(objectsIn: userPhoto.sizes.map { RealmSize(size: $0) })
-        self.userLikes = userPhoto.likes.userLikes
-        self.countLikes = userPhoto.likes.count
+        self.userLikes = userPhoto.likes?.userLikes ?? 0
+        self.countLikes = userPhoto.likes?.count ?? 0
     }
 }
 
@@ -69,6 +68,6 @@ class RealmSize: Object {
     convenience init(size: Size) {
         self.init()
         self.urlString = size.urlString
-        self.type = size.type
+        self.type = size.type.rawValue
     }
 }

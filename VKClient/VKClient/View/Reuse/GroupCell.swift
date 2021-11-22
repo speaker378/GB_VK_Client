@@ -1,5 +1,5 @@
 //
-//  CommunityCell.swift
+//  GroupCell.swift
 //  VKClient
 //
 //  Created by Сергей Черных on 25.08.2021.
@@ -8,9 +8,9 @@
 import UIKit
 import Nuke
 
-class CommunityCell: UITableViewCell {
-    @IBOutlet weak var communityImageView: UIImageView!
-    @IBOutlet weak var communityNameLabel: UILabel!
+class GroupCell: UITableViewCell {
+    @IBOutlet weak var groupImageView: UIImageView!
+    @IBOutlet weak var groupNameLabel: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -31,29 +31,29 @@ class CommunityCell: UITableViewCell {
     }
     
     private func setupViews() {
-        communityNameLabel.font = UIFont.systemFont(ofSize: 20)
+        groupNameLabel.font = UIFont.systemFont(ofSize: 20)
     }
     
-    func configure(community: RealmCommunity) {
+    func configure(group: RealmGroup) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
           transition: .fadeIn(duration: 0.25)
         )
-        if let url = URL(string: community.avatarUrlString) {
-            Nuke.loadImage(with: url, options: options, into: communityImageView)
+        if let url = URL(string: group.avatarUrlString) {
+            Nuke.loadImage(with: url, options: options, into: groupImageView)
         }
-        communityNameLabel.text = community.name
+        groupNameLabel.text = group.name
     }
     
-    func configure(community: Community) {
+    func configure(group: Group) {
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "photo"),
           transition: .fadeIn(duration: 0.25)
         )
-        if let url = URL(string: community.avatarUrlString) {
-            Nuke.loadImage(with: url, options: options, into: communityImageView)
+        if let url = URL(string: group.avatarUrlString) {
+            Nuke.loadImage(with: url, options: options, into: groupImageView)
         }
-        communityNameLabel.text = community.name
+        groupNameLabel.text = group.name
     }
     
 }
