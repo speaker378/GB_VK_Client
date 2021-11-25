@@ -9,15 +9,15 @@ import UIKit
 import RealmSwift
 
 final class NetworkService {
-    private let clientId = "7998302"
-    private let versionAPI = "5.131"
+    private let clientId = APIConstants.shared.clientId
+    private let versionAPI = APIConstants.shared.versionAPI
     private let session = URLSession.shared
     private var taskSearchGroups: URLSessionDataTask? = nil
     
     private func url(from path: String, params: [String: String]) -> URL {
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.vk.com"
+        components.scheme = APIConstants.shared.scheme
+        components.host = APIConstants.shared.host
         components.path = path
         components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
         components.queryItems! += [
@@ -178,36 +178,6 @@ final class NetworkService {
         task.resume()
     }
     
-    
-    func getGroups(userId: Int, complition: @escaping () -> Void) {
-        let path = "/method/groups.get"
-        let params = [
-            "user_id" : String(userId),
-            "extended" : "1",
-        ]
-        let url = url(from: path, params: params)
-        let request = URLRequest(url: url)
-        
-        let task = session.dataTask(with: request) { responseData, urlResponse, error in
-            guard let response = urlResponse as? HTTPURLResponse,
-                  (200...299).contains(response.statusCode),
-                  error == nil,
-                  let data = responseData
-            else { return complition() }
-            
-            do {
-                let groups = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
-                let realmGroups = groups.map { RealmGroup(group: $0) }
-                DispatchQueue.main.async {
-                    try? RealmService.save(items: realmGroups)
-                    complition()
-                }
-            } catch  {
-                print(error)
-            }
-        }
-        task.resume()
-    }
     
     func getGroupsSearch(text: String, complition: @escaping ([Group]) -> Void) {
         let path = "/method/groups.search"
