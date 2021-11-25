@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58A9CD2B27502CDC00042B09 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 58A9CD2A27502CDC00042B09 /* PromiseKit */; };
 		58E53ABA274F991F00E32CC9 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E53AB9274F991F00E32CC9 /* AsyncOperation.swift */; };
 		58E53ABC274F9EBC00E32CC9 /* FetchDataGroupsOperation.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E53ABB274F9EBC00E32CC9 /* FetchDataGroupsOperation.swift.swift */; };
 		58E53ABE274F9FA300E32CC9 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E53ABD274F9FA300E32CC9 /* APIConstants.swift */; };
@@ -113,6 +114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7477103B27256A3200132325 /* FirebaseDatabase in Frameworks */,
+				58A9CD2B27502CDC00042B09 /* PromiseKit in Frameworks */,
 				7474B0AE271D2BE0005BA504 /* RealmSwift in Frameworks */,
 				7474B0AC271D2BE0005BA504 /* Realm in Frameworks */,
 				7474B0A9271D2B76005BA504 /* Nuke in Frameworks */,
@@ -269,6 +271,7 @@
 				7474B0AD271D2BE0005BA504 /* RealmSwift */,
 				7477103827256A3200132325 /* FirebaseAuth */,
 				7477103A27256A3200132325 /* FirebaseDatabase */,
+				58A9CD2A27502CDC00042B09 /* PromiseKit */,
 			);
 			productName = VKClient;
 			productReference = 7436DCEA26C6E52600E7E21C /* VKClient.app */;
@@ -301,6 +304,7 @@
 				7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */,
 				7474B0AA271D2BE0005BA504 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				7477103727256A3200132325 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				58A9CD2927502CDB00042B09 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 			);
 			productRefGroup = 7436DCEB26C6E52600E7E21C /* Products */;
 			projectDirPath = "";
@@ -575,6 +579,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		58A9CD2927502CDB00042B09 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = exactVersion;
+				version = 6.16.2;
+			};
+		};
 		7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kean/Nuke.git";
@@ -602,6 +614,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		58A9CD2A27502CDC00042B09 /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A9CD2927502CDB00042B09 /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
+		};
 		7474B0A8271D2B76005BA504 /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7474B0A7271D2B76005BA504 /* XCRemoteSwiftPackageReference "Nuke" */;
