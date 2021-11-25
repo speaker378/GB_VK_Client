@@ -37,7 +37,19 @@ class GroupsTableVC: UITableViewController {
     }
     
     private func fetchGroups() {
-        networkService.getGroups(userId: Session.shared.userId) { }
+        let operationQ = OperationQueue()
+        operationQ.maxConcurrentOperationCount = 5
+        
+        let fetchOperation = FetchDataGroupsOperation()
+        let parseOperation = ParseDataGroupsOperation()
+        let saveToRealmOperation = SaveGroupsToRealmOperation()
+        
+        parseOperation.addDependency(fetchOperation)
+        saveToRealmOperation.addDependency(parseOperation)
+        
+        operationQ.addOperation(fetchOperation)
+        operationQ.addOperation(parseOperation)
+        operationQ.addOperation(saveToRealmOperation)
     }
     
     private func groupsObserveSetup() {
