@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import PromiseKit
 
 class FriendsVC: UIViewController {
     
@@ -59,7 +60,12 @@ class FriendsVC: UIViewController {
     }
     
     private func fetchFriends() {
-        networkService.getFriends {}
+        networkService.getFriendsUrlReuest()
+            .then(networkService.getFriendsData(with:))
+            .then(networkService.parseFriends(json:))
+            .then(networkService.parseFriendsToRealm(friends:))
+            .done { try? RealmService.save(items: $0) }
+            .catch { print($0) }
     }
     
     private func setupFriendsData() {

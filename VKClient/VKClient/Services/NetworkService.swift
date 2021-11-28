@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import PromiseKit
 
 final class NetworkService {
     private let clientId = APIConstants.shared.clientId
@@ -26,7 +27,7 @@ final class NetworkService {
         ]
         return components.url!
     }
-    
+    // MARK: Auth
     func getAuthorizeRequest() -> URLRequest {
         var urlConstructor = URLComponents()
         urlConstructor.scheme = "https"
@@ -43,7 +44,7 @@ final class NetworkService {
         let request = URLRequest(url: urlConstructor.url!)
         return request
     }
-    
+    // MARK: News
     func getNewsFeed(completion: @escaping ([NewsPublication]) -> Void) {
         let path = "/method/newsfeed.get"
         let params = [
@@ -97,34 +98,51 @@ final class NetworkService {
         }
         task.resume()
     }
-    
-    func getFriends(complition: @escaping () -> Void) {
-        let path = "/method/friends.get"
-        let params = ["fields" : "photo_100,online,friend_status"]
-        let url = url(from: path, params: params)
-        let request = URLRequest(url: url)
-        
-        let task = session.dataTask(with: request) { responseData, urlResponse, error in
-            guard let response = urlResponse as? HTTPURLResponse,
-                  (200...299).contains(response.statusCode),
-                  error == nil,
-                  let data = responseData
-            else { return complition() }
-            
-            do {
-                let friends = try JSONDecoder().decode(VKResponse<Profile>.self, from: data).response.items
-                let realmFriends = friends.map { RealmProfile(friend: $0) }
-                DispatchQueue.main.async {
-                    try? RealmService.save(items: realmFriends)
-                    complition()
-                }
-            } catch  {
-                print(error)
-            }
+    // MARK: Friends
+    func getFriendsUrlReuest() -> Promise<URLRequest> {
+        return Promise<URLRequest> {
+            let path = "/method/friends.get"
+            let params = ["fields" : "photo_100,online,friend_status"]
+            let url = url(from: path, params: params)
+            let request = URLRequest(url: url)
+            $0.fulfill(request)
         }
-        task.resume()
     }
     
+    func getFriendsData(with request: URLRequest) -> Promise<Data> {
+        return Promise<Data> { seal in
+            let task = session.dataTask(with: request) { responseData, _, error in
+                if error != nil {
+                    seal.reject(error!)
+                }
+                if let data = responseData {
+                    seal.fulfill(data)
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func parseFriends(json: Data) -> Promise<[Profile]> {
+        return Promise<[Profile]> {
+            do {
+                let friends = try JSONDecoder().decode(VKResponse<Profile>.self, from: json).response.items
+                $0.fulfill(friends)
+            } catch {
+                print(error)
+                $0.reject(error)
+            }
+        }
+    }
+    
+    func parseFriendsToRealm(friends: [Profile]) -> Guarantee<[RealmProfile]> {
+        return Guarantee<[RealmProfile]> {
+            let realmFriends = friends.map { RealmProfile(friend: $0) }
+            $0(realmFriends)
+        }
+    }
+    
+    // MARK: Photos
     func getAllPhotos(userId: Int, complition: @escaping () -> Void) {
         let path = "/method/photos.getAll"
         let params = [
@@ -178,7 +196,7 @@ final class NetworkService {
         task.resume()
     }
     
-    
+    // MARK: Groups
     func getGroupsSearch(text: String, complition: @escaping ([Group]) -> Void) {
         let path = "/method/groups.search"
         let params = [
