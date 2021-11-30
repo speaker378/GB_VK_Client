@@ -35,8 +35,12 @@ class PhotosCollectionVC: UICollectionViewController {
             switch changes {
             case .initial:
                 self?.collectionView.reloadData()
-            case .update:
-                self?.collectionView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                self?.collectionView.performBatchUpdates{
+                    self?.collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: 0) })
+                    self?.collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: 0) })
+                    self?.collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: 0) })
+                }
             case .error(let error):
                 print(error)
             }

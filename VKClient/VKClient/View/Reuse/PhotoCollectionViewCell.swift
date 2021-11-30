@@ -13,6 +13,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var likeControl: Like!
     
+    let optionsNuke = ImageLoadingOptions(
+      placeholder: UIImage(systemName: "photo"),
+      transition: .fadeIn(duration: 0.25)
+    )
+    
     func selectSizePhoto(of sizeList: List<RealmSize>) -> RealmSize {
         let sizes = sizeList.map { $0.type }
         
@@ -32,12 +37,8 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     func configure(userPhoto: RealmUserPhoto) {
         let size = selectSizePhoto(of: userPhoto.sizes)
-        let options = ImageLoadingOptions(
-          placeholder: UIImage(systemName: "photo"),
-          transition: .fadeIn(duration: 0.25)
-        )
         if let url = URL(string: size.urlString) {
-            Nuke.loadImage(with: url, options: options, into: photoImageView)
+            Nuke.loadImage(with: url, options: optionsNuke, into: photoImageView)
         }
         likeControl.likes = userPhoto.countLikes
         likeControl.ownerID = userPhoto.ownerID

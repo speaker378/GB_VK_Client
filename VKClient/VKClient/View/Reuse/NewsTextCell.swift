@@ -13,7 +13,7 @@ class NewsTextCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureContents()
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -24,15 +24,18 @@ class NewsTextCell: UITableViewCell {
         newsText.text = nil
     }
     
-    func configureContents() {
+    func setupViews() {
         newsText.translatesAutoresizingMaskIntoConstraints = false
+        newsText.backgroundColor = .systemBackground
+        newsText.isOpaque = true
         
         contentView.addSubview(newsText)
         
         newsText.font = UIFont.systemFont(ofSize: 18)
         newsText.numberOfLines = 0
 
-        contentView.backgroundColor = .systemOrange
+        contentView.backgroundColor = .systemBackground
+        contentView.isOpaque = true
         
         NSLayoutConstraint.activate([
             

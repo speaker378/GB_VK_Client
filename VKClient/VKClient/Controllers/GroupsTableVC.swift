@@ -57,8 +57,12 @@ class GroupsTableVC: UITableViewController {
             switch changes {
             case .initial:
                 self?.tableView.reloadData()
-            case .update:
-                self?.tableView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                self?.tableView.beginUpdates()
+                self?.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.endUpdates()
             case .error(let error):
                 print(error)
             }
@@ -95,5 +99,9 @@ class GroupsTableVC: UITableViewController {
         let configuration = UISwipeActionsConfiguration(actions: [leaveAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        (64 + 4 * 2)
     }
 }
