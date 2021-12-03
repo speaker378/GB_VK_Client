@@ -12,6 +12,9 @@ class NewsTableVC: UITableViewController {
     
     private var myNews = [NewsPublication]()
     var networkService = NetworkService()
+    var startTime = Int(Date().timeIntervalSince1970)
+    var nextFrom: String!
+    var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +25,40 @@ class NewsTableVC: UITableViewController {
         tableView.sectionHeaderTopPadding = 10
         tableView.separatorStyle = .none
         tableView.backgroundColor = .tertiarySystemGroupedBackground
+        setupPullToRefresh()
+        tableView.prefetchDataSource = self
         fetchNews()
     }
     
+    private func setupPullToRefresh() {
+        tableView.refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Загрузка...")
+        refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+    }
+    
+    @objc private func refreshNews() {
+        self.refreshControl?.beginRefreshing()
+        networkService.getNewsFeed(startTime: self.startTime, completion: { [weak self] news, nextFrom in
+            guard let self = self,
+                  news.count > 0
+            else { self?.refreshControl?.endRefreshing()
+                return }
+            
+            self.myNews = news + self.myNews
+            self.startTime = news.first!.date + 1
+            self.nextFrom = nextFrom
+            let indexSet = IndexSet(integersIn: 0..<news.count)
+            self.refreshControl?.endRefreshing()
+            self.tableView.insertSections(indexSet, with: .automatic)
+        })
+    }
+    
     func fetchNews() {
-        networkService.getNewsFeed { [weak self] myNews in
+        networkService.getNewsFeed { [weak self] myNews, nextFrom in
             guard let self = self else { return }
             self.myNews = myNews
+            self.nextFrom = nextFrom
+            self.startTime = myNews.first!.date + 1
             self.tableView.reloadData()
         }
     }
@@ -104,4 +134,22 @@ class NewsTableVC: UITableViewController {
         30
     }
     
+}
+
+extension NewsTableVC: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxSection = indexPaths.map ({ $0.section }).max() else { return }
+        
+        if maxSection > myNews.count - 3, !isLoading {
+            isLoading = true
+            networkService.getNewsFeed(startFrom: nextFrom) { [weak self] news, nextFrom in
+                guard let self = self else { return }
+                let indexSet = IndexSet(integersIn: self.myNews.count ..< self.myNews.count + news.count)
+                self.myNews.append(contentsOf: news)
+                self.nextFrom = nextFrom
+                self.tableView.insertSections(indexSet, with: .automatic)
+                self.isLoading = false
+            }
+        }
+    }
 }
