@@ -299,6 +299,7 @@
                                                 <constraint firstItem="0D7-qm-nRF" firstAttribute="leading" secondItem="bnp-8c-5Ea" secondAttribute="leading" constant="8" id="ls5-Zm-SOX"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="0D7-qm-nRF" secondAttribute="bottom" constant="4" id="Rq1-nc-KMZ"/>
                                             <constraint firstItem="jq1-TD-m9t" firstAttribute="trailing" secondItem="bnp-8c-5Ea" secondAttribute="trailing" constant="-28" id="q8E-Cc-MOw"/>
