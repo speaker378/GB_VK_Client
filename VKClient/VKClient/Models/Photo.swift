@@ -21,17 +21,19 @@ struct Photo: Codable {
         case likes
     }
     
-    static func findUrlInPhotoSizes(sizes: [Size], sizesByPriority: [SizeType]) -> String? {
+    static func findUrlInPhotoSizes(sizes: [Size], sizesByPriority: [SizeType]) -> (src: String?, ratio: CGFloat) {
         var urlString: String?
-        let tempDict = sizes.reduce(into: [SizeType : String]()) { result, next in
-            result[next.type] = next.urlString
+        var aspectRatio: CGFloat!
+        let tempDict = sizes.reduce(into: [SizeType : (String, CGFloat)]()) { result, next in
+            result[next.type] = (next.urlString, next.aspectRatio)
         }
         for sizesByPriority in sizesByPriority {
-            urlString = tempDict[sizesByPriority]
+            urlString = tempDict[sizesByPriority]?.0
+            aspectRatio = tempDict[sizesByPriority]?.1
             if urlString != nil { break }
         }
-        if urlString == nil { urlString = tempDict.first?.value }
-        return urlString
+        if urlString == nil { urlString = tempDict.first?.value.0 }
+        return (urlString, aspectRatio)
     }
 }
 
@@ -40,6 +42,7 @@ struct Size: Codable {
     let width: Int
     let height: Int
     let type: SizeType
+    var aspectRatio: CGFloat { CGFloat(height) / CGFloat(width) }
     
     enum CodingKeys: String, CodingKey {
         case urlString = "url"

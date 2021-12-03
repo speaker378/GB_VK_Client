@@ -15,6 +15,7 @@ class NewsTableVC: UITableViewController {
     var startTime = Int(Date().timeIntervalSince1970)
     var nextFrom: String!
     var isLoading = false
+    private let sizesByPriority: [SizeType] = [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,16 +63,27 @@ class NewsTableVC: UITableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    func getTextHeight(text: String, font: UIFont) -> CGFloat {
+        let maxWidth = tableView.bounds.width
+        let textBlock = CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude)
+        let rect = text.boundingRect(with: textBlock,
+                                     options:.usesLineFragmentOrigin,
+                                     attributes: [NSAttributedString.Key.font: font],
+                                     context: nil)
+        
+        let height = Double(rect.size.height)
+        return CGFloat(height)
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         myNews.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var cellsInSection = 0
+        var cellsInSection = 1
         let sectionData = myNews[section]
-        if sectionData.attachments != nil { cellsInSection += 1 }
-        if sectionData.text != "" { cellsInSection += 1 }
+        if sectionData.attachments != nil, sectionData.attachments?.first?.photo != nil { cellsInSection += 1 }
         return cellsInSection
     }
     
@@ -80,17 +92,14 @@ class NewsTableVC: UITableViewController {
         
         switch indexPath.row {
         case 0:
-            if sectionData.text != "" {
-                guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
-                textCell.newsText.text = sectionData.text
-                return textCell
-            }
-            fallthrough
-            
+            guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
+            textCell.newsText.text = sectionData.text
+            return textCell
+
         case 1:
             guard let photoSizes = sectionData.attachments?.first?.photo?.sizes else { return UITableViewCell() }
             guard let photoCell = tableView.dequeueReusableCell(withIdentifier: "NewsPhotoCell", for: indexPath) as? NewsPhotoCell else { return UITableViewCell() }
-            photoCell.configure(photoSizes)
+            photoCell.configure(photoSizes, sizesByPriority: sizesByPriority)
             return photoCell
             
         default:
@@ -100,6 +109,26 @@ class NewsTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let news = self.myNews[indexPath.section]
+        
+        switch indexPath.row {
+        case 0:
+            let text =  news.text
+            if text == "" { return 0 }
+            let cellHeight = getTextHeight(text: text, font: UIFont.systemFont(ofSize: 18))
+            return (cellHeight > 200 ? 200 : cellHeight)
+        case 1:
+            let tableWidth = tableView.bounds.width
+            let photoSizes = news.attachments!.first!.photo!.sizes
+            let ratio = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: sizesByPriority).ratio
+            let cellHeight = tableWidth * ratio
+            return cellHeight
+        default:
+            return UITableView.automaticDimension
+        }
     }
     
     //MARK: header
@@ -136,6 +165,7 @@ class NewsTableVC: UITableViewController {
     
 }
 
+//MARK: Data Source Prefetching
 extension NewsTableVC: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let maxSection = indexPaths.map ({ $0.section }).max() else { return }

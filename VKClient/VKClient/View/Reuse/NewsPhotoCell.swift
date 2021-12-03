@@ -46,12 +46,12 @@ class NewsPhotoCell: UITableViewCell {
         
     }
     
-    func configure(_ photoSizes: [Size]) {
+    func configure(_ photoSizes: [Size], sizesByPriority: [SizeType]) {
         let options = ImageLoadingOptions(
             placeholder: UIImage(systemName: "photo"),
             transition: .fadeIn(duration: 0.25)
         )
-        let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s])
+        let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: sizesByPriority).src
         let url = URL(string: urlString!)
         
         Nuke.loadImage(with: url, options: options, into: self.image)
