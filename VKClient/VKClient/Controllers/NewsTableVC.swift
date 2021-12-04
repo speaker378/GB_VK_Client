@@ -93,7 +93,7 @@ class NewsTableVC: UITableViewController {
         switch indexPath.row {
         case 0:
             guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
-            textCell.newsText.text = sectionData.text
+            textCell.configure(newsText: sectionData.text)
             return textCell
 
         case 1:
@@ -124,7 +124,7 @@ class NewsTableVC: UITableViewController {
             let tableWidth = tableView.bounds.width
             let photoSizes = news.attachments!.first!.photo!.sizes
             let ratio = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: sizesByPriority).ratio
-            let cellHeight = tableWidth * ratio
+            let cellHeight = (tableWidth * ratio).rounded(.up)
             return cellHeight
         default:
             return UITableView.automaticDimension

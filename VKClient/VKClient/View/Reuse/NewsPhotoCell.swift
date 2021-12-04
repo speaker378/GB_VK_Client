@@ -37,11 +37,10 @@ class NewsPhotoCell: UITableViewCell {
         contentView.isOpaque = true
         
         NSLayoutConstraint.activate([
-            
             image.topAnchor.constraint(equalTo: contentView.topAnchor),
-            image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            image.heightAnchor.constraint(equalToConstant: 300),
+            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
         
     }
