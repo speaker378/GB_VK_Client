@@ -118,7 +118,7 @@ class NewsTableVC: UITableViewController {
         case 0:
             let text =  news.text
             if text == "" { return 0 }
-            let cellHeight = getTextHeight(text: text, font: UIFont.systemFont(ofSize: 18))
+            let cellHeight = getTextHeight(text: text, font: UIFont.systemFont(ofSize: 18)).rounded(.up)
             return (cellHeight > 200 ? 200 : cellHeight)
         case 1:
             let tableWidth = tableView.bounds.width
