@@ -16,6 +16,8 @@ class NewsTableVC: UITableViewController {
     var nextFrom: String!
     var isLoading = false
     private let sizesByPriority: [SizeType] = [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]
+    let textFont = UIFont.systemFont(ofSize: 18)
+    let maxHeightTextCell: CGFloat = 200
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +95,7 @@ class NewsTableVC: UITableViewController {
         switch indexPath.row {
         case 0:
             guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
+            textCell.delegate = self
             textCell.configure(newsText: sectionData.text)
             return textCell
 
@@ -112,17 +115,24 @@ class NewsTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let news = self.myNews[indexPath.section]
-        
+        let sectionData = myNews[indexPath.section]
+        let tableWidth = tableView.bounds.width
+
         switch indexPath.row {
         case 0:
-            let text =  news.text
-            if text == "" { return 0 }
-            let cellHeight = getTextHeight(text: text, font: UIFont.systemFont(ofSize: 18)).rounded(.up)
-            return (cellHeight > 200 ? 200 : cellHeight)
+            var cellHeight: CGFloat = 0
+            let text =  sectionData.text
+            if text == "" { return cellHeight }
+            let cell = tableView.cellForRow(at: indexPath) as? NewsTextCell
+            cellHeight = text.getTextHeight(width: tableWidth, font: textFont)
+            
+            if cellHeight > maxHeightTextCell, cell?.fullText == true {
+                return cellHeight + cell!.button.frame.height
+            }
+            
+            return (cellHeight > maxHeightTextCell ? maxHeightTextCell : cellHeight)
         case 1:
-            let tableWidth = tableView.bounds.width
-            let photoSizes = news.attachments!.first!.photo!.sizes
+            let photoSizes = sectionData.attachments!.first!.photo!.sizes
             let ratio = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: sizesByPriority).ratio
             let cellHeight = (tableWidth * ratio).rounded(.up)
             return cellHeight
@@ -181,5 +191,12 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
                 self.isLoading = false
             }
         }
+    }
+}
+
+extension NewsTableVC: NewsTextCellDelegate {
+    func contentDidChange (cell: NewsTextCell) {
+        self.tableView.beginUpdates ()
+        self.tableView.endUpdates ()
     }
 }
