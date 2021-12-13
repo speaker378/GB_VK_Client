@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,31 +13,34 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" rowHeight="90" id="KGk-i7-Jjw" customClass="GroupCell" customModule="VKClient" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrH-jp-ia3">
-                        <rect key="frame" x="94" y="33" width="226" height="20.5"/>
+                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrH-jp-ia3">
+                        <rect key="frame" x="88" y="26" width="232" height="20.5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n0A-op-tzH">
-                        <rect key="frame" x="8" y="8" width="70" height="70"/>
+                        <rect key="frame" x="8" y="4" width="64" height="64"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="2Uq-ig-tBi"/>
-                            <constraint firstAttribute="height" constant="70" id="jGw-V7-ca6"/>
+                            <constraint firstAttribute="width" constant="64" id="2Uq-ig-tBi"/>
+                            <constraint firstAttribute="height" constant="64" id="jGw-V7-ca6"/>
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="tintColor" systemColor="systemBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="FrH-jp-ia3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="7Nx-TY-DfL"/>
                     <constraint firstItem="n0A-op-tzH" firstAttribute="centerY" secondItem="FrH-jp-ia3" secondAttribute="centerY" id="AlY-Px-b3c"/>
-                    <constraint firstItem="n0A-op-tzH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="IBe-7Y-TJE"/>
+                    <constraint firstItem="n0A-op-tzH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="IBe-7Y-TJE"/>
                     <constraint firstItem="FrH-jp-ia3" firstAttribute="leading" secondItem="n0A-op-tzH" secondAttribute="trailing" constant="16" id="OoL-XT-uUE"/>
                     <constraint firstItem="FrH-jp-ia3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PfS-o8-LZx"/>
-                    <constraint firstAttribute="bottom" secondItem="n0A-op-tzH" secondAttribute="bottom" constant="8" id="TC6-zy-H00"/>
+                    <constraint firstAttribute="bottom" secondItem="n0A-op-tzH" secondAttribute="bottom" constant="4" id="TC6-zy-H00"/>
                     <constraint firstAttribute="trailing" secondItem="FrH-jp-ia3" secondAttribute="trailing" id="nUA-g5-OgP"/>
                     <constraint firstItem="n0A-op-tzH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="oSE-hi-Q2h"/>
                 </constraints>
@@ -49,4 +53,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="123.88392857142857"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

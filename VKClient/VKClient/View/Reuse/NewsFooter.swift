@@ -60,9 +60,14 @@ class NewsFooter: UITableViewHeaderFooterView {
         repostsLabel.font = UIFont.systemFont(ofSize: 16)
         viewsLabel.font = UIFont.systemFont(ofSize: 16)
         
-        contentView.backgroundColor = .systemOrange
         contentView.layer.cornerRadius = 15
         contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        contentView.backgroundColor = .systemBackground
+        contentView.isOpaque = true
+        contentView.subviews.forEach {
+            $0.backgroundColor = .systemBackground
+            $0.isOpaque = true
+        }
         
         NSLayoutConstraint.activate([
             

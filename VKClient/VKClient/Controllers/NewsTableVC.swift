@@ -21,6 +21,7 @@ class NewsTableVC: UITableViewController {
         tableView.register(NewsFooter.self, forHeaderFooterViewReuseIdentifier: "NewsFooter")
         tableView.sectionHeaderTopPadding = 10
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .tertiarySystemGroupedBackground
         fetchNews()
     }
     
@@ -45,45 +46,22 @@ class NewsTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
-        guard let photoCell = tableView.dequeueReusableCell(withIdentifier: "NewsPhotoCell", for: indexPath) as? NewsPhotoCell else { return UITableViewCell() }
-        
         let sectionData = myNews[indexPath.section]
         
         switch indexPath.row {
         case 0:
             if sectionData.text != "" {
+                guard let textCell = tableView.dequeueReusableCell(withIdentifier: "NewsTextCell", for: indexPath) as? NewsTextCell else { return UITableViewCell() }
                 textCell.newsText.text = sectionData.text
                 return textCell
             }
-            let options = ImageLoadingOptions(
-                placeholder: UIImage(systemName: "photo"),
-                transition: .fadeIn(duration: 0.25)
-            )
-            
-            guard let photoSizes = sectionData.attachments?.first?.photo?.sizes,
-                  let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]),
-                  let url = URL(string: urlString)
-            else { return photoCell }
-            
-            Nuke.loadImage(with: url, options: options, into: photoCell.image)
-            return photoCell
+            fallthrough
             
         case 1:
-            if sectionData.attachments != nil {
-                let options = ImageLoadingOptions(
-                    placeholder: UIImage(systemName: "photo"),
-                    transition: .fadeIn(duration: 0.25)
-                )
-                guard let photoSizes = sectionData.attachments?.first?.photo?.sizes,
-                      let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]),
-                      let url = URL(string: urlString)
-                else { return photoCell }
-                
-                Nuke.loadImage(with: url, options: options, into: photoCell.image)
-                return photoCell
-            }
-            return textCell
+            guard let photoSizes = sectionData.attachments?.first?.photo?.sizes else { return UITableViewCell() }
+            guard let photoCell = tableView.dequeueReusableCell(withIdentifier: "NewsPhotoCell", for: indexPath) as? NewsPhotoCell else { return UITableViewCell() }
+            photoCell.configure(photoSizes)
+            return photoCell
             
         default:
             return UITableViewCell()

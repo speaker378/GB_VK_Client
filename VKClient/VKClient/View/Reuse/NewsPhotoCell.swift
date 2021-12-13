@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Nuke
 
 class NewsPhotoCell: UITableViewCell {
     
@@ -13,7 +14,7 @@ class NewsPhotoCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureContents()
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -24,13 +25,16 @@ class NewsPhotoCell: UITableViewCell {
         image.image = nil
     }
     
-    func configureContents() {
+    func setupViews() {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
+        image.backgroundColor = .systemBackground
+        image.isOpaque = true
         
         contentView.addSubview(image)
         
-        contentView.backgroundColor = .systemOrange
+        contentView.backgroundColor = .systemBackground
+        contentView.isOpaque = true
         
         NSLayoutConstraint.activate([
             
@@ -40,6 +44,17 @@ class NewsPhotoCell: UITableViewCell {
             image.heightAnchor.constraint(equalToConstant: 300),
         ])
         
+    }
+    
+    func configure(_ photoSizes: [Size]) {
+        let options = ImageLoadingOptions(
+            placeholder: UIImage(systemName: "photo"),
+            transition: .fadeIn(duration: 0.25)
+        )
+        let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s])
+        let url = URL(string: urlString!)
+        
+        Nuke.loadImage(with: url, options: options, into: self.image)
     }
     
 }

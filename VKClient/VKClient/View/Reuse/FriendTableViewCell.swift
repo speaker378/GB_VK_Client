@@ -15,6 +15,11 @@ class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var networkStatusUILabel: UILabel!
     @IBOutlet weak var networkStatusUIImage: UIImageView!
     
+    let optionsNuke = ImageLoadingOptions(
+      placeholder: UIImage(systemName: "photo"),
+      transition: .fadeIn(duration: 0.25)
+    )
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -27,6 +32,12 @@ class FriendTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarUIImageView.image = UIImage(systemName: "photo")
+        nameUILabel.text = nil
     }
     
     @objc func animate(_ sender: UITapGestureRecognizer) {
@@ -50,6 +61,7 @@ class FriendTableViewCell: UITableViewCell {
         containerForImageUIView.layer.shadowOffset = CGSize(width: -5, height: 0)
         containerForImageUIView.layer.shadowRadius = 2
         containerForImageUIView.layer.cornerRadius = containerForImageUIView.frame.height / 2
+        containerForImageUIView.layer.shadowPath = UIBezierPath(ovalIn: containerForImageUIView.bounds).cgPath
         containerForImageUIView.clipsToBounds = false
         containerForImageUIView.layer.masksToBounds = false
         containerForImageUIView.backgroundColor = .clear
@@ -73,12 +85,8 @@ class FriendTableViewCell: UITableViewCell {
     }
     
     func configure(friend: RealmProfile) {
-        let options = ImageLoadingOptions(
-          placeholder: UIImage(systemName: "photo"),
-          transition: .fadeIn(duration: 0.25)
-        )
         if let url = URL(string: friend.avatarUrlString) {
-            Nuke.loadImage(with: url, options: options, into: avatarUIImageView)
+            Nuke.loadImage(with: url, options: optionsNuke, into: avatarUIImageView)
         }
         nameUILabel.text = friend.firstName + " " + friend.lastName
         

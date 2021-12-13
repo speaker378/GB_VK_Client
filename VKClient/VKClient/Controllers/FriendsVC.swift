@@ -103,19 +103,12 @@ extension FriendsVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        CGFloat(0.01)
+        0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         30
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let mycell = cell as? FriendTableViewCell else { return }
-//        mycell.animate(UITapGestureRecognizer())
-//    }
-    
-    
 }
 
 

@@ -12,8 +12,15 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
     
+    let optionsNuke = ImageLoadingOptions(
+      placeholder: UIImage(systemName: "photo"),
+      transition: .fadeIn(duration: 0.25)
+    )
+    
     override func prepareForReuse() {
         super.prepareForReuse()
+        groupImageView.image = UIImage(systemName: "photo")
+        groupNameLabel.text = nil
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,23 +42,15 @@ class GroupCell: UITableViewCell {
     }
     
     func configure(group: RealmGroup) {
-        let options = ImageLoadingOptions(
-          placeholder: UIImage(systemName: "photo"),
-          transition: .fadeIn(duration: 0.25)
-        )
         if let url = URL(string: group.avatarUrlString) {
-            Nuke.loadImage(with: url, options: options, into: groupImageView)
+            Nuke.loadImage(with: url, options: optionsNuke, into: groupImageView)
         }
         groupNameLabel.text = group.name
     }
     
     func configure(group: Group) {
-        let options = ImageLoadingOptions(
-          placeholder: UIImage(systemName: "photo"),
-          transition: .fadeIn(duration: 0.25)
-        )
         if let url = URL(string: group.avatarUrlString) {
-            Nuke.loadImage(with: url, options: options, into: groupImageView)
+            Nuke.loadImage(with: url, options: optionsNuke, into: groupImageView)
         }
         groupNameLabel.text = group.name
     }

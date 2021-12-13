@@ -63,6 +63,10 @@ class SearchGroupsTableVC: UITableViewController {
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        (64 + 4 * 2)
+    }
 }
 
 extension SearchGroupsTableVC: UISearchBarDelegate {

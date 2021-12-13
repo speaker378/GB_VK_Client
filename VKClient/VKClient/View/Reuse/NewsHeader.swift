@@ -34,11 +34,18 @@ class NewsHeader: UITableViewHeaderFooterView {
         creatorAvatar.layer.cornerRadius = 25
         creatorAvatar.layer.masksToBounds = true
         creatorAvatar.contentMode = .scaleToFill
+        creatorAvatar.backgroundColor = .systemBackground
+        creatorAvatar.isOpaque = true
         
         creatorName.font = UIFont.systemFont(ofSize: 22)
+        creatorName.backgroundColor = .systemBackground
+        creatorName.isOpaque = true
         dateLabel.font = UIFont.systemFont(ofSize: 12)
+        dateLabel.backgroundColor = .systemBackground
+        dateLabel.isOpaque = true
         
-        contentView.backgroundColor = .systemOrange
+        contentView.backgroundColor = .systemBackground
+        contentView.isOpaque = true
         contentView.layer.cornerRadius = 15
         contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
