@@ -45,3 +45,12 @@ class RealmProfile: Object {
         self.friendStatus = friend.friendStatus ?? 0
     }
 }
+
+struct ProfileForAdapter: Equatable {
+    let userID: Int
+    let firstName: String
+    let lastName: String
+    let avatarUrlString: String
+    let networkStatus: Int
+    let friendStatus: Int
+}

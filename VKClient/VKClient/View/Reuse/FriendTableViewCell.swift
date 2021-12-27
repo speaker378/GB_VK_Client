@@ -84,7 +84,7 @@ class FriendTableViewCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
-    func configure(friend: RealmProfile) {
+    func configure(friend: ProfileForAdapter) {
         if let url = URL(string: friend.avatarUrlString) {
             Nuke.loadImage(with: url, options: optionsNuke, into: avatarUIImageView)
         }

@@ -13,28 +13,20 @@ class FriendsVC: UIViewController {
     
     @IBOutlet weak var friendsTableView: UITableView!
     
-    private var friends: Results<RealmProfile>?
+    private var friends: [ProfileForAdapter] = []
     private var friendsFirstLetters = [String]()
-    private var friendsDict = [String: [RealmProfile]]()
+    private var friendsDict = [String : [ProfileForAdapter]]()
     private var loader: Loader?
     private var friendsToken: NotificationToken?
-    var networkService = NetworkService()
+    var networkService = ProfileAdapter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        friends = try? RealmService.load(typeOf: RealmProfile.self)
-        fetchFriends()
+        networkService.getProfiles { [weak self] friends in
+            self?.friends = friends
+            self?.setupFriendsData()
+        }
         loader = Loader(rootView: view)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        friendsObserveSetup()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        friendsToken?.invalidate()
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,30 +38,7 @@ class FriendsVC: UIViewController {
         photosVC.userID = userID
     }
     
-    private func friendsObserveSetup() {
-        friendsToken = friends?.observe { [weak self] changes in
-            switch changes {
-            case .initial:
-                self?.setupFriendsData()
-            case .update:
-                self?.setupFriendsData()
-            case .error(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func fetchFriends() {
-        networkService.getFriendsUrlReuest()
-            .then(networkService.getFriendsData(with:))
-            .then(networkService.parseFriends(json:))
-            .then(networkService.parseFriendsToRealm(friends:))
-            .done { try? RealmService.save(items: $0) }
-            .catch { print($0) }
-    }
-    
     private func setupFriendsData() {
-        guard let friends = friends else { return }
         for friend in friends where friend.friendStatus == 3 {
             let firstChar = String(friend.firstName.first!).capitalized
             if friendsDict[firstChar] == nil {
