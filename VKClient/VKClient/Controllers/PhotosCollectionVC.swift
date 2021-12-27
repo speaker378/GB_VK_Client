@@ -12,6 +12,8 @@ class PhotosCollectionVC: UICollectionViewController {
     var userID = 0
     private var userPhotos: Results<RealmUserPhoto>?
     private var userPhotoToken: NotificationToken?
+    private let viewModelFactory = PhotoViewModelFactory()
+    private var viewModels: [PhotoViewModel] = []
     var networkService = NetworkService()
     
     override func viewDidLoad() {
@@ -33,9 +35,19 @@ class PhotosCollectionVC: UICollectionViewController {
     private func userPhotosObserveSetup() {
         userPhotoToken = userPhotos?.observe { [weak self] changes in
             switch changes {
-            case .initial:
-                self?.collectionView.reloadData()
-            case let .update(_, deletions, insertions, modifications):
+            case .initial(let realmPhotos):
+                guard let self = self else { return }
+                var photos: [RealmUserPhoto] = []
+                for realmPhoto in realmPhotos {
+                    photos.append(realmPhoto)
+                }
+                self.viewModels = self.viewModelFactory.constructViewModels(from: photos)
+                self.collectionView.reloadData()
+            case let .update(realmPhotos, deletions, insertions, modifications):
+                var photos: [RealmUserPhoto] = []
+                for realmPhoto in realmPhotos {
+                    photos.append(realmPhoto)
+                }
                 self?.collectionView.performBatchUpdates{
                     self?.collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: 0) })
                     self?.collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: 0) })
@@ -52,13 +64,13 @@ class PhotosCollectionVC: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userPhotos?.count ?? 0
+        return viewModels.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCollectionViewCell  else { return UICollectionViewCell() }
         
-        cell.configure(userPhoto: userPhotos![indexPath.item])
+        cell.configure(userPhoto: viewModels[indexPath.item])
     
         return cell
     }

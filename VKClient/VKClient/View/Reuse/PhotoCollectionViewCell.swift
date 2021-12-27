@@ -9,6 +9,14 @@ import UIKit
 import Nuke
 import RealmSwift
 
+struct PhotoViewModel {
+    let likes: Int
+    let ownerID: Int
+    let itemID: Int
+    let stateButton: Bool
+    let srcImage: URL?
+}
+
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var likeControl: Like!
@@ -18,33 +26,13 @@ class PhotoCollectionViewCell: UICollectionViewCell {
       transition: .fadeIn(duration: 0.25)
     )
     
-    func selectSizePhoto(of sizeList: List<RealmSize>) -> RealmSize {
-        let sizes = sizeList.map { $0.type }
-        
-        if sizes.contains("m") {
-            let myIndex = Int(sizeList.firstIndex { $0.type == "m" }!)
-            return sizeList[myIndex]
-        } else if sizes.contains("o") {
-            let myIndex = Int(sizeList.firstIndex { $0.type == "o" }!)
-            return sizeList[myIndex]
-        } else if sizes.contains("s") {
-            let myIndex = Int(sizeList.firstIndex { $0.type == "s" }!)
-            return sizeList[myIndex]
-        }
-        
-        return sizeList[0]
-    }
-    
-    func configure(userPhoto: RealmUserPhoto) {
-        let size = selectSizePhoto(of: userPhoto.sizes)
-        if let url = URL(string: size.urlString) {
+    func configure(userPhoto: PhotoViewModel) {
+        if let url = userPhoto.srcImage {
             Nuke.loadImage(with: url, options: optionsNuke, into: photoImageView)
         }
-        likeControl.likes = userPhoto.countLikes
+        likeControl.likes = userPhoto.likes
         likeControl.ownerID = userPhoto.ownerID
-        likeControl.itemID = userPhoto.id
-        if userPhoto.userLikes == 1 {
-            likeControl.stateButton = true
-        }
+        likeControl.itemID = userPhoto.itemID
+        likeControl.stateButton = userPhoto.stateButton
     }
 }
