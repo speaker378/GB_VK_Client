@@ -99,7 +99,7 @@ extension FriendsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
-        headerView.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        headerView.textLabel?.font = UIFont.system(size: 14)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

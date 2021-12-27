@@ -37,10 +37,10 @@ class NewsHeader: UITableViewHeaderFooterView {
         creatorAvatar.backgroundColor = .systemBackground
         creatorAvatar.isOpaque = true
         
-        creatorName.font = UIFont.systemFont(ofSize: 22)
+        creatorName.font = UIFont.system(size: 22)
         creatorName.backgroundColor = .systemBackground
         creatorName.isOpaque = true
-        dateLabel.font = UIFont.systemFont(ofSize: 12)
+        dateLabel.font = UIFont.system(size: 12)
         dateLabel.backgroundColor = .systemBackground
         dateLabel.isOpaque = true
         

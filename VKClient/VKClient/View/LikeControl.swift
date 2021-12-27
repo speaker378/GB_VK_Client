@@ -53,7 +53,7 @@ class Like: UIControl {
         image.image = UIImage(systemName: "suit.heart.fill")
         image.tintColor = .white
         
-        numberOfLikes.font = UIFont.boldSystemFont(ofSize: 20)
+        numberOfLikes.font = UIFont.system(size: 20)
         numberOfLikes.textAlignment = .right
         numberOfLikes.textColor = .white
         

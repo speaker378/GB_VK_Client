@@ -70,11 +70,11 @@ class FriendTableViewCell: UITableViewCell {
         avatarUIImageView.layer.cornerRadius = avatarUIImageView.frame.height / 2
         avatarUIImageView.clipsToBounds = true
         
-        nameUILabel.font = UIFont.systemFont(ofSize: 22)
+        nameUILabel.font = UIFont.system(size: 22)
         
         networkStatusUIImage.image = UIImage(systemName: "circle.fill")
         
-        networkStatusUILabel.font = UIFont.systemFont(ofSize: 10)
+        networkStatusUILabel.font = UIFont.system(size: 10)
 
         let singleTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.animate(_:)))
         singleTap.numberOfTapsRequired = 1

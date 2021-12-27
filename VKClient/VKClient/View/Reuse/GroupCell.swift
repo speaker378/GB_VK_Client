@@ -38,7 +38,7 @@ class GroupCell: UITableViewCell {
     }
     
     private func setupViews() {
-        groupNameLabel.font = UIFont.systemFont(ofSize: 20)
+        groupNameLabel.font = UIFont.system(size: 20)
     }
     
     func configure(group: RealmGroup) {
