@@ -45,12 +45,14 @@ final class NetworkService {
         return request
     }
     // MARK: News
-    func getNewsFeed(completion: @escaping ([NewsPublication]) -> Void) {
+    func getNewsFeed(startTime: Int? = nil, startFrom: String? = nil, completion: @escaping ([NewsPublication], String?) -> Void) {
         let path = "/method/newsfeed.get"
-        let params = [
+        var params = [
             "filters" : "post",
             "count" : "20"
         ]
+        if startTime != nil { params["start_time"] = String(startTime!) }
+        if startFrom != nil { params["start_from"] = startFrom }
         let url = url(from: path, params: params)
         let request = URLRequest(url: url)
         
@@ -59,18 +61,21 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return completion([]) }
+            else { return completion([], nil) }
             
             let dispatchGroup = DispatchGroup()
             var news = [NewsPublication]()
             var profiles: [Profile]?
             var groups: [Group]?
+            var nextFrom: String? = nil
             
             do {
                 dispatchGroup.enter()
-                news = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.items
-                profiles = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.profiles
-                groups = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response.groups
+                let response = try JSONDecoder().decode(VKResponse<NewsPublication>.self, from: data).response
+                nextFrom = response.nextFrom
+                news = response.items
+                profiles = response.profiles
+                groups = response.groups
                 dispatchGroup.leave()
             } catch  {
                 dispatchGroup.leave()
@@ -93,7 +98,7 @@ final class NetworkService {
             }
             
             dispatchGroup.notify(queue: .main) {
-                completion(news)
+                completion(news, nextFrom)
             }
         }
         task.resume()

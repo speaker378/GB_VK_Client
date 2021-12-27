@@ -37,21 +37,20 @@ class NewsPhotoCell: UITableViewCell {
         contentView.isOpaque = true
         
         NSLayoutConstraint.activate([
-            
             image.topAnchor.constraint(equalTo: contentView.topAnchor),
-            image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            image.heightAnchor.constraint(equalToConstant: 300),
+            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
         
     }
     
-    func configure(_ photoSizes: [Size]) {
+    func configure(_ photoSizes: [Size], sizesByPriority: [SizeType]) {
         let options = ImageLoadingOptions(
             placeholder: UIImage(systemName: "photo"),
             transition: .fadeIn(duration: 0.25)
         )
-        let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s])
+        let urlString = Photo.findUrlInPhotoSizes(sizes: photoSizes, sizesByPriority: sizesByPriority).src
         let url = URL(string: urlString!)
         
         Nuke.loadImage(with: url, options: options, into: self.image)
