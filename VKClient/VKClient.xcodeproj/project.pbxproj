@@ -169,6 +169,7 @@
 			children = (
 				7436DCED26C6E52600E7E21C /* AppDelegate.swift */,
 				7436DCEF26C6E52600E7E21C /* SceneDelegate.swift */,
+				7468BD692779DC3B005CFF87 /* Extensions */,
 				58E53AB8274F98FF00E32CC9 /* Operations */,
 				74397D612706E2D4001B50CB /* Services */,
 				74D2234926D54C5200D444F7 /* Models */,
@@ -216,11 +217,18 @@
 			children = (
 				74397D622706E2FD001B50CB /* NetworkService.swift */,
 				74ED889E2721429100D6E28B /* RealmService.swift */,
-				745D8799273C2947007ABE80 /* DateFormater.swift */,
-				745E2DDC275F359C005C0F8E /* StringExtension.swift */,
 				58E53ABD274F9FA300E32CC9 /* APIConstants.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		7468BD692779DC3B005CFF87 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				745E2DDC275F359C005C0F8E /* StringExtension.swift */,
+				745D8799273C2947007ABE80 /* DateFormater.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		74D2234926D54C5200D444F7 /* Models */ = {

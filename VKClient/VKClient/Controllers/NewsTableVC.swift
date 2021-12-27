@@ -61,7 +61,7 @@ class NewsTableVC: UITableViewController {
             guard let self = self else { return }
             self.myNews = myNews
             self.nextFrom = nextFrom
-            self.startTime = myNews.first!.date + 1
+            self.startTime = (myNews.first?.date ?? 0) + 1
             self.tableView.reloadData()
         }
     }
