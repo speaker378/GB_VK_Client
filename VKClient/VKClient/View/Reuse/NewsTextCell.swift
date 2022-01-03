@@ -15,7 +15,7 @@ class NewsTextCell: UITableViewCell {
     
     let newsText = UILabel()
     let button = UIButton()
-    let textFont = UIFont.systemFont(ofSize: 18)
+    let textFont = UIFont.system(size: 18)
     var buttonHeighToConstraint = NSLayoutConstraint()
     var fullText = true
     weak var delegate: NewsTextCellDelegate!

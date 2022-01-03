@@ -55,10 +55,10 @@ class NewsFooter: UITableViewHeaderFooterView {
         repostsImage.image =  UIImage(systemName: "arrowshape.turn.up.right")
         viewsImage.image =  UIImage(systemName: "eye")
         
-        likesLabel.font = UIFont.systemFont(ofSize: 16)
-        commentsLabel.font = UIFont.systemFont(ofSize: 16)
-        repostsLabel.font = UIFont.systemFont(ofSize: 16)
-        viewsLabel.font = UIFont.systemFont(ofSize: 16)
+        likesLabel.font = UIFont.system(size: 16)
+        commentsLabel.font = UIFont.system(size: 16)
+        repostsLabel.font = UIFont.system(size: 16)
+        viewsLabel.font = UIFont.system(size: 16)
         
         contentView.layer.cornerRadius = 15
         contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]

@@ -16,7 +16,7 @@ class NewsTableVC: UITableViewController {
     var nextFrom: String!
     var isLoading = false
     private let sizesByPriority: [SizeType] = [.x, .y, .z, .w, .r, .q, .p, .m, .o, .s]
-    let textFont = UIFont.systemFont(ofSize: 18)
+    let textFont = UIFont.system(size: 18)
     let maxHeightTextCell: CGFloat = 200
 
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ class NewsTableVC: UITableViewController {
             guard let self = self else { return }
             self.myNews = myNews
             self.nextFrom = nextFrom
-            self.startTime = myNews.first!.date + 1
+            self.startTime = (myNews.first?.date ?? 0) + 1
             self.tableView.reloadData()
         }
     }
