@@ -104,7 +104,7 @@ final class NetworkService {
         task.resume()
     }
     // MARK: Friends
-    func getFriendsUrlReuest() -> Promise<URLRequest> {
+    func getFriendsUrlRequest() -> Promise<URLRequest> {
         return Promise<URLRequest> {
             let path = "/method/friends.get"
             let params = ["fields" : "photo_100,online,friend_status"]
