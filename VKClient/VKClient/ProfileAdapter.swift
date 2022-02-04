@@ -23,18 +23,14 @@ final class ProfileAdapter {
             switch changes {
             case .update(let realmProfiles, _, _, _):
                 var profiles: [ProfileForAdapter] = []
-                for realmProfile in realmProfiles {
-                    profiles.append(self.profile(from: realmProfile))
-                }
+                profiles = realmProfiles.map { ProfileForAdapter(rlmProfile: $0) }
                 self.realmNotificationToken?.invalidate()
                 completion(profiles)
             case .error(let error):
                 fatalError("\(error)")
             case .initial:
                 var profiles: [ProfileForAdapter] = []
-                for realmProfile in realmProfiles {
-                    profiles.append(self.profile(from: realmProfile))
-                }
+                profiles = realmProfiles.map { ProfileForAdapter(rlmProfile: $0) }
                 self.realmNotificationToken?.invalidate()
                 completion(profiles)
             }
@@ -42,20 +38,11 @@ final class ProfileAdapter {
         self.realmNotificationToken = token
         
         
-        networkService.getFriendsUrlReuest()
+        networkService.getFriendsUrlRequest()
             .then(networkService.getFriendsData(with:))
             .then(networkService.parseFriends(json:))
             .then(networkService.parseFriendsToRealm(friends:))
             .done { try? RealmService.save(items: $0) }
             .catch { print($0) }
-    }
-    
-    private func profile(from rlmProfile: RealmProfile) -> ProfileForAdapter {
-        return ProfileForAdapter(userID: rlmProfile.userID,
-                                 firstName: rlmProfile.firstName,
-                                 lastName: rlmProfile.lastName,
-                                 avatarUrlString: rlmProfile.avatarUrlString,
-                                 networkStatus: rlmProfile.networkStatus,
-                                 friendStatus: rlmProfile.friendStatus)
     }
 }

@@ -53,4 +53,14 @@ struct ProfileForAdapter: Equatable {
     let avatarUrlString: String
     let networkStatus: Int
     let friendStatus: Int
+
+    init(rlmProfile: RealmProfile) {
+        self.userID = rlmProfile.userID
+        self.firstName = rlmProfile.firstName
+        self.lastName = rlmProfile.lastName
+        self.avatarUrlString = rlmProfile.avatarUrlString
+        self.networkStatus = rlmProfile.networkStatus
+        self.friendStatus = rlmProfile.friendStatus
+    }
+
 }
