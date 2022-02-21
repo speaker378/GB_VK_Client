@@ -11,7 +11,7 @@ import Nuke
 class NewsTableVC: UITableViewController {
     
     private var myNews = [NewsPublication]()
-    var networkService = NetworkService()
+    var networkService: NetworkServiceInterface = NetworkServiceProxy(networkService: NetworkService())
     var startTime = Int(Date().timeIntervalSince1970)
     var nextFrom: String!
     var isLoading = false
@@ -41,7 +41,7 @@ class NewsTableVC: UITableViewController {
     
     @objc private func refreshNews() {
         self.refreshControl?.beginRefreshing()
-        networkService.getNewsFeed(startTime: self.startTime, completion: { [weak self] news, nextFrom in
+        networkService.getNewsFeed(startTime: self.startTime, startFrom: nil, completion: { [weak self] news, nextFrom in
             guard let self = self,
                   news.count > 0
             else { self?.refreshControl?.endRefreshing()
@@ -57,7 +57,7 @@ class NewsTableVC: UITableViewController {
     }
     
     func fetchNews() {
-        networkService.getNewsFeed { [weak self] myNews, nextFrom in
+        networkService.getNewsFeed (startTime: nil, startFrom: nil) { [weak self] myNews, nextFrom in
             guard let self = self else { return }
             self.myNews = myNews
             self.nextFrom = nextFrom
@@ -182,7 +182,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
         
         if maxSection > myNews.count - 3, !isLoading {
             isLoading = true
-            networkService.getNewsFeed(startFrom: nextFrom) { [weak self] news, nextFrom in
+            networkService.getNewsFeed(startTime: nil, startFrom: nextFrom) { [weak self] news, nextFrom in
                 guard let self = self else { return }
                 let indexSet = IndexSet(integersIn: self.myNews.count ..< self.myNews.count + news.count)
                 self.myNews.append(contentsOf: news)

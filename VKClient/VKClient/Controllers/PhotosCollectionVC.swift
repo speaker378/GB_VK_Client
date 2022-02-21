@@ -14,7 +14,7 @@ class PhotosCollectionVC: UICollectionViewController {
     private var userPhotoToken: NotificationToken?
     private let viewModelFactory = PhotoViewModelFactory()
     private var viewModels: [PhotoViewModel] = []
-    var networkService = NetworkService()
+    var networkService: NetworkServiceProxy = NetworkServiceProxy(networkService: NetworkService())
     
     override func viewDidLoad() {
         super.viewDidLoad()
