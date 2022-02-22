@@ -13,7 +13,7 @@ class SearchGroupsTableVC: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var groups = [Group]()
-    var networkService = NetworkService()
+    var networkService: NetworkServiceProxy = NetworkServiceProxy(networkService: NetworkService())
     
     override func viewDidLoad() {
         super.viewDidLoad()

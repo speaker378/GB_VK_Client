@@ -30,7 +30,7 @@ class Like: UIControl {
     let stackView = UIStackView()
     let image = UIImageView()
     let numberOfLikes  = UILabel()
-    let networkService = NetworkService()
+    let networkService: NetworkServiceProxy = NetworkServiceProxy(networkService: NetworkService())
     
     override init(frame: CGRect) {
         super.init(frame: frame)

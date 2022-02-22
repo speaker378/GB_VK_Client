@@ -9,7 +9,17 @@ import UIKit
 import RealmSwift
 import PromiseKit
 
-final class NetworkService {
+protocol NetworkServiceInterface {
+    func getAuthorizeRequest() -> URLRequest
+    func getNewsFeed(startTime: Int?, startFrom: String?, completion: @escaping ([NewsPublication], String?) -> Void)
+    func getFriendsData(with request: URLRequest) -> Promise<Data>
+    func getAllPhotos(userId: Int, completion: @escaping () -> Void)
+    func likePhoto(ownerID: Int, itemID: Int, action: LikeAction)
+    func getGroupsSearch(text: String, completion: @escaping ([Group]) -> Void)
+    func groupMembershipAction(groupID: Int, action: GroupMembershipAction)
+}
+
+final class NetworkService: NetworkServiceInterface {
     private let clientId = APIConstants.shared.clientId
     private let versionAPI = APIConstants.shared.versionAPI
     private let session = URLSession.shared
@@ -148,7 +158,7 @@ final class NetworkService {
     }
     
     // MARK: Photos
-    func getAllPhotos(userId: Int, complition: @escaping () -> Void) {
+    func getAllPhotos(userId: Int, completion: @escaping () -> Void) {
         let path = "/method/photos.getAll"
         let params = [
             "owner_id" : String(userId),
@@ -163,7 +173,7 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return complition() }
+            else { return completion() }
             
             do {
                 let jsonPhotos = try JSONDecoder().decode(VKResponse<Photo>.self, from: data).response.items
@@ -178,7 +188,7 @@ final class NetworkService {
                         friend?.first?.userPhotos = photos
                     }
                     
-                    complition()
+                    completion()
                 }
             } catch  {
                 print(error)
@@ -187,7 +197,7 @@ final class NetworkService {
         task.resume()
     }
     
-    func likePhoto(ownerID: Int, itemID: Int, action: likeAction) {
+    func likePhoto(ownerID: Int, itemID: Int, action: LikeAction) {
         let path = "/method/likes.\(action.rawValue)"
         let params = [
             "type" : "photo",
@@ -202,7 +212,7 @@ final class NetworkService {
     }
     
     // MARK: Groups
-    func getGroupsSearch(text: String, complition: @escaping ([Group]) -> Void) {
+    func getGroupsSearch(text: String, completion: @escaping ([Group]) -> Void) {
         let path = "/method/groups.search"
         let params = [
             "q" : text,
@@ -218,12 +228,12 @@ final class NetworkService {
                   (200...299).contains(response.statusCode),
                   error == nil,
                   let data = responseData
-            else { return complition([]) }
+            else { return completion([]) }
             
             do {
                 let groups = try JSONDecoder().decode(VKResponse<Group>.self, from: data).response.items
                 DispatchQueue.main.async {
-                    complition(groups)
+                    completion(groups)
                 }
             } catch  {
                 print(error)
@@ -232,7 +242,7 @@ final class NetworkService {
         taskSearchGroups!.resume()
     }
     
-    func groupMembershipAction(groupID: Int, action: groupMembershipAction) {
+    func groupMembershipAction(groupID: Int, action: GroupMembershipAction) {
         let path = "/method/groups.\(action.rawValue)"
         let params = [
             "group_id" : String(groupID),
@@ -246,13 +256,11 @@ final class NetworkService {
     
 }
 
-extension NetworkService {
-    enum likeAction: String {
-        case add
-        case delete
-    }
-    enum groupMembershipAction: String {
-        case join
-        case leave
-    }
+enum LikeAction: String {
+    case add
+    case delete
+}
+enum GroupMembershipAction: String {
+    case join
+    case leave
 }

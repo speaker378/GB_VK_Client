@@ -11,7 +11,7 @@ import RealmSwift
 class GroupsTableVC: UITableViewController {
     private var groups: Results<RealmGroup>?
     private var groupsToken: NotificationToken?
-    var networkService = NetworkService()
+    var networkService: NetworkServiceProxy = NetworkServiceProxy(networkService: NetworkService())
     
 
     override func viewDidLoad() {

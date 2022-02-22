@@ -17,7 +17,7 @@ class AuthorizationVC: UIViewController {
         }
     }
     
-    let request = NetworkService().getAuthorizeRequest()
+    let request = NetworkServiceProxy(networkService: NetworkService()).getAuthorizeRequest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
